@@ -1,4 +1,4 @@
-package members.controller;
+package com.jhd.dotime.members.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 

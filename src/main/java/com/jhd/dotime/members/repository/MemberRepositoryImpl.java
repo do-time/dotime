@@ -1,4 +1,4 @@
-package members.repository;
+package com.jhd.dotime.members.repository;
 
 import org.springframework.stereotype.Repository;
 
