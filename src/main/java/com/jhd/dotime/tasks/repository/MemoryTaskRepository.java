@@ -36,4 +36,9 @@ public class MemoryTaskRepository implements TaskRepository{
         task.setUpdated_date(updated_time);
         data.replace(id, task);
     }
+
+    @Override
+    public HashMap<Long, Task> getTaskList() {
+        return data;
+    }
 }
