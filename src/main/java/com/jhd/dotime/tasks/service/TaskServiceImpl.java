@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 
 
 @Service
@@ -25,6 +26,11 @@ public class TaskServiceImpl implements TaskService{
     @Override
     public Task findTask(Long id) {
         return taskRepository.findTask(id);
+    }
+
+    @Override
+    public HashMap<Long, Task> findTaskList() {
+        return taskRepository.getTaskList();
     }
 
     @Override
