@@ -18,6 +18,8 @@ public class TaskServiceImpl implements TaskService{
     public TaskServiceImpl(TaskRepository taskRepository){
         this.taskRepository = taskRepository;
     }
+
+
     @Override
     public void insert(Task task) {
         taskRepository.store(task);
