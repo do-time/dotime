@@ -1,6 +1,7 @@
 package com.jhd.dotime.tasks.repository;
 
 import com.jhd.dotime.tasks.entity.Task;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
@@ -11,6 +12,7 @@ import java.util.HashMap;
 @Repository
 public class MemoryTaskRepository implements TaskRepository{
     private static HashMap<Long, Task> data = new HashMap<>();
+
 
 
     @Override

@@ -2,6 +2,7 @@ package com.jhd.dotime.tasks.service;
 
 import com.jhd.dotime.common.config.AppConfig;
 import com.jhd.dotime.tasks.entity.Task;
+import com.jhd.dotime.tasks.repository.MemoryTaskRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,8 +19,9 @@ class TaskServiceTest {
 
     @BeforeEach
     public void beforeEach() {
-        ApplicationContext ac = new AnnotationConfigApplicationContext(AppConfig.class);
-        taskService = ac.getBean(TaskService.class);
+//        ApplicationContext ac = new AnnotationConfigApplicationContext(AppConfig.class);
+//        taskService = ac.getBean(TaskService.class);
+        taskService = new TaskServiceImpl(new MemoryTaskRepository());
     }
 
     /*

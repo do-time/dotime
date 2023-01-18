@@ -2,6 +2,7 @@ package com.jhd.dotime.tasks.controller;
 
 import com.jhd.dotime.common.config.AppConfig;
 import com.jhd.dotime.tasks.entity.Task;
+import com.jhd.dotime.tasks.repository.MemoryTaskRepository;
 import com.jhd.dotime.tasks.repository.TaskRepository;
 import com.jhd.dotime.tasks.service.TaskService;
 import com.jhd.dotime.tasks.service.TaskServiceImpl;
@@ -10,13 +11,14 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultMatcher;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -30,6 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 
+@RunWith(SpringRunner.class)
 @WebMvcTest
 class TaskControllerTest {
 
@@ -39,15 +42,19 @@ class TaskControllerTest {
      * mock bean을 통해 test를 진행할 수 있음.
      */
 
+    @MockBean
     TaskService taskService;
+    @MockBean
+    TaskController taskController;
+
 
     @Autowired
     MockMvc mvc;
 
     @BeforeEach
-    void setUp() {
-        ApplicationContext ac = new AnnotationConfigApplicationContext(AppConfig.class);
-        taskService = ac.getBean("taskService", TaskService.class);
+    public void setUp() {
+        this.taskService = new TaskServiceImpl(new MemoryTaskRepository());
+        this.taskController = new TaskController(this.taskService);
     }
 
 
@@ -61,9 +68,10 @@ class TaskControllerTest {
         //when
         Assertions.assertThat(taskService.findTask(task.getId())).isEqualTo(task);
         //then
-        mvc.perform(get("/api/v1/task"))
-                .andExpect(status().isOk())
-                .andExpect((ResultMatcher) content().string(containsString("hello controller")));
+        mvc.perform(get("/api/v1/task/"+task.getId().toString())
+                        .param("id", task.getId().toString()))
+                .andExpect(status().isOk());
+
     }
 
 
