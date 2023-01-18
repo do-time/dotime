@@ -11,20 +11,23 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("api/v1")
 public class TaskController {
 
-    private TaskService taskService;
 
-    public TaskController(TaskServiceImpl taskService){
+    private final TaskService taskService;
+
+    @Autowired
+    public TaskController(TaskService taskService){
         this.taskService = taskService;
     }
 
 
     @GetMapping("/task/{id}")
-    public Task getTask(Long id){
+    public Task getTask(@RequestParam Long id){
         return taskService.findTask(id);
     }
 }
