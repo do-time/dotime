@@ -6,6 +6,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -15,12 +16,14 @@ import java.time.LocalDateTime;
 
 class TaskRepositoryTest {
 
+
     TaskRepository taskRepository;
 
     @BeforeEach
     public void beforeEach(){
-        ApplicationContext ac = new AnnotationConfigApplicationContext(AppConfig.class);
-        taskRepository = ac.getBean("taskRepository", TaskRepository.class);
+//        ApplicationContext ac = new AnnotationConfigApplicationContext(AppConfig.class);
+//        taskRepository = ac.getBean("taskRepository", TaskRepository.class);
+        taskRepository = new MemoryTaskRepository();
     }
 
     @Test
