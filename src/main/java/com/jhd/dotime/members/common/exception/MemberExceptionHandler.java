@@ -35,7 +35,7 @@ public class MemberExceptionHandler {
 
     @ExceptionHandler({
             NoHandlerFoundException.class,
-            NotFoundException.class,
+            MemberNotFoundException.class,
     })
     public ResponseEntity<?> handleNotFoundException(Exception e) {
         return newResponse(e, HttpStatus.NOT_FOUND);
