@@ -4,12 +4,12 @@ import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @RequiredArgsConstructor
-//@NoArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Member {
     @Id
@@ -23,7 +23,7 @@ public class Member {
 
     private String profileImage;
 
-    private Date createdDate;
+    private LocalDateTime createdDate;
 
-    private Date updatedDate;
+    private LocalDateTime updatedDate;
 }
