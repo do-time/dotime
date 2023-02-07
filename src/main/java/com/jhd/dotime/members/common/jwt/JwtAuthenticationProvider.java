@@ -1,6 +1,6 @@
 package com.jhd.dotime.members.common.jwt;
 
-import com.jhd.dotime.members.common.exception.MemberNotFoundException;
+import com.jhd.dotime.members.common.exception.NotFoundException;
 import com.jhd.dotime.members.dto.Email;
 import com.jhd.dotime.members.dto.Role;
 import com.jhd.dotime.members.entity.Member;
@@ -44,7 +44,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
                     );
             authenticated.setDetails(member);
             return authenticated;
-        } catch (MemberNotFoundException e) {
+        } catch (NotFoundException e) {
             throw new UsernameNotFoundException(e.getMessage());
         } catch (IllegalArgumentException e) {
             throw new BadCredentialsException(e.getMessage());
