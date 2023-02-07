@@ -1,17 +1,13 @@
 package com.jhd.dotime.members.repository;
 
-import com.jhd.dotime.members.dto.MemberDto;
 import com.jhd.dotime.members.entity.Member;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface MemberRepository {
+import java.util.Optional;
 
-    void createMember(MemberDto memberDto);
+public interface MemberRepository extends JpaRepository<Member, Long> {
 
-    Member getMember(String email);
+    Optional<Member> findByEmail(String Email);
 
-    void updateMember(MemberDto memberDto);
-
-    void updatePassword(String email, String password);
-
-    void deleteMember(String email);
+    void deleteByEmail(String email);
 }
