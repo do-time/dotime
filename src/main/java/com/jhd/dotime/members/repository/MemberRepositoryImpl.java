@@ -8,12 +8,11 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 
 @Repository
-public class MemberRepositoryImpl implements MemberRepository{
+public class MemberRepositoryImpl{
 
     private final static HashMap<String, Member> DB = new HashMap<>();
 
 
-    @Override
     public void createMember(MemberDto memberDto) {
         Member member = new Member();
 
@@ -26,12 +25,10 @@ public class MemberRepositoryImpl implements MemberRepository{
         member.setUpdatedDate(LocalDateTime.now());
     }
 
-    @Override
     public Member getMember(String email) {
         return DB.get(email);
     }
 
-    @Override
     public void updateMember(MemberDto memberDto) {
         Member member = DB.get(memberDto.getEmail());
 
@@ -41,7 +38,6 @@ public class MemberRepositoryImpl implements MemberRepository{
         DB.replace(memberDto.getEmail(), member);
     }
 
-    @Override
     public void updatePassword(String email, String password) {
         Member member = DB.get(email);
 
@@ -51,7 +47,6 @@ public class MemberRepositoryImpl implements MemberRepository{
         DB.replace(email, member);
     }
 
-    @Override
     public void deleteMember(String email) {
         DB.remove(email);
     }
