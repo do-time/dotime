@@ -3,10 +3,12 @@ package com.jhd.dotime.members.service;
 import com.jhd.dotime.members.dto.MemberDto;
 import com.jhd.dotime.members.entity.Member;
 
+import java.util.Optional;
+
 public interface MemberService {
     void createMember(MemberDto memberDto);
 
-    Member getMember(String email);
+    Optional<Member> getMember(String email);
 
     void updateMember(MemberDto memberDto);
 
