@@ -7,6 +7,7 @@ import com.jhd.dotime.members.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -17,14 +18,20 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public void createMember(MemberDto memberDto) {
+        LocalDateTime now = LocalDateTime.now();
+
         Member member = Member.builder()
                 .email(memberDto.getEmail())
                 .password(memberDto.getPassword())
                 .username(memberDto.getUsername())
                 .profileImage(memberDto.getProfileImage())
+                .createdDate(now)
+                .updatedDate(now)
                 .build();
 
-        memberRepository.save(member);
+        System.out.println(member.toString());
+
+        System.out.println(memberRepository.save(member));
     }
 
     @Override
