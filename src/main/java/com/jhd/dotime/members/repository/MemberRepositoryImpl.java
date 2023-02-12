@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 
-@Repository
 public class MemberRepositoryImpl{
 
     private final static HashMap<String, Member> DB = new HashMap<>();
