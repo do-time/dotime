@@ -29,9 +29,7 @@ public class MemberServiceImpl implements MemberService{
                 .updatedDate(now)
                 .build();
 
-        System.out.println(member.toString());
-
-        System.out.println(memberRepository.save(member));
+        memberRepository.save(member);
     }
 
     @Override

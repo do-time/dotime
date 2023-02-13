@@ -3,10 +3,9 @@ package com.jhd.dotime.members.repository;
 import com.jhd.dotime.members.common.exception.NotFoundException;
 import com.jhd.dotime.members.entity.Member;
 import org.assertj.core.api.Assertions;
-import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -15,15 +14,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.time.LocalDateTime;
 
 @DataJpaTest
-@RunWith(SpringRunner.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class MemberRepositoryTest {
     @Autowired
     private MemberRepository memberRepository;
 
-    @BeforeEach
-    public void beforeEach(){
-        memberRepository.deleteAll();
+    @AfterEach
+    public void afterEach(){
+        memberRepository.deleteAllInBatch();
     }
 
     @Test
