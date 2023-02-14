@@ -1,26 +1,27 @@
 package com.jhd.dotime.tasks.service;
 
 
+import com.jhd.dotime.tasks.dto.TaskSaveRequestDto;
 import com.jhd.dotime.tasks.entity.Task;
 import com.jhd.dotime.tasks.repository.TaskRepository;
-import lombok.RequiredArgsConstructor;
-import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
-
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
-
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.*;
 
 //@RequiredArgsConstructor
 @SpringBootTest
@@ -31,14 +32,14 @@ public class TaskServiceTest {
     private TaskRepository taskRepository;
 
 
-    TaskService taskService;
+    @InjectMocks
+    private TaskServiceImpl taskService;
 
-    @BeforeEach
-    public void beforeEach(){
-        MockitoAnnotations.initMocks(this);
-        this.taskService = new TaskServiceImpl(taskRepository);
+    @AfterEach
+    public void afterEach(){
+        taskRepository.deleteAllInBatch();
+
     }
-
 
     /*
      * insert의 필수값
@@ -48,47 +49,59 @@ public class TaskServiceTest {
      *
      */
     @Test
+    @Transactional
     @DisplayName("새로운 Task 삽입")
     public void insert() {
         //given
         LocalDateTime now = LocalDateTime.now();
-        Task task = Task.builder().title("helloTask").content("nono").created_date(now).updated_date(now).build();
-
+//        TaskSaveRequestDto task = TaskSaveRequestDto.builder().title("helloTask").content("nono").build();
+//        taskService.insert(task);
+//        List<TaskSaveRequestDto> taskList = new ArrayList<>();
+//        taskList.add(task);
+//        given(taskRepository.findAll()).willReturn(taskList);
         //when
-        taskService.insert(task);
-        Optional<Task> findTask = taskService.findTask(1L);
+//        List<Task> findTask = taskRepository.findAll();
+
 
         //then
-        System.out.println("findTask = " + findTask);
-        System.out.println("task = " + task.getTitle());
-//        Assertions.assertThat(task).isEqualTo(findTask);
+//        Assertions.assertThat(task.getTitle()).isEqualTo(findTask.get(0).getTitle());
+//        System.out.println("findTask.get(0).getTitle() = " + findTask.get(0).getTitle());
+//        System.out.println("task.getTitle() = " + task.getTitle());
     }
 
-//
-//    /*
-//     * delete시에 taskId를 통해 해당 task가 더이상 존재하지 않는 것을 보여야한다.
-//     */
-//    @Test
-//    @DisplayName("Task 삭제")
-//    void delete() {
+
+    /*
+     * delete시에 taskId를 통해 해당 task가 더이상 존재하지 않는 것을 보여야한다.
+     */
+    @Test
+    @Transactional
+    @DisplayName("Task 삭제")
+    void delete() {
+        //given
+        Task task = Task.builder().title("helloTask").content("its me").build();
+
+        //when
+        List<Task> taskLst = new ArrayList<>();
+        taskLst.add(task);
+        given(taskRepository.findAll()).willReturn(taskLst);
+
+        System.out.println("task added -> " + taskRepository.findAll().get(0).getContent());
+
+        //then
+
+        Mockito.verify(taskRepository, times(1)).delete(task);
+//                List<Task> retTask = taskRepository.findAll();
+
+//        Assertions.assertThat(retTask.get(0)).isNull();
+    }
+
+    @Test
+    @Transactional
+    @DisplayName("Task id로 조회")
+    void findById() {
 //        //given
-////        LocalDateTime now = LocalDateTime.now();
-////        Task task = new Task(1L, "hello task", now, now);
-//
-//        //when
-//        taskService.delete(this.task);
-//        //then
-//        Optional<Task> retTask = taskService.findTask(1L);
-//        Assertions.assertThat(retTask).isNull();
-//    }
-//
-//    @Test
-//    @DisplayName("Task id로 조회")
-//    void findById() {
-//        //given
-////        LocalDateTime now = LocalDateTime.now();
-//        Long id = 1L;
-////        Task task = new Task(id, "hello task", now, now);
+//        LocalDateTime now = LocalDateTime.now();
+//        Task task = new Task("hello task","its me", now, now);
 //
 //
 //        //when
@@ -97,15 +110,16 @@ public class TaskServiceTest {
 //
 //        //then
 //        Assertions.assertThat(returnedTask).isEqualTo(task);
-//    }
-//
-//    @Test
-//    @DisplayName("Task 갱신")
-//    void update() {
-//        //given
-//        //when
-//        //then
-//    }
+    }
+
+    @Test
+    @Transactional
+    @DisplayName("Task 갱신")
+    void update() {
+        //given
+        //when
+        //then
+    }
 
 
 }

@@ -1,5 +1,6 @@
 package com.jhd.persistence;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
@@ -17,6 +18,7 @@ public class JdbcConnectionTest {
 
 
     @Test
+    @DisplayName("database conn test")
     public void testConn(){
         try(Connection conn = DriverManager.getConnection(
                 "jdbc:mysql://ec2-13-124-238-68.ap-northeast-2.compute.amazonaws.com:3306/dotime?useUniCode=yes&characterEncoding=UTF-8&serverTimezone=Asia/Seoul",

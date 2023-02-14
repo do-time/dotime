@@ -43,8 +43,7 @@ public class TaskRepositoryTest {
     public void store() {
 
         //given
-        LocalDateTime now = LocalDateTime.now();
-        Task task = Task.builder().title("task").content("nono").created_date(now).updated_date(now).build();
+        Task task = Task.builder().title("task").content("nono").build();
         //when
         taskRepository.save(task);
         List<Task> taskList = taskRepository.findAll();
@@ -59,9 +58,8 @@ public class TaskRepositoryTest {
     @DisplayName("task 업데이트")
     public void update(){
         //given
-        LocalDateTime now = LocalDateTime.now();
-        final Task task = Task.builder().title("task").content("nono").created_date(now).updated_date(now).build();
-        final Task newTask = Task.builder().title("fff task").content("nono").created_date(now).updated_date(now).build();
+        Task task = Task.builder().title("task").content("nono").build();
+        Task newTask = Task.builder().title("new task").content("yeseyes").build();
         //when
         taskRepository.save(task);
         taskRepository.save(newTask);
@@ -82,11 +80,11 @@ public class TaskRepositoryTest {
     public void delete(){
         //given
         LocalDateTime now = LocalDateTime.now();
-        Task task = Task.builder().title("new task").content("nono").created_date(now).updated_date(now).build();
+        Task task = Task.builder().title("new task").content("nono").build();
         //when
         taskRepository.delete(task);
         //then
-        Assertions.assertThat(taskRepository.findById(1L)).isEqualTo(Optional.empty());
+        Assertions.assertThat(taskRepository.findById(task.getId())).isEqualTo(Optional.empty());
     }
 
 }
