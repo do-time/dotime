@@ -1,18 +1,22 @@
 package com.jhd.dotime.tasks.service;
 
 import com.jhd.dotime.tasks.entity.Task;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.Optional;
 
+@Service
 public interface TaskService {
+
     void insert(Task task);
 
-    Task findTask(Long id);
+    Optional<Task> findTask(Long id);
 
-    HashMap<Long, Task> findTaskList();
+    //HashMap<Long, Task> findTaskList();
 
-    void delete(Long id);
+    void delete(Task task);
 
-    void update(Long id, String title_edited, String content_edited, LocalDateTime updated_time);
+    void save(Task task);
 }
