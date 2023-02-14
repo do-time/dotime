@@ -1,6 +1,5 @@
 package com.jhd.dotime.tasks.controller;
 
-import com.jhd.dotime.common.config.AppConfig;
 import com.jhd.dotime.members.service.MemberService;
 import com.jhd.dotime.tasks.entity.Task;
 import com.jhd.dotime.tasks.service.TaskService;
@@ -12,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.Optional;
 
 @Controller
 @RequestMapping("api/v1")
@@ -27,7 +28,7 @@ public class TaskController {
 
 
     @GetMapping("/task/{id}")
-    public Task getTask(@RequestParam Long id){
+    public Optional<Task> getTask(@RequestParam Long id){
         return taskService.findTask(id);
     }
 }

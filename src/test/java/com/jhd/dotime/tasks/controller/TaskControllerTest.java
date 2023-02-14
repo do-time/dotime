@@ -1,8 +1,8 @@
 package com.jhd.dotime.tasks.controller;
 
-import com.jhd.dotime.common.config.AppConfig;
+
 import com.jhd.dotime.tasks.entity.Task;
-import com.jhd.dotime.tasks.repository.MemoryTaskRepository;
+
 import com.jhd.dotime.tasks.repository.TaskRepository;
 import com.jhd.dotime.tasks.service.TaskService;
 import com.jhd.dotime.tasks.service.TaskServiceImpl;
@@ -23,39 +23,37 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 
-
-import static org.hamcrest.Matchers.containsString;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 
-@RunWith(SpringRunner.class)
+
 @WebMvcTest
+@RunWith(SpringRunner.class)
 class TaskControllerTest {
-
-
     /*
      * mock을 사용하지 않는다면 app Config를 사용해야했음.
      * mock bean을 통해 test를 진행할 수 있음.
      */
 
+//    @MockBean
+//    TaskRepository taskRepository;
+
     @MockBean
     TaskService taskService;
+
     @MockBean
     TaskController taskController;
-
 
     @Autowired
     MockMvc mvc;
 
-    @BeforeEach
-    public void setUp() {
-        this.taskService = new TaskServiceImpl(new MemoryTaskRepository());
-        this.taskController = new TaskController(this.taskService);
-    }
+//    @BeforeEach
+//    public void setUp() {
+//        this.taskService = new TaskServiceImpl(taskRepository);
+//        this.taskController = new TaskController(this.taskService);
+//    }
 
 
     @Test
@@ -63,7 +61,7 @@ class TaskControllerTest {
     void getTask() throws Exception{
         //given
         LocalDateTime now = LocalDateTime.now();
-        Task task = new Task(1L, "hello controller", now, now);
+        Task task = Task.builder().title("task").content("nono").created_date(now).updated_date(now).build();
         taskService.insert(task);
         //when
         Assertions.assertThat(taskService.findTask(task.getId())).isEqualTo(task);
@@ -87,26 +85,27 @@ class TaskControllerTest {
 
     }
 
-    @Test
-    @DisplayName("Task 목록 조회하기")
-    void getTaskList(){
-        //given
-        LocalDateTime now = LocalDateTime.now();
-        Task task = new Task(1L, "hello task", now, now);
-        Task task2 = new Task(2L, "bye task", now, now);
-
-        taskService.insert(task);
-        taskService.insert(task2);
-
-        HashMap<Long, Task> data = new HashMap<>();
-        data.put(task.getId(), task);
-        data.put(task2.getId(), task2);
-
-        //when
-
-        //then
-
-    }
+//    @Test
+//    @DisplayName("Task 목록 조회하기")
+//    void getTaskList(){
+//        //given
+//        LocalDateTime now = LocalDateTime.now();
+//        LocalDateTime now = LocalDateTime.now();
+//        Task task = Task.builder().title("task").content("nono").created_date(now).updated_date(now).build();
+//
+//
+//        taskService.insert(task);
+//
+//
+//
+//        data.put(task.getId(), task);
+//
+//
+//        //when
+//
+//        //then
+//
+//    }
 
 
     @AfterEach
