@@ -74,7 +74,7 @@ public class TaskController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @PatchMapping("/task/{id}")
-    public Long updateTask(@PathVariable Long id, @RequestBody TaskUpdateRequestDto taskUpdateRequestDto){
+    public Long updateTask(@PathVariable Long memberId, @PathVariable Long id, @RequestBody TaskUpdateRequestDto taskUpdateRequestDto){
         return taskService.update(id, taskUpdateRequestDto);
     }
 
@@ -84,9 +84,22 @@ public class TaskController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND"),
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
-    @PostMapping("/task")
-    public Long saveTask(@RequestBody TaskSaveRequestDto taskSaveRequestDto){
+    @PostMapping("/member/{id}/task")
+    public Long saveTask(@PathVariable Long memberId, @RequestBody TaskSaveRequestDto taskSaveRequestDto){
         return taskService.insert(taskSaveRequestDto);
+    }
+
+
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND"),
+            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
+    })
+    @ResponseBody
+    @GetMapping("/member/{id}/task")
+    public List<TaskResponseDto> getTaskList(@PathVariable Long memberId){
+        return taskService.getTaskListByMemberId(memberId);
     }
 
 }

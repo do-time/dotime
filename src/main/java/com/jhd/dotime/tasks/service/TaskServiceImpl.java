@@ -66,5 +66,13 @@ public class TaskServiceImpl implements TaskService{
         return id;
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public List<TaskResponseDto> getTaskListByMemberId(Long memberId){
+        return taskRepository.findTaskListByMemberId(memberId).stream()
+                .map(TaskResponseDto::new)
+                .collect(Collectors.toList());
+    }
+
 
 }

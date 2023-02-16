@@ -73,7 +73,7 @@ class TaskServiceTest {
     @DisplayName("[Service] Task 삭제")
     void delete() {
         //given
-        Task task = new Task(1L, "new Task", "Task Test");
+        Task task = new Task(1L, 1L,"new Task", "Task Test");
 
         //when
         given(taskRepository.findById(task.getId())).willReturn(Optional.of(task));
@@ -89,7 +89,7 @@ class TaskServiceTest {
     @DisplayName("[Service] Task id로 조회")
     void findById() {
         //given
-        Task task = new Task(1L, "task", "find task test");
+        Task task = new Task(1L, 1L,"new Task", "Task Test");
         given(taskRepository.findById(task.getId())).willReturn(Optional.of(task));
         //when
         when(taskRepository.findById(task.getId())).thenReturn(Optional.of(task));
@@ -104,8 +104,8 @@ class TaskServiceTest {
     @DisplayName("[Service] Task 전체 조회")
     void findTaskList() {
         //given
-        Task task = new Task(1L, "task", "find task list test");
-        Task task2 = new Task(2L, "task2", "find task list test");
+        Task task = new Task(1L, 1L,"new Task", "Task Test");
+        Task task2 = new Task(2L, 1L,"new Task", "Task Test");
         List<Task> taskList = new ArrayList<>();
         taskList.add(task);
         taskList.add(task2);
@@ -124,7 +124,7 @@ class TaskServiceTest {
     @DisplayName("[Service] Task 갱신")
     void update() {
         //given
-        Task task = new Task(1L, "task", "update task test");
+        Task task = new Task(1L, 1L,"new Task", "Task Test");
         TaskUpdateRequestDto taskUpdateRequestDto = new TaskUpdateRequestDto("update task", "update task test22");
         given(taskRepository.findById(1L)).willReturn(Optional.of(task));
 

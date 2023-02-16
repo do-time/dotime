@@ -16,7 +16,6 @@ public interface TaskService {
     TaskResponseDto findTask(Long id);
 
 
-
     List<TaskResponseDto> findTaskList();
 
     Long delete(Long id);
@@ -24,4 +23,8 @@ public interface TaskService {
     void save(Task task);
 
     Long update(Long id, TaskUpdateRequestDto taskUpdateRequestDto);
+
+    List<TaskResponseDto> getTaskListByMemberId(Long memberId);
+
+
 }

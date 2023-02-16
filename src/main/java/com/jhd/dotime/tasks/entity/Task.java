@@ -13,13 +13,17 @@ public class Task extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name="member_id")
+    private Long memberId;
     @Column
     private String title;
     @Column
     private String content;
 
     @Builder
-    public Task(String title, String content){
+    public Task(Long memberId, String title, String content){
+        this.memberId = memberId;
         this.title = title;
         this.content = content;
     }
