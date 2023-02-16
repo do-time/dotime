@@ -3,6 +3,7 @@ package com.jhd.dotime.tasks.controller;
 import com.jhd.dotime.tasks.dto.TaskSaveRequestDto;
 import com.jhd.dotime.tasks.dto.TaskResponseDto;
 import com.jhd.dotime.tasks.dto.TaskUpdateRequestDto;
+import com.jhd.dotime.tasks.entity.Task;
 import com.jhd.dotime.tasks.service.TaskService;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -42,7 +43,7 @@ public class TaskController {
 
 
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = TaskResponseDto.class))),
+            @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
             @ApiResponse(responseCode = "404", description = "NOT FOUND"),
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
@@ -55,7 +56,7 @@ public class TaskController {
 
 
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = TaskResponseDto.class))),
+            @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
             @ApiResponse(responseCode = "404", description = "NOT FOUND"),
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
@@ -67,25 +68,38 @@ public class TaskController {
     }
 
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = TaskResponseDto.class))),
+            @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
             @ApiResponse(responseCode = "404", description = "NOT FOUND"),
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @PatchMapping("/task/{id}")
-    public Long updateTask(@PathVariable Long id, @RequestBody TaskUpdateRequestDto taskUpdateRequestDto){
+    public Long updateTask(@PathVariable Long memberId, @PathVariable Long id, @RequestBody TaskUpdateRequestDto taskUpdateRequestDto){
         return taskService.update(id, taskUpdateRequestDto);
     }
 
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = TaskResponseDto.class))),
+            @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
             @ApiResponse(responseCode = "404", description = "NOT FOUND"),
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
-    @PostMapping("/task")
-    public Long saveTask(@RequestBody TaskSaveRequestDto taskSaveRequestDto){
+    @PostMapping("/member/{id}/task")
+    public Long saveTask(@PathVariable Long memberId, @RequestBody TaskSaveRequestDto taskSaveRequestDto){
         return taskService.insert(taskSaveRequestDto);
+    }
+
+
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND"),
+            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
+    })
+    @ResponseBody
+    @GetMapping("/member/{id}/task")
+    public List<TaskResponseDto> getTaskList(@PathVariable Long memberId){
+        return taskService.getTaskListByMemberId(memberId);
     }
 
 }

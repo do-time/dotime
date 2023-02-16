@@ -1,90 +1,132 @@
 package com.jhd.dotime.tasks.repository;
 
 
+import com.jhd.dotime.members.entity.Member;
+import com.jhd.dotime.members.repository.MemberRepository;
 import com.jhd.dotime.tasks.entity.Task;
-//import org.junit.jupiter.api.AfterEach;
-//import org.junit.jupiter.api.DisplayName;
-//import org.junit.jupiter.api.Test;
-//import org.junit.runner.RunWith;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-//import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-//import org.springframework.test.context.junit4.SpringRunner;
+import org.junit.Before;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.assertj.core.api.Assertions;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.junit4.SpringRunner;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 
 @DataJpaTest
-@RunWith(SpringRunner.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class TaskRepositoryTest {
+class TaskRepositoryTest {
+
+    @Autowired
+    private MemberRepository memberRepository;
 
     @Autowired
     private TaskRepository taskRepository;
 
 
-    @AfterEach
-    public void cleanup(){
-        taskRepository.deleteById(1L);
-    }
-
     @Test
-    @DisplayName("task 저장")
-    public void store() {
-
+    @DisplayName("[Repository] task 조회")
+    public void getTask() {
         //given
-        Task task = Task.builder().title("task").content("nono").build();
+        Task task = Task.builder().title("new task").content("nono").build();
+
         //when
         taskRepository.save(task);
-        List<Task> taskList = taskRepository.findAll();
+        List<Task> lst = taskRepository.findAll();
 
         //then
-        Assertions.assertThat(task.getTitle()).isEqualTo(taskList.get(0).getTitle());
+        Assertions.assertThat(taskRepository.findById(lst.get(lst.size() - 1).getId()).get().getTitle()).isEqualTo(task.getTitle());
+
     }
 
-
-
     @Test
-    @DisplayName("task 업데이트")
-    public void update(){
+    @DisplayName("member로 task 목록 조회")
+    public void insertTaskWithMember() {
         //given
-        Task task = Task.builder().title("task").content("nono").build();
-        Task newTask = Task.builder().title("new task").content("yeseyes").build();
-        //when
-        taskRepository.save(task);
-        taskRepository.save(newTask);
-        List<Task> taskList = taskRepository.findAll();
-        Assertions.assertThat(newTask.getTitle()).isEqualTo(taskList.get(1).getTitle());
+        Member newMember = Member.builder()
+                .email("test@test.com")
+                .password("1234")
+                .username("testMan")
+                .profileImage("")
+                .build();
 
-        for (Task task1 : taskList) {
-            System.out.println("task1.getTitle() = " + task1.getTitle());
+        memberRepository.save(newMember);
+        Long memberId = memberRepository.findByEmail(newMember.getEmail()).get().getId();
+        Task task1 = new Task(1L, memberId, "test1", "testtest");
+        taskRepository.save(task1);
+//        taskRepository.save(task2);
+//        taskRepository.save(task3);
+
+
+        //when
+        List<Task> findTask = taskRepository.findTaskListByMemberId(memberId);
+        for (Task task : findTask) {
+            System.out.println("task.getTitle() = " + task.getTitle());
+
         }
 
-
         //then
-//        Assertions.assertThat(taskRepository.findById(1L)).isEqualTo(task.getId());
+        Assertions.assertThat(findTask.stream().count()).isEqualTo(1);
+        Assertions.assertThat(findTask.get(0).getTitle()).isEqualTo(task1.getTitle());
     }
 
     @Test
-    @DisplayName("task 삭제")
-    public void delete(){
+    @DisplayName("[Repository] task 저장")
+    public void store() {
         //given
-        LocalDateTime now = LocalDateTime.now();
-        Task task = Task.builder().title("new task").content("nono").build();
+        Member newMember = Member.builder()
+                .email("test@test.com")
+                .password("1234")
+                .username("testMan")
+                .profileImage("")
+                .build();
+
         //when
-        taskRepository.delete(task);
+
+        Task newTask = Task.builder().memberId(newMember.getId()).title("save task").content("save task test").build();
+        taskRepository.save(newTask);
+        List<Task> taskList = taskRepository.findTaskListByMemberId(newMember.getId());
+        newMember.setTask(taskList);
+        memberRepository.save(newMember);
+
         //then
-        Assertions.assertThat(taskRepository.findById(task.getId())).isEqualTo(Optional.empty());
+        Assertions.assertThat(newTask.getTitle()).isEqualTo(taskList.get(taskList.size() - 1).getTitle());
     }
+
+    @Test
+    @DisplayName("[Repository] task 삭제")
+    public void delete() {
+        //given
+        Member newMember = Member.builder()
+                .email("test@test.com")
+                .password("1234")
+                .username("testMan")
+                .profileImage("")
+                .build();
+
+        //when
+        memberRepository.save(newMember);
+        Task newTask = Task.builder().memberId(newMember.getId()).title("save task").content("save task test").build();
+        taskRepository.save(newTask);
+        List<Task> taskList = taskRepository.findAll();
+        for (Task task : taskList) {
+            System.out.println("task.getTitle() = " + task.getTitle());
+        }
+        taskRepository.delete(newTask);
+        taskList = taskRepository.findTaskListByMemberId(memberRepository.findByEmail(newMember.getEmail()).get().getId());
+
+        boolean success = taskList.contains(newTask);
+
+        //then
+        Assertions.assertThat(success).isEqualTo(false);
+    }
+
 
 }
