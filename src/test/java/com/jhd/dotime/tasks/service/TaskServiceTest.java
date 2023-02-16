@@ -1,111 +1,142 @@
 package com.jhd.dotime.tasks.service;
 
 
+import com.jhd.dotime.tasks.dto.TaskResponseDto;
+import com.jhd.dotime.tasks.dto.TaskSaveRequestDto;
+import com.jhd.dotime.tasks.dto.TaskUpdateRequestDto;
 import com.jhd.dotime.tasks.entity.Task;
 import com.jhd.dotime.tasks.repository.TaskRepository;
-import lombok.RequiredArgsConstructor;
-import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-
+import org.assertj.core.api.Assertions;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
-
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
-//@RequiredArgsConstructor
-@SpringBootTest
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.*;
+
+
 @ExtendWith(MockitoExtension.class)
-public class TaskServiceTest {
+class TaskServiceTest {
 
     @Mock
     private TaskRepository taskRepository;
 
+    @InjectMocks
+    private TaskServiceImpl taskService;
 
-    TaskService taskService;
-
-    @BeforeEach
+    @Before
     public void beforeEach(){
         MockitoAnnotations.initMocks(this);
-        this.taskService = new TaskServiceImpl(taskRepository);
+        this.taskService = new TaskServiceImpl(this.taskRepository);
+    }
+
+
+    @Test
+    @Transactional
+    @DisplayName("[Service] Task 삽입")
+    public void insert() {
+        //given
+        TaskSaveRequestDto task = TaskSaveRequestDto.builder().title("new task").content("new task unit test").build();
+
+        //when
+
+        List<Task> taskLst = new ArrayList<>();
+        taskLst.add(task.toEntity());
+        given(taskRepository.findAll()).willReturn(taskLst);
+        given(taskRepository.save(any(Task.class))).willReturn(task.toEntity());
+        //        when(taskService.insert(task)).thenReturn(1L);
+
+        //then
+        taskService.insert(task);
+        List<TaskResponseDto> tmp = taskService.findTaskList();
+        Assertions.assertThat(tmp.get(0).getTitle()).isEqualTo(task.getTitle());
+
     }
 
 
     /*
-     * insert의 필수값
-     * member_id, title, created_date, updated_date
-     *
-     * 테스트 시에 주의 해야하는 부분
-     *
+     * delete시에 taskId를 통해 해당 task가 더이상 존재하지 않는 것을 보여야한다.
      */
     @Test
-    @DisplayName("새로운 Task 삽입")
-    public void insert() {
+    @Transactional
+    @DisplayName("[Service] Task 삭제")
+    void delete() {
         //given
-        LocalDateTime now = LocalDateTime.now();
-        Task task = Task.builder().title("helloTask").content("nono").created_date(now).updated_date(now).build();
+        Task task = new Task(1L, 1L,"new Task", "Task Test");
 
         //when
-        taskService.insert(task);
-        Optional<Task> findTask = taskService.findTask(1L);
+        given(taskRepository.findById(task.getId())).willReturn(Optional.of(task));
 
         //then
-        System.out.println("findTask = " + findTask);
-        System.out.println("task = " + task.getTitle());
-//        Assertions.assertThat(task).isEqualTo(findTask);
+        Long id = taskService.delete(1L);
+        Assertions.assertThat(id).isEqualTo(1L);
+
     }
 
-//
-//    /*
-//     * delete시에 taskId를 통해 해당 task가 더이상 존재하지 않는 것을 보여야한다.
-//     */
-//    @Test
-//    @DisplayName("Task 삭제")
-//    void delete() {
-//        //given
-////        LocalDateTime now = LocalDateTime.now();
-////        Task task = new Task(1L, "hello task", now, now);
-//
-//        //when
-//        taskService.delete(this.task);
-//        //then
-//        Optional<Task> retTask = taskService.findTask(1L);
-//        Assertions.assertThat(retTask).isNull();
-//    }
-//
-//    @Test
-//    @DisplayName("Task id로 조회")
-//    void findById() {
-//        //given
-////        LocalDateTime now = LocalDateTime.now();
-//        Long id = 1L;
-////        Task task = new Task(id, "hello task", now, now);
-//
-//
-//        //when
-//        taskService.insert(task);
-//        Optional<Task> returnedTask = taskService.findTask(id);
-//
-//        //then
-//        Assertions.assertThat(returnedTask).isEqualTo(task);
-//    }
-//
-//    @Test
-//    @DisplayName("Task 갱신")
-//    void update() {
-//        //given
-//        //when
-//        //then
-//    }
+    @Test
+    @Transactional
+    @DisplayName("[Service] Task id로 조회")
+    void findById() {
+        //given
+        Task task = new Task(1L, 1L,"new Task", "Task Test");
+        given(taskRepository.findById(task.getId())).willReturn(Optional.of(task));
+        //when
+        when(taskRepository.findById(task.getId())).thenReturn(Optional.of(task));
+        //then
+        TaskResponseDto findTask = taskService.findTask(1L);
+        Assertions.assertThat(findTask.getId()).isEqualTo(task.getId());
+
+    }
+
+    @Test
+    @Transactional
+    @DisplayName("[Service] Task 전체 조회")
+    void findTaskList() {
+        //given
+        Task task = new Task(1L, 1L,"new Task", "Task Test");
+        Task task2 = new Task(2L, 1L,"new Task", "Task Test");
+        List<Task> taskList = new ArrayList<>();
+        taskList.add(task);
+        taskList.add(task2);
+        given(taskRepository.findAll()).willReturn(taskList);
+        //when
+
+        //then
+
+        List<TaskResponseDto> taskResLst = taskService.findTaskList();
+        Assertions.assertThat(taskResLst.get(0).getTitle()).isEqualTo(taskList.get(0).getTitle());
+
+    }
+
+    @Test
+    @Transactional
+    @DisplayName("[Service] Task 갱신")
+    void update() {
+        //given
+        Task task = new Task(1L, 1L,"new Task", "Task Test");
+        TaskUpdateRequestDto taskUpdateRequestDto = new TaskUpdateRequestDto("update task", "update task test22");
+        given(taskRepository.findById(1L)).willReturn(Optional.of(task));
+
+        //when
+        Long id = taskService.update(1L, taskUpdateRequestDto);
+        System.out.println("task.getTitle() = " + task.getTitle());
+
+        //then
+        Assertions.assertThat(id).isEqualTo(task.getId());
+        Assertions.assertThat(taskUpdateRequestDto.getTitle()).isEqualTo(task.getTitle());
+
+    }
 
 
 }

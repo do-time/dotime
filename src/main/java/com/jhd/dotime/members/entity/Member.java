@@ -1,21 +1,22 @@
 package com.jhd.dotime.members.entity;
 
+import com.jhd.dotime.common.entity.BaseTimeEntity;
+import com.jhd.dotime.tasks.entity.Task;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-public class Member {
+@Entity(name = "member")
+public class Member extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -26,11 +27,10 @@ public class Member {
 
     private String password;
 
+    @Column(nullable = true)
     private String profileImage;
 
-    @CreatedDate
-    private LocalDateTime createdDate;
-
-    @LastModifiedDate
-    private LocalDateTime updatedDate;
+//    @OneToMany(mappedBy = "member", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//    @JoinColumn(name = "member_id")
+//    private List<Task> task = new ArrayList<>();
 }

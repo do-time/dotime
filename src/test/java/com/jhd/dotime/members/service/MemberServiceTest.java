@@ -4,6 +4,8 @@ import com.jhd.dotime.members.common.exception.NotFoundException;
 import com.jhd.dotime.members.dto.MemberDto;
 import com.jhd.dotime.members.entity.Member;
 import com.jhd.dotime.members.repository.MemberRepository;
+import com.jhd.dotime.tasks.repository.TaskRepository;
+import com.jhd.dotime.tasks.service.TaskServiceImpl;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,6 +29,12 @@ class MemberServiceTest {
     @Mock
     private MemberRepository memberRepository;
 
+    @InjectMocks
+    private TaskServiceImpl taskService;
+
+    @Mock
+    private TaskRepository taskRepository;
+
     /*
      *
      * create 테스트에서 find를 쓰는게 맞을까?
@@ -44,8 +52,8 @@ class MemberServiceTest {
                 .password("1234")
                 .username("testMan")
                 .profileImage("")
-                .createdDate(now)
-                .updatedDate(now)
+//                .createdDate(now)
+//                .updatedDate(now)
                 .build();
 
 //        Long fakeMemberId = 1l;

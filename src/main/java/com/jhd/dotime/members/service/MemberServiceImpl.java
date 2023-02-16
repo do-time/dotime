@@ -18,20 +18,14 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public void createMember(MemberDto memberDto) {
-        LocalDateTime now = LocalDateTime.now();
+//        Member member = Member.builder()
+//                .email(memberDto.getEmail())
+//                .password(memberDto.getPassword())
+//                .username(memberDto.getUsername())
+//                .profileImage(memberDto.getProfileImage())
+//                .build();
 
-        Member member = Member.builder()
-                .email(memberDto.getEmail())
-                .password(memberDto.getPassword())
-                .username(memberDto.getUsername())
-                .profileImage(memberDto.getProfileImage())
-                .createdDate(now)
-                .updatedDate(now)
-                .build();
-
-        System.out.println(member.toString());
-
-        System.out.println(memberRepository.save(member));
+        memberRepository.save(memberDto.toEntity());
     }
 
     @Override
@@ -66,4 +60,8 @@ public class MemberServiceImpl implements MemberService{
 
         memberRepository.deleteByEmail(email);
     }
+
+
+
+
 }

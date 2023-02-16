@@ -20,8 +20,8 @@ public class MemberRepositoryImpl{
         member.setUsername(memberDto.getUsername());
         member.setPassword(memberDto.getPassword());
         member.setProfileImage(memberDto.getProfileImage());
-        member.setCreatedDate(LocalDateTime.now());
-        member.setUpdatedDate(LocalDateTime.now());
+//        member.setCreatedDate(LocalDateTime.now());
+//        member.setUpdatedDate(LocalDateTime.now());
     }
 
     public Member getMember(String email) {
@@ -32,7 +32,7 @@ public class MemberRepositoryImpl{
         Member member = DB.get(memberDto.getEmail());
 
         member.setUsername(memberDto.getUsername());
-        member.setUpdatedDate(LocalDateTime.now());
+//        member.setUpdatedDate(LocalDateTime.now());
 
         DB.replace(memberDto.getEmail(), member);
     }
@@ -41,7 +41,7 @@ public class MemberRepositoryImpl{
         Member member = DB.get(email);
 
         member.setPassword(password);
-        member.setUpdatedDate(LocalDateTime.now());
+//        member.setUpdatedDate(LocalDateTime.now());
 
         DB.replace(email, member);
     }

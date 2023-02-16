@@ -1,49 +1,39 @@
 package com.jhd.dotime.tasks.entity;
 
+import com.jhd.dotime.common.entity.BaseTimeEntity;
+import com.jhd.dotime.members.entity.Member;
 import lombok.*;
-
-import javax.annotation.Nullable;
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 
 @Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-public class Task {
+@Entity(name="task")
+public class Task extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
     @Column
     private String title;
     @Column
     private String content;
-    @Column
-    private LocalDateTime create_date;
-    @Column
-    private LocalDateTime updated_date;
-
-//    @Column
-//    private Long member_id;
-
-
-//    public Task(Task task){
-//        this.id = task.getId();
-//        this.title = task.getTitle();
-//        this.content = task.getContent();
-//        this.create_date = task.getCreate_date();
-//        this.updated_date = task.getUpdated_date();
-////        this.member_id = task.getMember_id();
-//    }
 
     @Builder
-    public Task(String title, String content, LocalDateTime created_date, LocalDateTime updated_date) {
+    public Task(Member member, String title, String content){
+        this.member = member;
         this.title = title;
         this.content = content;
-        this.create_date = created_date;
-        this.updated_date = updated_date;
+    }
+
+
+    public void update(String title, String content){
+        this.title = title;
+        this.content = content;
     }
 
 
