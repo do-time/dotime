@@ -30,7 +30,7 @@ public class Member extends BaseTimeEntity {
     @Column(nullable = true)
     private String profileImage;
 
-    @OneToMany(mappedBy = "member", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "member_id")
-    private List<Task> task = new ArrayList<>();
+//    @OneToMany(mappedBy = "member", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//    @JoinColumn(name = "member_id")
+//    private List<Task> task = new ArrayList<>();
 }

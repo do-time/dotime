@@ -19,12 +19,7 @@ public class MemberDto {
 
     private String profileImage;
 
-    public Member toEntity() {
-        return Member.builder()
-                .email(email)
-                .username(username)
-                .password(password)
-                .profileImage(profileImage)
-                .build();
+    public Member toEntity(){
+        return Member.builder().email(email).username(username).password(password).profileImage(profileImage).build();
     }
 }
