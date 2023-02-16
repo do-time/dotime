@@ -1,5 +1,6 @@
 package com.jhd.dotime.members.dto;
 
+import com.jhd.dotime.members.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,4 +18,13 @@ public class MemberDto {
     private String password;
 
     private String profileImage;
+
+    public Member toEntity() {
+        return Member.builder()
+                .email(email)
+                .username(username)
+                .password(password)
+                .profileImage(profileImage)
+                .build();
+    }
 }
