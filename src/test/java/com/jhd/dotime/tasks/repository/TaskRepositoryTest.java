@@ -2,6 +2,7 @@ package com.jhd.dotime.tasks.repository;
 
 
 import com.jhd.dotime.tasks.entity.Task;
+import org.junit.Before;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.assertj.core.api.Assertions;
@@ -24,13 +25,13 @@ class TaskRepositoryTest {
     private TaskRepository taskRepository;
 
 
-    @BeforeEach
+    @Before
     public void cleanup(){
         taskRepository.deleteAll();
     }
 
     @Test
-    @DisplayName("task 저장")
+    @DisplayName("[Repository] task 저장")
     public void store() {
         //given
         Task task = Task.builder().title("task").content("nono").build();
@@ -44,7 +45,7 @@ class TaskRepositoryTest {
     }
 
     @Test
-    @DisplayName("task 삭제")
+    @DisplayName("[Repository] task 삭제")
     public void delete(){
         //given
         Task task = Task.builder().title("new task").content("nono").build();
@@ -59,7 +60,7 @@ class TaskRepositoryTest {
     }
 
     @Test
-    @DisplayName("task 조회")
+    @DisplayName("[Repository] task 조회")
     public void getTask(){
         //given
         Task task = Task.builder().title("new task").content("nono").build();

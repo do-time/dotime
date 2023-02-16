@@ -2,6 +2,7 @@ package com.jhd.dotime.tasks.dto;
 
 
 import com.jhd.dotime.tasks.entity.Task;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
