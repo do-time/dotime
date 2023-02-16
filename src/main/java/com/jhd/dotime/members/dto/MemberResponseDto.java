@@ -1,16 +1,18 @@
 package com.jhd.dotime.members.dto;
 
-import com.jhd.dotime.members.entity.Member;
+import com.jhd.dotime.tasks.dto.TaskResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @Builder
-public class MemberDto {
+public class MemberResponseDto {
+
     private String email;
 
     private String username;
@@ -19,7 +21,6 @@ public class MemberDto {
 
     private String profileImage;
 
-    public Member toEntity(){
-        return Member.builder().email(email).username(username).password(password).profileImage(profileImage).build();
-    }
+    private List<TaskResponseDto> taskList;
+
 }

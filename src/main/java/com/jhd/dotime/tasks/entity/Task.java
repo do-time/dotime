@@ -1,6 +1,7 @@
 package com.jhd.dotime.tasks.entity;
 
 import com.jhd.dotime.common.entity.BaseTimeEntity;
+import com.jhd.dotime.members.entity.Member;
 import lombok.*;
 import javax.persistence.*;
 
@@ -14,16 +15,17 @@ public class Task extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="member_id")
-    private Long memberId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
     @Column
     private String title;
     @Column
     private String content;
 
     @Builder
-    public Task(Long memberId, String title, String content){
-        this.memberId = memberId;
+    public Task(Member member, String title, String content){
+        this.member = member;
         this.title = title;
         this.content = content;
     }

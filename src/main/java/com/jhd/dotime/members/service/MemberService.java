@@ -3,6 +3,7 @@ package com.jhd.dotime.members.service;
 import com.jhd.dotime.members.dto.MemberDto;
 import com.jhd.dotime.members.entity.Member;
 import com.jhd.dotime.tasks.dto.TaskResponseDto;
+import com.jhd.dotime.tasks.entity.Task;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,5 +18,4 @@ public interface MemberService {
     void updatePassword(String email, String password);
 
     void deleteMember(String email);
-
 }
