@@ -17,7 +17,7 @@ public interface MemberService {
 
     void updatePassword(String email, String password);
 
-    void deleteMember(String email);
+    void deleteMember(Long id);
 
     Optional<Member> getMember(Long memberId);
 }

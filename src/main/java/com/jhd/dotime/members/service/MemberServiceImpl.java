@@ -30,6 +30,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    @Transactional
     public void updateMember(MemberDto memberDto) {
         Member member = getMember(memberDto.getEmail()).orElseThrow(() -> new NotFoundException("Member does not exist"));
 
@@ -54,8 +55,8 @@ public class MemberServiceImpl implements MemberService {
      */
     @Override
     @Transactional
-    public void deleteMember(String email) {
-        memberRepository.delete(getMember(email).orElseThrow(() -> new NotFoundException("Member does not exist")));
+    public void deleteMember(Long id) {
+        memberRepository.delete(getMember(id).orElseThrow(() -> new NotFoundException("Member does not exist")));
     }
 
     @Override
