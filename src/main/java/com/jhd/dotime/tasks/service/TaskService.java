@@ -1,5 +1,6 @@
 package com.jhd.dotime.tasks.service;
 
+import com.jhd.dotime.members.entity.Member;
 import com.jhd.dotime.tasks.dto.TaskSaveRequestDto;
 import com.jhd.dotime.tasks.dto.TaskResponseDto;
 import com.jhd.dotime.tasks.dto.TaskUpdateRequestDto;
@@ -11,7 +12,7 @@ import java.util.List;
 @Service
 public interface TaskService {
 
-    Long insert(TaskSaveRequestDto taskSaveRequestDto);
+    Long insert(Long memberId, TaskSaveRequestDto taskSaveRequestDto);
 
     TaskResponseDto findTask(Long id);
 
