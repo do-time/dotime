@@ -1,5 +1,7 @@
 package com.jhd.dotime.tasks.controller;
 
+import com.jhd.dotime.members.entity.Member;
+import com.jhd.dotime.members.service.MemberService;
 import com.jhd.dotime.tasks.dto.TaskSaveRequestDto;
 import com.jhd.dotime.tasks.dto.TaskResponseDto;
 import com.jhd.dotime.tasks.dto.TaskUpdateRequestDto;
@@ -23,6 +25,8 @@ import java.util.List;
 public class TaskController {
 
     private final TaskService taskService;
+
+    private final MemberService memberService;
 
 
     @ApiResponses({
@@ -84,9 +88,9 @@ public class TaskController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND"),
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
-    @PostMapping("/member/{id}/task")
+    @PostMapping("/member/{memberId}/task")
     public Long saveTask(@PathVariable Long memberId, @RequestBody TaskSaveRequestDto taskSaveRequestDto){
-        return taskService.insert(taskSaveRequestDto);
+        return taskService.insert(memberId, taskSaveRequestDto);
     }
 
 
@@ -97,7 +101,7 @@ public class TaskController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @ResponseBody
-    @GetMapping("/member/{id}/task")
+    @GetMapping("/member/{memberId}/task")
     public List<TaskResponseDto> getTaskList(@PathVariable Long memberId){
         return taskService.getTaskListByMemberId(memberId);
     }

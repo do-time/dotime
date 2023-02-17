@@ -18,6 +18,7 @@ public class Task extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
+
     @Column
     private String title;
     @Column
@@ -35,6 +36,7 @@ public class Task extends BaseTimeEntity {
         this.title = title;
         this.content = content;
     }
+
 
 
 }

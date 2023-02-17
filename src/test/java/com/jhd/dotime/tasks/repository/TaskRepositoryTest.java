@@ -11,8 +11,6 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +57,7 @@ class TaskRepositoryTest {
 
         memberRepository.save(newMember);
         Long memberId = memberRepository.findByEmail(newMember.getEmail()).get().getId();
-        Task task1 = new Task(1L, memberId, "test1", "testtest");
+        Task task1 = new Task(1L, newMember, "test1", "testtest");
         taskRepository.save(task1);
 //        taskRepository.save(task2);
 //        taskRepository.save(task3);
@@ -89,12 +87,12 @@ class TaskRepositoryTest {
                 .build();
 
         //when
-
-        Task newTask = Task.builder().memberId(newMember.getId()).title("save task").content("save task test").build();
+        memberRepository.save(newMember);
+        Task newTask = Task.builder().member(newMember).title("save task").content("save task test").build();
         taskRepository.save(newTask);
         List<Task> taskList = taskRepository.findTaskListByMemberId(newMember.getId());
-        newMember.setTask(taskList);
-        memberRepository.save(newMember);
+//        newMember.setTask(taskList);
+
 
         //then
         Assertions.assertThat(newTask.getTitle()).isEqualTo(taskList.get(taskList.size() - 1).getTitle());
@@ -113,7 +111,7 @@ class TaskRepositoryTest {
 
         //when
         memberRepository.save(newMember);
-        Task newTask = Task.builder().memberId(newMember.getId()).title("save task").content("save task test").build();
+        Task newTask = Task.builder().member(newMember).title("save task").content("save task test").build();
         taskRepository.save(newTask);
         List<Task> taskList = taskRepository.findAll();
         for (Task task : taskList) {

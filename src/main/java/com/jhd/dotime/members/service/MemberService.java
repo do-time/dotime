@@ -18,4 +18,6 @@ public interface MemberService {
     void updatePassword(String email, String password);
 
     void deleteMember(String email);
+
+    Optional<Member> getMember(Long memberId);
 }
