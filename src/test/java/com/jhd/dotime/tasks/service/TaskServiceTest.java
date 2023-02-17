@@ -66,9 +66,9 @@ class TaskServiceTest {
         //when
 
         List<Task> taskLst = new ArrayList<>();
-        taskLst.add(task.toEntity());
+        taskLst.add(task.toEntity(newMember));
         given(taskRepository.findAll()).willReturn(taskLst);
-        given(taskRepository.save(any(Task.class))).willReturn(task.toEntity());
+        given(taskRepository.save(any(Task.class))).willReturn(task.toEntity(newMember));
         //        when(taskService.insert(task)).thenReturn(1L);
 
         //then

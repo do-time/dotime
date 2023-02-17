@@ -24,8 +24,13 @@ public class TaskServiceImpl implements TaskService{
     @Override
     @Transactional
     public Long insert(Long memberId, TaskSaveRequestDto taskSaveRequestDto) {
+        Task newTask = Task.builder()
+                .member(memberRepository.findById(memberId).get())
+                .title(taskSaveRequestDto.getTitle())
+                .content(taskSaveRequestDto.getContent())
+                .build();
 
-        return taskRepository.save(taskSaveRequestDto.toEntity()).getId();
+        return taskRepository.save(newTask).getId();
     }
 
     @Override
