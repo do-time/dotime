@@ -57,4 +57,9 @@ public class MemberServiceImpl implements MemberService {
     public void deleteMember(String email) {
         memberRepository.delete(getMember(email).orElseThrow(() -> new NotFoundException("Member does not exist")));
     }
+
+    @Override
+    public Optional<Member> getMember(Long memberId) {
+        return memberRepository.findById(memberId);
+    }
 }
