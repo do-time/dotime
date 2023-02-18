@@ -1,5 +1,6 @@
 package com.jhd.dotime.tasks.service;
 
+import com.jhd.dotime.members.repository.MemberRepository;
 import com.jhd.dotime.tasks.dto.TaskSaveRequestDto;
 import com.jhd.dotime.tasks.dto.TaskUpdateRequestDto;
 import com.jhd.dotime.tasks.dto.TaskResponseDto;
@@ -18,10 +19,12 @@ import java.util.stream.Collectors;
 public class TaskServiceImpl implements TaskService{
     private final TaskRepository taskRepository;
 
+    private final MemberRepository memberRepository;
 
     @Override
     @Transactional
-    public Long insert(TaskSaveRequestDto taskSaveRequestDto) {
+    public Long insert(Long memberId, TaskSaveRequestDto taskSaveRequestDto) {
+
         return taskRepository.save(taskSaveRequestDto.toEntity()).getId();
     }
 
@@ -73,6 +76,7 @@ public class TaskServiceImpl implements TaskService{
                 .map(TaskResponseDto::new)
                 .collect(Collectors.toList());
     }
+
 
 
 }
