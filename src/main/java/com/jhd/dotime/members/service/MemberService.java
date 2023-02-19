@@ -10,6 +10,7 @@ import java.util.Optional;
 
 public interface MemberService {
     void createMember(MemberDto memberDto);
+//    void createMember(Member member);
 
     Optional<Member> getMember(String email);
 

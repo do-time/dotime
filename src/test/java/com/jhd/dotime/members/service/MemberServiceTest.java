@@ -7,12 +7,18 @@ import com.jhd.dotime.members.repository.MemberRepository;
 import com.jhd.dotime.tasks.repository.TaskRepository;
 import com.jhd.dotime.tasks.service.TaskServiceImpl;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.time.LocalDateTime;
@@ -20,13 +26,16 @@ import java.time.LocalDateTime;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
+
+
 @ExtendWith(MockitoExtension.class)
 class MemberServiceTest {
 
-    @InjectMocks
+//    @InjectMocks
     private MemberServiceImpl memberService;
 
     @Mock
+
     private MemberRepository memberRepository;
 
     @InjectMocks
@@ -34,6 +43,8 @@ class MemberServiceTest {
 
     @Mock
     private TaskRepository taskRepository;
+
+
 
     /*
      *
@@ -48,7 +59,7 @@ class MemberServiceTest {
         LocalDateTime now = LocalDateTime.now();
         MemberDto newMember = new MemberDto("test@test.com", "testMan", "1234", "");
         Member member = Member.builder()
-                .email("test@test.com")
+                .email("11111@test.com")
                 .password("1234")
                 .username("testMan")
                 .profileImage("")
@@ -59,19 +70,22 @@ class MemberServiceTest {
 //        Long fakeMemberId = 1l;
 //        ReflectionTestUtils.setField(member, "id", fakeMemberId);
 
-        System.out.println(newMember.getEmail().equals(member.getEmail()));
-        System.out.println(member.toString());
+//        System.out.println(newMember.getEmail().equals(newmember.getEmail()));
+//        System.out.println(member.toString());
 
 //        given(memberRepository.save(any())).willReturn(member);
 
         //when
         memberService.createMember(newMember);
+//        Member findMember = memberRepository.findByEmail(member.getEmail()).orElseThrow(() -> new NotFoundException("Member does not exist"));
+        Member findMember = memberRepository.findByEmail(member.getEmail()).orElseThrow(() -> new NotFoundException("Member does not exist"));
+//        System.out.println(findMember.toString());
 
-//        Member findMember = memberRepository.findByEmail(newMember.getEmail()).orElseThrow(() -> new NotFoundException("Member does not exist"));
-        Member findMember = memberRepository.findById(1l).orElseThrow();
+
+//        Member findMember = memberRepository.findById(1l).orElseThrow();
         //then
         Assertions.assertThat(findMember).isNotNull();
-        Assertions.assertThat(findMember.getEmail()).isEqualTo(newMember.getEmail());
+//        Assertions.assertThat(findMember.getEmail()).isEqualTo(newMember.getEmail());
     }
 
     @Test

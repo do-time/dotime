@@ -21,6 +21,7 @@ public class Task extends BaseTimeEntity {
 
     @Column
     private String title;
+
     @Column
     private String content;
 
@@ -30,6 +31,7 @@ public class Task extends BaseTimeEntity {
         this.title = title;
         this.content = content;
     }
+
 
 
     public void update(String title, String content){
