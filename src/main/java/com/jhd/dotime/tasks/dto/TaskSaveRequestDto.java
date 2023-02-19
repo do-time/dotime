@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 @Getter
 public class TaskSaveRequestDto {
 
-    private Member member;
     private String title;
     private String content;
 
@@ -21,12 +20,11 @@ public class TaskSaveRequestDto {
 //    LocalDateTime updatedDate;
 
     @Builder
-    public TaskSaveRequestDto(Member member, String title, String content){
-        this.member = member;
+    public TaskSaveRequestDto(String title, String content){
         this.title = title;
         this.content = content;
     }
-    public Task toEntity(){
+    public Task toEntity(Member member){
         return Task.builder()
                 .member(member)
                 .title(title)
