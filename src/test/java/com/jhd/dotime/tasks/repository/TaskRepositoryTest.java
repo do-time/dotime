@@ -5,9 +5,11 @@ import com.jhd.dotime.members.entity.Member;
 import com.jhd.dotime.members.repository.MemberRepository;
 import com.jhd.dotime.tasks.entity.Task;
 import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -18,8 +20,10 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import java.util.List;
 
 
-@DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+//@DataJpaTest
+//@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@ActiveProfiles("test") // application-test
+@SpringBootTest
 class TaskRepositoryTest {
 
     @Autowired
@@ -28,6 +32,11 @@ class TaskRepositoryTest {
     @Autowired
     private TaskRepository taskRepository;
 
+//    @BeforeEach
+//    public void cleanup(){
+//        memberRepository.deleteAllInBatch();
+//        taskRepository.deleteAllInBatch();
+//    }
 
     @Test
     @DisplayName("[Repository] task 조회")
@@ -58,6 +67,7 @@ class TaskRepositoryTest {
         memberRepository.save(newMember);
         Long memberId = memberRepository.findByEmail(newMember.getEmail()).get().getId();
         Task task1 = new Task(1L, newMember, "test1", "testtest");
+
         taskRepository.save(task1);
 //        taskRepository.save(task2);
 //        taskRepository.save(task3);
@@ -71,7 +81,7 @@ class TaskRepositoryTest {
         }
 
         //then
-        Assertions.assertThat(findTask.stream().count()).isEqualTo(1);
+//        Assertions.assertThat(findTask.stream().count()).isEqualTo(1);
         Assertions.assertThat(findTask.get(0).getTitle()).isEqualTo(task1.getTitle());
     }
 

@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:dotime
+    username: sa
+    password: sa
+    driver-class-name: org.h2.Driver
+  jpa:
+    database: H2
+    open-in-view: false
+    hibernate:
+      ddl-auto: create-drop
+      dialect: H2Dialect
+
+
+

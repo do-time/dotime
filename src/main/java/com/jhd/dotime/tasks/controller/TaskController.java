@@ -90,7 +90,7 @@ public class TaskController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND"),
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
-    @PostMapping("/member/{memberId}/task")
+    @PostMapping("/members/{memberId}/task")
     public Long saveTask(@PathVariable Long memberId, @RequestBody TaskSaveRequestDto taskSaveRequestDto){
         return taskService.insert(memberId, taskSaveRequestDto);
     }
