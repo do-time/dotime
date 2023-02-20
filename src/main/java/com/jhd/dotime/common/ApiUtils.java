@@ -4,6 +4,24 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.http.HttpStatus;
 
+/*
+ * Author      : 변지훈
+ * Date        : 2023/02/20
+ * Description : API 공통 포멧
+ *             : success(성공 API)
+ *             : error(실패 API)
+ * Format
+ *   {
+ *    "success": `true` or `false`
+ *    "response": return 값(DTO)
+ *    "error"
+ *       "message": `Unauthorized` etc...
+ *       "status": `401` etc...
+ *   }
+ * Add
+ *  - success시 기본 HttpSataus(200, OK)
+ *  - HttpStatus 변경이 필요할 시 Controller 메서드에 @ResponseHttastatus 어노테이션 추가
+ */
 public class ApiUtils {
 
     public static <T> ApiResult<T> success(T response) {
