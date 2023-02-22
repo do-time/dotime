@@ -1,5 +1,7 @@
 package com.jhd.dotime.tasks.service;
 
+import com.jhd.dotime.common.error.ErrorCode;
+import com.jhd.dotime.common.exception.CustomException;
 import com.jhd.dotime.members.repository.MemberRepository;
 import com.jhd.dotime.tasks.dto.TaskSaveRequestDto;
 import com.jhd.dotime.tasks.dto.TaskUpdateRequestDto;
@@ -30,8 +32,16 @@ public class TaskServiceImpl implements TaskService{
                 .content(taskSaveRequestDto.getContent())
                 .build();
 
+        //* 같은 이름의 title이 task list에 존재하는지 확인 있다면 DUPLICATE_RESOURCE 처리 *//
+        List<Task> taskLst = taskRepository.findTaskListByMemberId(memberId);
+        for (Task task : taskLst) {
+            if(task.getTitle().equals(newTask.getTitle())) throw new CustomException(ErrorCode.DUPLICATE_RESOURCE);
+        }
+
+
         return taskRepository.save(newTask).getId();
     }
+
 
     @Override
     @Transactional(readOnly = true)
