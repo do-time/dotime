@@ -4,73 +4,63 @@ import com.jhd.dotime.members.common.exception.NotFoundException;
 import com.jhd.dotime.members.dto.MemberDto;
 import com.jhd.dotime.members.entity.Member;
 import com.jhd.dotime.members.repository.MemberRepository;
-import com.jhd.dotime.tasks.dto.TaskResponseDto;
-import com.jhd.dotime.tasks.repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class MemberServiceImpl implements MemberService{
+public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
 
-    private final TaskRepository taskRepository;
-
     @Override
+    @Transactional
     public void createMember(MemberDto memberDto) {
-//        Member member = Member.builder()
-//                .email(memberDto.getEmail())
-//                .password(memberDto.getPassword())
-//                .username(memberDto.getUsername())
-//                .profileImage(memberDto.getProfileImage())
-//                .build();
-
         memberRepository.save(memberDto.toEntity());
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<Member> getMember(String email) {
         return memberRepository.findByEmail(email);
     }
 
     @Override
+    @Transactional
     public void updateMember(MemberDto memberDto) {
-        getMember(memberDto.getEmail()).orElseThrow(() -> new NotFoundException("Member does not exist"));
+        Member member = getMember(memberDto.getEmail()).orElseThrow(() -> new NotFoundException("Member does not exist"));
 
-//        memberRepository.save(Member.builder()
-//                .email(memberDto.getEmail())
-//                .password(memberDto.getPassword())
-//                .username(memberDto.getUsername())
-//                .profileImage(memberDto.getProfileImage())
-//                .build());
-        memberRepository.save(memberDto.toEntity());
+        member.updateInfo(memberDto.getUsername());
     }
 
+
     /*
-     update password 같은 경우는 Member Entity 내부에 작성해도 좋은거 같습니다.
-     Task 참조
+     * Spring Security 적용 이후 개발 예정
      */
     @Override
+    @Transactional
     public void updatePassword(String email, String password) {
         getMember(email).orElseThrow(() -> new NotFoundException("Member does not exist"));
 
-        memberRepository.save(Member.builder()
-                .password(password)
-                .build());
+        memberRepository.save(Member.builder().password(password).build());
+    }
+
+    /*
+     * delete의 경우 삭제 컬럼을 하나 만들어 삭제 여부 표시하면 좋을 듯(개인정보 데이터도 함께 날리고)
+     * 추후 사용자 데이터 사용을 위해
+     */
+    @Override
+    @Transactional
+    public void deleteMember(Long id) {
+        memberRepository.delete(getMember(id).orElseThrow(() -> new NotFoundException("Member does not exist")));
     }
 
     @Override
-    public void deleteMember(String email) {
-        getMember(email).orElseThrow(() -> new NotFoundException("Member does not exist"));
-
-        memberRepository.deleteByEmail(email);
+    public Optional<Member> getMember(Long memberId) {
+        return memberRepository.findById(memberId);
     }
-
-
-
 }

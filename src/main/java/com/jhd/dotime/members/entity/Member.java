@@ -1,6 +1,7 @@
 package com.jhd.dotime.members.entity;
 
 import com.jhd.dotime.common.entity.BaseTimeEntity;
+import com.jhd.dotime.members.dto.MemberDto;
 import com.jhd.dotime.tasks.entity.Task;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -30,7 +31,11 @@ public class Member extends BaseTimeEntity {
     @Column(nullable = true)
     private String profileImage;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "member_id")
-    private List<Task> task = new ArrayList<>();
+    public void updateInfo(String username){
+        this.username = username;
+    }
+
+//    @OneToMany(mappedBy = "member", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//    @JoinColumn(name = "member_id")
+//    private List<Task> task = new ArrayList<>();
 }

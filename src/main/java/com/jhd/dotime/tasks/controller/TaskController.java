@@ -1,5 +1,7 @@
 package com.jhd.dotime.tasks.controller;
 
+import com.jhd.dotime.members.entity.Member;
+import com.jhd.dotime.members.service.MemberService;
 import com.jhd.dotime.tasks.dto.TaskSaveRequestDto;
 import com.jhd.dotime.tasks.dto.TaskResponseDto;
 import com.jhd.dotime.tasks.dto.TaskUpdateRequestDto;
@@ -12,6 +14,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,6 +27,8 @@ import java.util.List;
 public class TaskController {
 
     private final TaskService taskService;
+
+    private final MemberService memberService;
 
 
     @ApiResponses({
@@ -73,9 +79,9 @@ public class TaskController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND"),
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
-    @PatchMapping("/task/{id}")
-    public Long updateTask(@PathVariable Long memberId, @PathVariable Long id, @RequestBody TaskUpdateRequestDto taskUpdateRequestDto){
-        return taskService.update(id, taskUpdateRequestDto);
+    @PatchMapping("members/{memberId}/task/{id}")
+    public ResponseEntity<Long> updateTask(@PathVariable Long memberId, @PathVariable Long id, @RequestBody TaskUpdateRequestDto taskUpdateRequestDto){
+        return new ResponseEntity<>(taskService.update(id, taskUpdateRequestDto), HttpStatus.CREATED);
     }
 
     @ApiResponses({
@@ -84,9 +90,9 @@ public class TaskController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND"),
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
-    @PostMapping("/member/{id}/task")
+    @PostMapping("/members/{memberId}/task")
     public Long saveTask(@PathVariable Long memberId, @RequestBody TaskSaveRequestDto taskSaveRequestDto){
-        return taskService.insert(taskSaveRequestDto);
+        return taskService.insert(memberId, taskSaveRequestDto);
     }
 
 
@@ -97,7 +103,7 @@ public class TaskController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @ResponseBody
-    @GetMapping("/member/{id}/task")
+    @GetMapping("/member/{memberId}/task")
     public List<TaskResponseDto> getTaskList(@PathVariable Long memberId){
         return taskService.getTaskListByMemberId(memberId);
     }
