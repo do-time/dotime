@@ -1,22 +1,31 @@
 package com.jhd.dotime.tasks.service;
 
+import com.jhd.dotime.members.entity.Member;
+import com.jhd.dotime.tasks.dto.TaskSaveRequestDto;
+import com.jhd.dotime.tasks.dto.TaskResponseDto;
+import com.jhd.dotime.tasks.dto.TaskUpdateRequestDto;
 import com.jhd.dotime.tasks.entity.Task;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Optional;
+import java.util.List;
 
 @Service
 public interface TaskService {
 
-    void insert(Task task);
+    Long insert(Long memberId, TaskSaveRequestDto taskSaveRequestDto);
 
-    Optional<Task> findTask(Long id);
+    TaskResponseDto findTask(Long id);
 
-    //HashMap<Long, Task> findTaskList();
 
-    void delete(Task task);
+    List<TaskResponseDto> findTaskList();
+
+    Long delete(Long id);
 
     void save(Task task);
+
+    Long update(Long id, TaskUpdateRequestDto taskUpdateRequestDto);
+
+    List<TaskResponseDto> getTaskListByMemberId(Long memberId);
+
+
 }
