@@ -10,11 +10,11 @@ import java.time.LocalDateTime;
 
 @Getter
 public class TaskResponseDto {
-    private Long id;
-    private String title;
-    private String content;
-    private LocalDateTime createdDate;
-    private LocalDateTime updatedDate;
+    private final Long id;
+    private final String title;
+    private final String content;
+    private final LocalDateTime createdDate;
+    private final LocalDateTime updatedDate;
 
     public TaskResponseDto(Task entity){
         this.id = entity.getId();
