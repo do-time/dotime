@@ -1,16 +1,9 @@
 package com.jhd.dotime.members.entity;
 
 import com.jhd.dotime.common.entity.BaseTimeEntity;
-import com.jhd.dotime.members.dto.MemberDto;
-import com.jhd.dotime.tasks.entity.Task;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 @Builder
