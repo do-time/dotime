@@ -20,6 +20,8 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional
     public void createMember(MemberRequestDto memberRequestDto) {
+        duplicateCheckEmail(memberRequestDto.getEmail());
+
         memberRepository.save(memberRequestDto.toEntity());
     }
 
@@ -34,7 +36,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional(readOnly = true)
     public Member getMember(Long memberId) {
-        return memberRepository.findById(memberId).orElseThrow(() -> new NotFoundException("Member does not exist"));
+        return memberRepository.findById(memberId).orElseThrow(() -> new CustomException(MemberErrorCode.MEMBER_NOT_FOUND));
     }
 
     @Override
@@ -64,5 +66,15 @@ public class MemberServiceImpl implements MemberService {
     @Transactional
     public void deleteMember(Long id) {
         memberRepository.delete(getMember(id));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public boolean duplicateCheckEmail(String email){
+        if(memberRepository.existsByEmail(email))
+            throw new CustomException(MemberErrorCode.DUPLICATE_EMAIL);
+        else {
+            return true;
+        }
     }
 }
