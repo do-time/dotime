@@ -1,6 +1,7 @@
 package com.jhd.dotime.members.service;
 
 import com.jhd.dotime.members.dto.MemberDto;
+import com.jhd.dotime.members.dto.MemberResponseDto;
 import com.jhd.dotime.members.entity.Member;
 import com.jhd.dotime.tasks.dto.TaskResponseDto;
 import com.jhd.dotime.tasks.entity.Task;
@@ -12,13 +13,13 @@ public interface MemberService {
     void createMember(MemberDto memberDto);
 //    void createMember(Member member);
 
-    Optional<Member> getMember(String email);
+    MemberResponseDto getMember(String email);
 
     void updateMember(MemberDto memberDto);
 
-    void updatePassword(String email, String password);
+    void updatePassword(MemberDto memberDto);
 
     void deleteMember(Long id);
 
-    Optional<Member> getMember(Long memberId);
+    Member getMember(Long memberId);
 }
