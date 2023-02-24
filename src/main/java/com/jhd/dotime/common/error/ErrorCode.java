@@ -9,7 +9,7 @@ import static org.springframework.http.HttpStatus.*;
 
 @Getter
 @AllArgsConstructor
-public enum ErrorCode {
+public enum ErrorCode implements BaseErrorCode {
 
     /**
      * 400 BAD_REQUEST
