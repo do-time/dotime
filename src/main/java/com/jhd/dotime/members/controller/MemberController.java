@@ -30,7 +30,7 @@ public class MemberController {
      */
     @GetMapping("/{email}")
     public ResponseEntity<MemberResponseDto> getMember(@PathVariable String email) {
-        return new ResponseEntity<MemberResponseDto>(memberService.getMember(email).map(MemberResponseDto::new).orElseThrow(() -> new NotFoundException("Member does not exist")), HttpStatus.OK);
+        return new ResponseEntity<>(memberService.getMember(email), HttpStatus.OK);
     }
 
     @PatchMapping()

@@ -9,6 +9,8 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 public class MemberDto {
+    private Long id;
+
     private String email;
 
     private String username;
@@ -18,6 +20,6 @@ public class MemberDto {
     private String profileImage;
 
     public Member toEntity(){
-        return Member.builder().email(email).username(username).password(password).profileImage(profileImage).build();
+        return Member.builder().id(id).email(email).username(username).password(password).profileImage(profileImage).build();
     }
 }
