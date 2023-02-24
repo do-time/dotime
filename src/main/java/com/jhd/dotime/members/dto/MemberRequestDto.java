@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class MemberDto {
+public class MemberRequestDto {
     private Long id;
 
     private String email;
@@ -18,6 +18,13 @@ public class MemberDto {
     private String password;
 
     private String profileImage;
+
+    public MemberRequestDto(String email, String username, String password, String profileImage){
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.profileImage = profileImage;
+    }
 
     public Member toEntity(){
         return Member.builder().id(id).email(email).username(username).password(password).profileImage(profileImage).build();

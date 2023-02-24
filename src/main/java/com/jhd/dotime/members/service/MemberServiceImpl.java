@@ -1,7 +1,9 @@
 package com.jhd.dotime.members.service;
 
+import com.jhd.dotime.common.exception.CustomException;
+import com.jhd.dotime.members.common.error.MemberErrorCode;
 import com.jhd.dotime.members.common.exception.NotFoundException;
-import com.jhd.dotime.members.dto.MemberDto;
+import com.jhd.dotime.members.dto.MemberRequestDto;
 import com.jhd.dotime.members.dto.MemberResponseDto;
 import com.jhd.dotime.members.entity.Member;
 import com.jhd.dotime.members.repository.MemberRepository;
@@ -17,8 +19,8 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional
-    public void createMember(MemberDto memberDto) {
-        memberRepository.save(memberDto.toEntity());
+    public void createMember(MemberRequestDto memberRequestDto) {
+        memberRepository.save(memberRequestDto.toEntity());
     }
 
     @Override
@@ -26,7 +28,7 @@ public class MemberServiceImpl implements MemberService {
     public MemberResponseDto getMember(String email) {
         return memberRepository.findByEmail(email)
                 .map(MemberResponseDto::new)
-                .orElseThrow(() -> new NotFoundException("Member does not exist"));
+                .orElseThrow(() -> new CustomException(MemberErrorCode.MEMBER_NOT_FOUND));
     }
 
     @Override
@@ -37,10 +39,10 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional
-    public void updateMember(MemberDto memberDto) {
-        Member member = getMember(memberDto.getId());
+    public void updateMember(MemberRequestDto memberRequestDto) {
+        Member member = getMember(memberRequestDto.getId());
 
-        member.updateInfo(memberDto.getUsername());
+        member.updateInfo(memberRequestDto.getUsername());
     }
 
     /*
@@ -48,10 +50,10 @@ public class MemberServiceImpl implements MemberService {
      */
     @Override
     @Transactional
-    public void updatePassword(MemberDto memberDto) {
-        getMember(memberDto.getPassword());
+    public void updatePassword(MemberRequestDto memberRequestDto) {
+        getMember(memberRequestDto.getPassword());
 
-        memberRepository.save(Member.builder().password(memberDto.getPassword()).build());
+        memberRepository.save(Member.builder().password(memberRequestDto.getPassword()).build());
     }
 
     /*
