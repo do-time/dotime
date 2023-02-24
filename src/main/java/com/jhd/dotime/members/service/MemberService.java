@@ -17,4 +17,6 @@ public interface MemberService {
     void deleteMember(Long id);
 
     Member getMember(Long memberId);
+
+    boolean duplicateCheckEmail(String email);
 }
