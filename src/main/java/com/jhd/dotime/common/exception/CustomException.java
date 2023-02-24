@@ -1,6 +1,7 @@
 package com.jhd.dotime.common.exception;
 
 
+import com.jhd.dotime.common.error.BaseErrorCode;
 import com.jhd.dotime.common.error.ErrorCode;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
@@ -11,14 +12,14 @@ public class CustomException extends RuntimeException{
 
 //    private final String message;
 //    private final HttpStatus status;
-    private final ErrorCode errorCode;
+    private final BaseErrorCode errorCode;
 
-    public CustomException(ErrorCode errorCode, Throwable reason){
+    public CustomException(BaseErrorCode errorCode, Throwable reason){
         super(errorCode.getMessage(), reason);
         this.errorCode = errorCode;
     }
 
-    public CustomException(ErrorCode errorCode){
+    public CustomException(BaseErrorCode errorCode){
         super(errorCode.getMessage());
         this.errorCode = errorCode;
     }
