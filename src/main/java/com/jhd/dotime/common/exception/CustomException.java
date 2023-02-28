@@ -3,6 +3,8 @@ package com.jhd.dotime.common.exception;
 
 import com.jhd.dotime.common.error.BaseErrorCode;
 import com.jhd.dotime.common.error.ErrorCode;
+import com.jhd.dotime.tasks.common.error.TaskErrorCode;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
@@ -23,6 +25,7 @@ public class CustomException extends RuntimeException{
         super(errorCode.getMessage());
         this.errorCode = errorCode;
     }
+
 
 //    public CustomException(String message, HttpStatus status, Throwable reason) {
 //        super(message, reason);
