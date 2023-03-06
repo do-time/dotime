@@ -13,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class MemberResponseDto {
+    private Long id;
 
     private String email;
 
@@ -23,6 +24,7 @@ public class MemberResponseDto {
     private List<TaskResponseDto> taskList;
 
     public MemberResponseDto(Member member){
+        this.id = member.getId();
         this.email = member.getEmail();
         this.username = member.getUsername();
         this.profileImage = member.getProfileImage();

@@ -1,10 +1,8 @@
 package com.jhd.dotime.members.repository;
 
-import com.jhd.dotime.members.dto.MemberDto;
+import com.jhd.dotime.members.dto.MemberRequestDto;
 import com.jhd.dotime.members.entity.Member;
-import org.springframework.stereotype.Repository;
 
-import java.time.LocalDateTime;
 import java.util.HashMap;
 
 public class MemberRepositoryImpl{
@@ -12,14 +10,14 @@ public class MemberRepositoryImpl{
     private final static HashMap<String, Member> DB = new HashMap<>();
 
 
-    public void createMember(MemberDto memberDto) {
+    public void createMember(MemberRequestDto memberRequestDto) {
         Member member = new Member();
 
         member.setId(DB.size()+1L);
-        member.setEmail(memberDto.getEmail());
-        member.setUsername(memberDto.getUsername());
-        member.setPassword(memberDto.getPassword());
-        member.setProfileImage(memberDto.getProfileImage());
+        member.setEmail(memberRequestDto.getEmail());
+        member.setUsername(memberRequestDto.getUsername());
+        member.setPassword(memberRequestDto.getPassword());
+        member.setProfileImage(memberRequestDto.getProfileImage());
 //        member.setCreatedDate(LocalDateTime.now());
 //        member.setUpdatedDate(LocalDateTime.now());
     }
@@ -28,13 +26,13 @@ public class MemberRepositoryImpl{
         return DB.get(email);
     }
 
-    public void updateMember(MemberDto memberDto) {
-        Member member = DB.get(memberDto.getEmail());
+    public void updateMember(MemberRequestDto memberRequestDto) {
+        Member member = DB.get(memberRequestDto.getEmail());
 
-        member.setUsername(memberDto.getUsername());
+        member.setUsername(memberRequestDto.getUsername());
 //        member.setUpdatedDate(LocalDateTime.now());
 
-        DB.replace(memberDto.getEmail(), member);
+        DB.replace(memberRequestDto.getEmail(), member);
     }
 
     public void updatePassword(String email, String password) {

@@ -80,9 +80,21 @@ public class TaskController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @PatchMapping("members/{memberId}/task/{id}")
-    public ResponseEntity<Long> updateTask(@PathVariable Long memberId, @PathVariable Long id, @RequestBody TaskUpdateRequestDto taskUpdateRequestDto){
-        return new ResponseEntity<>(taskService.update(id, taskUpdateRequestDto), HttpStatus.CREATED);
+    public Long updateTask(@PathVariable Long memberId, @PathVariable Long id, @RequestBody TaskUpdateRequestDto taskUpdateRequestDto){
+        return taskService.update(id, taskUpdateRequestDto);
+
     }
+//    @ApiResponses({
+//            @ApiResponse(responseCode = "200", description = "OK"),
+//            @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
+//            @ApiResponse(responseCode = "404", description = "NOT FOUND"),
+//            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
+//    })
+//    @PatchMapping("members/{memberId}/task/{id}")
+//    public ResponseEntity<Long> updateTask(@PathVariable Long memberId, @PathVariable Long id, @RequestBody TaskUpdateRequestDto taskUpdateRequestDto){
+////        return new ResponseEntity<>(taskService.update(id, taskUpdateRequestDto), HttpStatus.CREATED);
+//
+//    }
 
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK"),
