@@ -1,34 +1,22 @@
 package com.jhd.dotime.common.config;
 
-import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.security.Keys;
-import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
+import com.jhd.dotime.common.security.TokenProvider;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 
-import java.security.Key;
+@Configuration
+@ComponentScan
+public class JwtConfig {
+    @Value("${jwt.secret}")
+    private String accessTokenSecret;
+    @Value("${jwt.access-token-validity-in-seconds}")
+    private Long accessTokenValidityInSeconds;
 
-@Slf4j
-@Getter
-@Component
-public class TokenProvider {
-    protected final Logger logger = LoggerFactory.getLogger(com.jhd.dotime.common.config.TokenProvider.class);
-
-    protected static final String AUTHORITIES_KEY = "auth";
-
-    protected final String secret;
-    protected final long tokenValidityInMilliseconds;
-    protected Key key;
-
-    public TokenProvider(String secret, long tokenValidityInMilliseconds){
-        this.secret = secret;
-        this.tokenValidityInMilliseconds = tokenValidityInMilliseconds*1000;
-        byte[] keyBytes = Decoders.BASE64.decode(secret);
-        this.key = Keys.hmacShaKeyFor(keyBytes);
-
+    // 액세스 토큰 발급용, 리프레시 토큰 발급용은 각각 별도의 키와 유효기간을 갖는다.
+    @Bean(name = "tokenProvider")
+    public TokenProvider tokenProvider() {
+        return new TokenProvider(accessTokenSecret, accessTokenValidityInSeconds);
     }
-
-
 }
