@@ -19,14 +19,14 @@ public class MemberRequestDto {
 
     private String profileImage;
 
-    public MemberRequestDto(String email, String username, String password, String profileImage){
+    public MemberRequestDto(String email, String username, String password, String profileImage) {
         this.email = email;
         this.username = username;
         this.password = password;
         this.profileImage = profileImage;
     }
 
-    public Member toEntity(){
-        return Member.builder().id(id).email(email).username(username).password(password).profileImage(profileImage).build();
+    public Member toEntity() {
+        return Member.builder().id(id).email(email).username(username).password(password).profileImage(profileImage).role(Role.USER).build();
     }
 }

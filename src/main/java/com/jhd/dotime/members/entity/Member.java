@@ -1,6 +1,7 @@
 package com.jhd.dotime.members.entity;
 
 import com.jhd.dotime.common.entity.BaseTimeEntity;
+import com.jhd.dotime.members.dto.Role;
 import lombok.*;
 
 import javax.persistence.*;
@@ -23,6 +24,14 @@ public class Member extends BaseTimeEntity {
 
     @Column(nullable = true)
     private String profileImage;
+
+    /*
+     * @Enumerated
+     * EnumType.STRING  : 각 Enum 이름을 DB 컬럼에 저장
+     * EnumType.ORDINAL : 각 Enum에 대응되는 순서를 컬럼에 저장
+     */
+    @Enumerated(value = EnumType.STRING)
+    private Role role;
 
     public void updateInfo(String username){
         this.username = username;

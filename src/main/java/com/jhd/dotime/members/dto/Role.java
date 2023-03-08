@@ -2,6 +2,7 @@ package com.jhd.dotime.members.dto;
 
 public enum Role {
 
+    ADMIN("ROLE_ADMIN"),
     USER("ROLE_USER");
 
     private final String value;
