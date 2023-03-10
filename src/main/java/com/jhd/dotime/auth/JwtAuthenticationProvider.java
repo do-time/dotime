@@ -1,4 +1,4 @@
-package com.jhd.dotime.members.common.jwt;
+package com.jhd.dotime.auth;
 
 import com.jhd.dotime.members.common.exception.NotFoundException;
 import com.jhd.dotime.members.dto.Email;

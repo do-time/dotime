@@ -1,4 +1,4 @@
-package com.jhd.dotime.common.entity;
+package com.jhd.dotime.auth.entity;
 
 import lombok.Builder;
 import lombok.Getter;

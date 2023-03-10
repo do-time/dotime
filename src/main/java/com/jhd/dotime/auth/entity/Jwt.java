@@ -1,4 +1,4 @@
-package com.jhd.dotime.members.common.jwt;
+package com.jhd.dotime.auth.entity;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTCreator;
@@ -73,8 +73,8 @@ public final class Jwt {
     }
 
     static public class Claims {
-        String email;
-        String[] roles;
+        public String email;
+        public String[] roles;
         Date iat;
         Date exp;
 

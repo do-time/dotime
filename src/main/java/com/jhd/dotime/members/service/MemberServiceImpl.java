@@ -1,5 +1,6 @@
 package com.jhd.dotime.members.service;
 
+import com.jhd.dotime.auth.dto.LoginResponseDto;
 import com.jhd.dotime.common.exception.CustomException;
 import com.jhd.dotime.members.common.error.MemberErrorCode;
 import com.jhd.dotime.members.common.exception.NotFoundException;
@@ -8,6 +9,8 @@ import com.jhd.dotime.members.dto.MemberResponseDto;
 import com.jhd.dotime.members.entity.Member;
 import com.jhd.dotime.members.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,12 +20,20 @@ public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
 
+    private final PasswordEncoder passwordEncoder;
+
     @Override
     @Transactional
     public void createMember(MemberRequestDto memberRequestDto) {
         duplicateCheckEmail(memberRequestDto.getEmail());
+        Member member = Member.builder()
+                .username(memberRequestDto.getUsername())
+                .email(memberRequestDto.getEmail())
+                .password(passwordEncoder.encode(memberRequestDto.getPassword()))
+                .activated(true)
+                .build();
 
-        memberRepository.save(memberRequestDto.toEntity());
+        memberRepository.save(member);
     }
 
     @Override
@@ -70,8 +81,8 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional(readOnly = true)
-    public boolean duplicateCheckEmail(String email){
-        if(memberRepository.existsByEmail(email))
+    public boolean duplicateCheckEmail(String email) {
+        if (memberRepository.existsByEmail(email))
             throw new CustomException(MemberErrorCode.DUPLICATE_EMAIL);
         else {
             return true;

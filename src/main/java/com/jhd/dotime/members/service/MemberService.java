@@ -1,12 +1,13 @@
 package com.jhd.dotime.members.service;
 
+import com.jhd.dotime.auth.dto.LoginResponseDto;
 import com.jhd.dotime.members.dto.MemberRequestDto;
 import com.jhd.dotime.members.dto.MemberResponseDto;
 import com.jhd.dotime.members.entity.Member;
 
 public interface MemberService {
     void createMember(MemberRequestDto memberRequestDto);
-//    void createMember(Member member);
+
 
     MemberResponseDto getMember(String email);
 
