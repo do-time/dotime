@@ -1,10 +1,12 @@
 package com.jhd.dotime.members.entity;
 
+import com.jhd.dotime.auth.entity.Authority;
 import com.jhd.dotime.common.entity.BaseTimeEntity;
 import com.jhd.dotime.members.dto.Role;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Data
 @Builder
@@ -33,11 +35,16 @@ public class Member extends BaseTimeEntity {
     @Enumerated(value = EnumType.STRING)
     private Role role;
 
+    @ManyToMany
+    @JoinTable( // JoinTable은 테이블과 테이블 사이에 별도의 조인 테이블을 만들어 양 테이블간의 연관관계를 설정 하는 방법
+            name = "account_authority",
+            joinColumns = {@JoinColumn(name = "account_id", referencedColumnName = "account_id")},
+            inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "authority_name")})
+    private Set<Authority> authorities;
+
     public void updateInfo(String username){
         this.username = username;
     }
 
-//    @OneToMany(mappedBy = "member", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-//    @JoinColumn(name = "member_id")
-//    private List<Task> task = new ArrayList<>();
+
 }
