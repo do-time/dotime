@@ -15,6 +15,7 @@ public class ErrorResponse {
     private final String code;
     private final String message;
 
+
     public static ResponseEntity<ErrorResponse> toResponseEntity(BaseErrorCode errorCode) {
         return ResponseEntity
                 .status(errorCode.getStatus())
