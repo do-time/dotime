@@ -1,5 +1,6 @@
-package com.jhd.dotime.members.common.jwt;
+package com.jhd.dotime.auth;
 
+import com.jhd.dotime.auth.entity.Jwt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
@@ -22,7 +23,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import static java.util.Objects.nonNull;
 import static java.util.stream.Collectors.toList;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 

@@ -26,7 +26,7 @@ public class MemberRequestDto {
         this.profileImage = profileImage;
     }
 
-    public Member toEntity(){
-        return Member.builder().id(id).email(email).username(username).password(password).profileImage(profileImage).build();
-    }
+//    public Member toEntity(){
+//        return Member.builder().id(id).email(email).username(username).password(password).profileImage(profileImage).build();
+//    }
 }
