@@ -11,13 +11,13 @@ import javax.persistence.Id;
 @Entity(name = "auth")
 @Getter
 @NoArgsConstructor
-public class Authority {
+public class Auth {
     @Id
-    @Column
+    @Column(name = "authority_name")
     private String authorityName;
 
     @Builder
-    public Authority(String authorityName){
+    public Auth(String authorityName){
         this.authorityName = authorityName;
     }
 }

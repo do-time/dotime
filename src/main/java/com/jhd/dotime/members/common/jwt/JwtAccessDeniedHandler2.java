@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
-public class JwtAccessDeniedHandler implements AccessDeniedHandler {
+public class JwtAccessDeniedHandler2 implements AccessDeniedHandler {
 
     static String _403 = "{\"success\":false,\"response\":null,\"error\":{\"message\":\"Forbidden\",\"status\":403}}";
 
