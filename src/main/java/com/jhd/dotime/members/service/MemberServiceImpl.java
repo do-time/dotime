@@ -8,6 +8,7 @@ import com.jhd.dotime.members.dto.MemberResponseDto;
 import com.jhd.dotime.members.entity.Member;
 import com.jhd.dotime.members.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,10 +18,14 @@ public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
 
+    private final PasswordEncoder passwordEncoder;
+
     @Override
     @Transactional
     public void createMember(MemberRequestDto memberRequestDto) {
         duplicateCheckEmail(memberRequestDto.getEmail());
+
+        memberRequestDto.passwordEncoding(passwordEncoder);
 
         memberRepository.save(memberRequestDto.toEntity());
     }

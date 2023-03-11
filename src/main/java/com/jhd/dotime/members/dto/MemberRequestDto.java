@@ -1,7 +1,11 @@
 package com.jhd.dotime.members.dto;
 
+import com.jhd.dotime.auth.entity.Auth;
 import com.jhd.dotime.members.entity.Member;
 import lombok.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.Collections;
 
 @Getter
 @Setter
@@ -27,6 +31,22 @@ public class MemberRequestDto {
     }
 
     public Member toEntity() {
-        return Member.builder().id(id).email(email).username(username).password(password).profileImage(profileImage).role(Role.USER).build();
+        Auth auth = Auth.builder()
+                .authorityName("ROLE_USER")
+                .build();
+
+
+        return Member.builder()
+                .id(id)
+                .email(email)
+                .username(username)
+                .password(password)
+                .profileImage(profileImage)
+                .authorities(Collections.singleton(auth))
+                .build();
+    }
+
+    public void passwordEncoding(PasswordEncoder passwordEncoder){
+        this.password = passwordEncoder.encode(this.password);
     }
 }
