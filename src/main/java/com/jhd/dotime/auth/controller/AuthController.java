@@ -25,7 +25,7 @@ public class AuthController {
     }
 
 
-    @PostMapping("/auth")
+    @PostMapping("/login")
     public ResponseEntity<LoginResponseDto> authorize(@RequestBody LoginRequestDto loginRequestDto){
         LoginResponseDto token = authService.authenticate(loginRequestDto);
 
