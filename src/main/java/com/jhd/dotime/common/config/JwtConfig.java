@@ -6,6 +6,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
+/*
+ * JWT 설정파일
+ * TokenProvider에 의존성을 주입하고 빈을 생성하는 역할
+ */
 @Configuration
 @ComponentScan
 public class JwtConfig {

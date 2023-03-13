@@ -37,6 +37,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+    /*
+     * 스프링 시큐리티 룰을 무시하게 하는 Url 규칙(여기 등록하면 규칙 적용하지 않음)
+     */
     @Override
     public void configure(WebSecurity web){
         web.ignoring()
@@ -50,12 +53,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception{
         http
-//                .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                 .csrf().disable()
-                .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class) //UsernamePasswordAuthenticationFilter 전에 customFilter가 걸리게 한다.
                 .exceptionHandling()
-                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-                .accessDeniedHandler(jwtAccessDeniedHandler)
+                .authenticationEntryPoint(jwtAuthenticationEntryPoint) // 인증 실패 핸들링
+                .accessDeniedHandler(jwtAccessDeniedHandler) // 인가 실패 핸들링
 
                 .and()
                 .sessionManagement()
@@ -69,12 +71,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/api/signup").permitAll()
-                .antMatchers("/api/auth").permitAll()
+                .antMatchers("/api/auth/**").permitAll()
                 .antMatchers("/swagger-ui.html").permitAll()
 //                .anyRequest().authenticated()
 
                 .and()
-                .apply(new JwtSecurityConfig(tokenProvider));
+                .apply(new JwtSecurityConfig(tokenProvider)) // JwtSecurityConfig 적용
+        ;
 
 
 

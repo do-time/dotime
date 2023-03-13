@@ -28,7 +28,6 @@ public class AuthService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String token = tokenProvider.createToken(authentication);
-        System.out.println("token ->" + token);
 
         return LoginResponseDto.builder()
                 .accessToken(token)
