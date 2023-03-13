@@ -1,4 +1,4 @@
-package com.jhd.dotime.members.common.jwt;
+package com.jhd.dotime.auth;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
