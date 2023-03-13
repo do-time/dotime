@@ -18,6 +18,10 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.stream.Collectors;
 
+
+/*
+ * 토큰을 생성하고 검증하며 토큰에서 정보를 꺼내 스프링 시큐리티 Authentication 객체 생성
+ */
 public class TokenProvider {
 
     protected final Logger logger = LoggerFactory.getLogger(TokenProvider.class);

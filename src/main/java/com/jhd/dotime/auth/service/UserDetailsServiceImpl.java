@@ -22,6 +22,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
 
+    /*
+     * authenticationManangerBuilder.getObject().authenticate() 메소드가 실행되면
+     *   1. AuthenticationManager 의 구현체인 ProviderManager 의 authenticate() 메소드가 실행됨
+     *   2. 해당 메소드에선 AuthenticaionProvider 인터페이스의 authenticate() 메소드를 실행하는데
+     *      해당 인터페이스에서 데이터베이스에 있는 이용자의 정보를 가져오는  UserDetailsService 인터페이스를 사용
+     *   3. 그래서 UserDetailsService 인터페이스의 loadUserByUsername() 메소드를 호출
+     * 따라서 CustomUserDetailsService 구현체에 오버라이드된 loadUserByUsername() 메소드를 호출
+     */
     @Override
     @Transactional
     public UserDetails loadUserByUsername(final String email) throws UsernameNotFoundException {
