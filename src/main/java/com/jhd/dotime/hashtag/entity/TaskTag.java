@@ -13,6 +13,6 @@ public class TaskTag {
     private Long member_id;
 
     @ManyToOne
-    @JoinColumn(name="task_id")
-    private Long task_id;
+    @JoinColumn(name="hashtag_id")
+    private Long hashtag_id;
 }
