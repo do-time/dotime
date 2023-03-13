@@ -24,6 +24,7 @@ public class MemberRepositoryTest {
 
     @BeforeAll
     public static void beforeAll(){
+        System.out.println("들어온다");
         member = Member.builder()
                 .email("test@test.com")
                 .password("1234")

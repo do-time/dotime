@@ -8,7 +8,6 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "member")
@@ -46,10 +45,11 @@ public class Member extends BaseTimeEntity {
     private Set<Authority> authorities;
 
     @Builder
-    public Member(String email, String username, String password, Set<Authority> authorities, boolean activated) {
+    public Member(String email, String username, String password, String profileImage, Set<Authority> authorities, boolean activated) {
         this.email = email;
         this.username = username;
         this.password = password;
+        this.profileImage = profileImage;
         this.authorities = authorities;
         this.activated = activated;
 //        this.tokenWeight = 1L;

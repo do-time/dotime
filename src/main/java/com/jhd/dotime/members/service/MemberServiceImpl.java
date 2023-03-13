@@ -7,9 +7,11 @@ import com.jhd.dotime.members.common.exception.NotFoundException;
 import com.jhd.dotime.members.dto.MemberRequestDto;
 import com.jhd.dotime.members.dto.MemberResponseDto;
 import com.jhd.dotime.members.entity.Member;
+import com.jhd.dotime.members.mapper.MemberDtoMapper;
 import com.jhd.dotime.members.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
+import org.mapstruct.factory.Mappers;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,18 +22,16 @@ public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
 
+    private final MemberDtoMapper dtoMapper = Mappers.getMapper(MemberDtoMapper.class);
+
     private final PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional
     public void createMember(MemberRequestDto memberRequestDto) {
         duplicateCheckEmail(memberRequestDto.getEmail());
-        Member member = Member.builder()
-                .username(memberRequestDto.getUsername())
-                .email(memberRequestDto.getEmail())
-                .password(passwordEncoder.encode(memberRequestDto.getPassword()))
-                .activated(true)
-                .build();
+
+        Member member = dtoMapper.toEntity(memberRequestDto);
 
         memberRepository.save(member);
     }
