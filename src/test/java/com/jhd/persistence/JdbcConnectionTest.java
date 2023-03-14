@@ -21,7 +21,7 @@ public class JdbcConnectionTest {
     @DisplayName("database conn test")
     public void testConn(){
         try(Connection conn = DriverManager.getConnection(
-                "jdbc:mysql://ec2-13-124-238-68.ap-northeast-2.compute.amazonaws.com:3306/dotime?useUniCode=yes&characterEncoding=UTF-8&serverTimezone=Asia/Seoul",
+                "jdbc:mysql://ec2-13-125-96-73.ap-northeast-2.compute.amazonaws.com:3306/dotime?useUniCode=yes&characterEncoding=UTF-8&serverTimezone=Asia/Seoul",
                 "root",
                 "1234")) {
             System.out.println("Connection -> " + conn);
