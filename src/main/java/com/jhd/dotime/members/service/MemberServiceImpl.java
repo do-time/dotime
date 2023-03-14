@@ -1,16 +1,13 @@
 package com.jhd.dotime.members.service;
 
-import com.jhd.dotime.auth.dto.LoginResponseDto;
 import com.jhd.dotime.common.exception.CustomException;
 import com.jhd.dotime.members.common.error.MemberErrorCode;
-import com.jhd.dotime.members.common.exception.NotFoundException;
 import com.jhd.dotime.members.dto.MemberRequestDto;
 import com.jhd.dotime.members.dto.MemberResponseDto;
 import com.jhd.dotime.members.entity.Member;
-import com.jhd.dotime.members.mapper.MemberDtoMapper;
+import com.jhd.dotime.members.mapper.MemberMapper;
 import com.jhd.dotime.members.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.java.Log;
 import org.mapstruct.factory.Mappers;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,7 +19,9 @@ public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
 
-    private final MemberDtoMapper dtoMapper = Mappers.getMapper(MemberDtoMapper.class);
+    private final MemberMapper memberMapper = Mappers.getMapper(MemberMapper.class);
+
+    //private final MemberMapper memberMapper = Mappers.getMapper(MemberMapper.class);
 
     private final PasswordEncoder passwordEncoder;
 
@@ -31,7 +30,7 @@ public class MemberServiceImpl implements MemberService {
     public void createMember(MemberRequestDto memberRequestDto) {
         duplicateCheckEmail(memberRequestDto.getEmail());
 
-        Member member = dtoMapper.toEntity(memberRequestDto);
+        Member member = memberMapper.toEntity(memberRequestDto);
 
         memberRepository.save(member);
     }
