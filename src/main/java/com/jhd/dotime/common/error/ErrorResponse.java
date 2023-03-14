@@ -15,11 +15,13 @@ public class ErrorResponse {
     private final String code;
     private final String message;
 
-    public static ResponseEntity<ErrorResponse> toResponseEntity(ErrorCode errorCode) {
+
+    public static ResponseEntity<ErrorResponse> toResponseEntity(BaseErrorCode errorCode) {
         return ResponseEntity
-                .status(errorCode.getStatus().value())
+                .status(errorCode.getStatus())
                 .body(
                         ErrorResponse.builder()
+                                .status(errorCode.getStatus().value())
                                 .error(errorCode.getStatus().name())
                                 .code(errorCode.name())
                                 .message(errorCode.getMessage())

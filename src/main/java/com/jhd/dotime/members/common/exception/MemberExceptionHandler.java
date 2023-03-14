@@ -1,6 +1,6 @@
 package com.jhd.dotime.members.common.exception;
 
-import com.jhd.dotime.common.ApiUtils;
+import com.jhd.dotime.common.utils.ApiUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 
-import static com.jhd.dotime.common.ApiUtils.error;
+import static com.jhd.dotime.common.utils.ApiUtils.error;
 
 @ControllerAdvice
 public class MemberExceptionHandler {

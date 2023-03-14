@@ -3,6 +3,8 @@ package com.jhd.dotime.tasks.service;
 import com.jhd.dotime.common.error.ErrorCode;
 import com.jhd.dotime.common.exception.CustomException;
 import com.jhd.dotime.members.repository.MemberRepository;
+import com.jhd.dotime.tasks.common.error.TaskErrorCode;
+import com.jhd.dotime.tasks.common.exception.TaskException;
 import com.jhd.dotime.tasks.dto.TaskSaveRequestDto;
 import com.jhd.dotime.tasks.dto.TaskUpdateRequestDto;
 import com.jhd.dotime.tasks.dto.TaskResponseDto;
@@ -36,6 +38,7 @@ public class TaskServiceImpl implements TaskService{
         List<Task> taskLst = taskRepository.findTaskListByMemberId(memberId);
         for (Task task : taskLst) {
             if(task.getTitle().equals(newTask)) throw new CustomException(ErrorCode.DUPLICATE_RESOURCE);
+
         }
 
 
@@ -47,7 +50,7 @@ public class TaskServiceImpl implements TaskService{
     @Transactional(readOnly = true)
     public TaskResponseDto findTask(Long id) {
         Task entity = taskRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 작업이 없습니다. id = " + id));
+                .orElseThrow(() -> new TaskException(TaskErrorCode.TASK_NOT_FOUNT));
         return new TaskResponseDto(entity);
     }
 
@@ -63,7 +66,7 @@ public class TaskServiceImpl implements TaskService{
     @Transactional
     public Long delete(Long id) {
         Task tasks = taskRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 작업이 없습니다. id = " + id));
+                .orElseThrow(() -> new TaskException(TaskErrorCode.TASK_NOT_FOUNT));
         taskRepository.delete(tasks);
         System.out.println("tasks.getTitle() = " + tasks.getTitle() + " tasks.id = " + tasks.getId());
         return id;
@@ -78,7 +81,7 @@ public class TaskServiceImpl implements TaskService{
     @Transactional
     public Long update(Long id, TaskUpdateRequestDto taskUpdateRequestDto) {
         Task tasks = taskRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 작업이 없습니다. id = " + id));
+                .orElseThrow(() -> new TaskException(TaskErrorCode.TASK_NOT_FOUNT));
 
         tasks.update(taskUpdateRequestDto.getTitle(), taskUpdateRequestDto.getContent());
         return id;
