@@ -2,15 +2,14 @@ package com.jhd.dotime.members.dto;
 
 import com.jhd.dotime.members.entity.Member;
 import com.jhd.dotime.tasks.dto.TaskResponseDto;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
 import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class MemberResponseDto {
     private Long id;
