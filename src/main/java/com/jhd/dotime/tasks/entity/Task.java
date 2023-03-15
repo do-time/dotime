@@ -12,6 +12,7 @@ import javax.persistence.*;
 @Entity(name="task")
 public class Task extends BaseTimeEntity {
     @Id
+    @Column(name="task_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -24,6 +25,10 @@ public class Task extends BaseTimeEntity {
 
     @Column
     private String content;
+
+//    @Column
+//    private Long tasktag_id;
+
 
     @Builder
     public Task(Member member, String title, String content){

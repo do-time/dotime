@@ -17,8 +17,8 @@ public class JwtTest {
     public void testPasswordEncoding(){
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(16);
 
-        String pwd = encoder.encode("password");
-        System.out.println(BCrypt.checkpw("123", pwd));
+        String pwd = encoder.encode("1234");
+        System.out.println(BCrypt.checkpw("1234", pwd));
 
 
         System.out.println("pwd = " + pwd);
