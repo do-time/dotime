@@ -2,10 +2,7 @@ package com.jhd.dotime.hashtag.entity;
 
 
 import com.jhd.dotime.common.entity.BaseTimeEntity;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -18,6 +15,7 @@ import javax.persistence.*;
 public class HashTag extends BaseTimeEntity {
 
     @Id
+    @Column(name="hashtag_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -25,6 +23,6 @@ public class HashTag extends BaseTimeEntity {
     private String name;
 
     @Column
-    private String description;
+    private String descr;
 
 }
