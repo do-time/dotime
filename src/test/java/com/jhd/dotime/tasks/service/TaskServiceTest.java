@@ -47,7 +47,7 @@ class TaskServiceTest {
     @Before
     public void beforeEach(){
         MockitoAnnotations.initMocks(this);
-        this.taskService = new TaskServiceImpl(this.taskRepository, this.memberRepository);
+//        this.taskService = new TaskServiceImpl(this.taskRepository, this.memberRepository);
     }
 
 
