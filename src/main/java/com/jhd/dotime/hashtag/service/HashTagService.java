@@ -11,6 +11,6 @@ import java.util.List;
 public interface HashTagService {
 
     List<HashTag> getHashTagList();
-    Long createHashtag(HashTagRequestDto hashTagRequestDto);
+    Long createHashtag(Long taskId, HashTagRequestDto hashTagRequestDto);
 
 }

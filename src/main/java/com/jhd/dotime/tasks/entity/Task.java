@@ -26,8 +26,6 @@ public class Task extends BaseTimeEntity {
     @Column
     private String content;
 
-//    @Column
-//    private Long tasktag_id;
 
 
     @Builder
