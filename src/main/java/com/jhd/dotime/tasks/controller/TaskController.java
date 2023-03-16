@@ -1,5 +1,7 @@
 package com.jhd.dotime.tasks.controller;
 
+import com.jhd.dotime.hashtag.service.HashTagService;
+import com.jhd.dotime.hashtag.service.TaskTagService;
 import com.jhd.dotime.members.entity.Member;
 import com.jhd.dotime.members.service.MemberService;
 import com.jhd.dotime.tasks.dto.TaskSaveRequestDto;
@@ -29,6 +31,8 @@ public class TaskController {
     private final TaskService taskService;
 
     private final MemberService memberService;
+
+    private final HashTagService hashTagService;
 
 
     @ApiResponses({
@@ -104,6 +108,7 @@ public class TaskController {
     })
     @PostMapping("/members/{memberId}/task")
     public Long saveTask(@PathVariable Long memberId, @RequestBody TaskSaveRequestDto taskSaveRequestDto){
+        hashTagService.createHashtag(taskSaveRequestDto.getHashtag());
         return taskService.insert(memberId, taskSaveRequestDto);
     }
 

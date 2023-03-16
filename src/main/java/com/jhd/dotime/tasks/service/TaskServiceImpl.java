@@ -2,6 +2,7 @@ package com.jhd.dotime.tasks.service;
 
 import com.jhd.dotime.common.error.ErrorCode;
 import com.jhd.dotime.common.exception.CustomException;
+import com.jhd.dotime.hashtag.repository.HashTagRepository;
 import com.jhd.dotime.hashtag.repository.TaskTagRepository;
 import com.jhd.dotime.members.repository.MemberRepository;
 import com.jhd.dotime.tasks.common.error.TaskErrorCode;
@@ -26,7 +27,7 @@ public class TaskServiceImpl implements TaskService{
 
     private final MemberRepository memberRepository;
 
-    private final TaskTagRepository taskTagRepository;
+//    private final HashTagRepository hashTagRepository;
 
     @Override
     @Transactional
