@@ -22,7 +22,5 @@ public class HashTag extends BaseTimeEntity {
     @Column
     private String name;
 
-    @Column
-    private String descr;
 
 }
