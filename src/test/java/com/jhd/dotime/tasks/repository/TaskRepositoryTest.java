@@ -35,7 +35,7 @@ class TaskRepositoryTest {
     @DisplayName("[Repository] task 조회")
     public void getTask() {
         //given
-        Task task = Task.builder().title("new task").content("nono").build();
+        Task task = Task.builder().title("new task").content("nono").hashtag("#hello#bye").build();
 
         //when
         taskRepository.save(task);
@@ -59,7 +59,7 @@ class TaskRepositoryTest {
 
         memberRepository.save(newMember);
         Long memberId = memberRepository.findByEmail(newMember.getEmail()).get().getId();
-        Task task1 = new Task(1L, newMember, "test1", "testtest");
+        Task task1 = new Task(1L, newMember,  "new task", "test1", "testtest");
 
         taskRepository.save(task1);
 //        taskRepository.save(task2);
@@ -91,7 +91,7 @@ class TaskRepositoryTest {
 
         //when
         memberRepository.save(newMember);
-        Task newTask = Task.builder().member(newMember).title("save task").content("save task test").build();
+        Task newTask = new Task(1L, newMember,  "new task", "test1", "testtest");
         taskRepository.save(newTask);
         List<Task> taskList = taskRepository.findTaskListByMemberId(newMember.getId());
 //        newMember.setTask(taskList);
@@ -114,7 +114,7 @@ class TaskRepositoryTest {
 
         //when
         memberRepository.save(newMember);
-        Task newTask = Task.builder().member(newMember).title("save task").content("save task test").build();
+        Task newTask = new Task(1L, newMember,  "new task", "test1", "testtest");
         taskRepository.save(newTask);
         List<Task> taskList = taskRepository.findAll();
         for (Task task : taskList) {
