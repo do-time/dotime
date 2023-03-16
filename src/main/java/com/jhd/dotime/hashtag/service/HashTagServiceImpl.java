@@ -12,6 +12,7 @@ import com.jhd.dotime.members.entity.Member;
 import com.jhd.dotime.members.repository.MemberRepository;
 import com.jhd.dotime.tasks.common.error.TaskErrorCode;
 import com.jhd.dotime.tasks.common.exception.TaskException;
+import com.jhd.dotime.tasks.dto.TaskSaveRequestDto;
 import com.jhd.dotime.tasks.entity.Task;
 import com.jhd.dotime.tasks.repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 @RequiredArgsConstructor
@@ -39,12 +42,20 @@ public class HashTagServiceImpl implements HashTagService {
 
     @Override
     @Transactional
-    public Long createHashtag(Long taskId, HashTagRequestDto hashTagRequestDto) {
-        Task task = taskRepository.findById(taskId).orElseThrow(() -> new TaskException(TaskErrorCode.TASK_NOT_FOUNT));
-        TaskTag newTaskTag = TaskTag.builder().task(task).hashTag(hashTagRequestDto.toEntity()).build();
-        taskTagRepository.save(newTaskTag);
+    public void createHashtag(String hashtag) {
+//        Task task = taskRepository.findById(taskId).orElseThrow(() -> new TaskException(TaskErrorCode.TASK_NOT_FOUNT));
+//        TaskTag newTaskTag = TaskTag.builder().task(task).hashTag(hashTagRequestDto.toEntity()).build();
+//        taskTagRepository.save(newTaskTag);
+        String pat = "#(\\S+)";
+        Pattern pattern = Pattern.compile(pat);
+        Matcher res = pattern.matcher(hashtag);
 
-        return newTaskTag.getId();
+        while(res.find()){
+//            System.out.println("res.group() = " + res.group(1));
+            HashTag newTag = HashTag.builder().name(res.group(1)).build();
+            hashTagRepository.save(newTag);
+        }
+
 
     }
 }

@@ -18,13 +18,10 @@ import javax.persistence.Column;
 public class HashTagRequestDto {
     private String name;
 
-    private String descr;
-
 
     public HashTag toEntity(){
         return HashTag.builder()
                 .name(name)
-                .descr(descr)
                 .build();
     }
 }

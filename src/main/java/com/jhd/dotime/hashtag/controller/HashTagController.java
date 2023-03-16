@@ -44,7 +44,7 @@ public class HashTagController {
     @ResponseBody
     @PatchMapping("/hashtag")
     public void createHashTag(@PathVariable Long taskId, @RequestBody HashTagRequestDto hashTagRequestDto){
-        hashTagService.createHashtag(taskId, hashTagRequestDto);
+//        hashTagService.createHashtag(taskId, hashTagRequestDto);
     }
 
     @ApiResponses({
