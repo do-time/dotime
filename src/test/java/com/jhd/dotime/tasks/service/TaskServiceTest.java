@@ -56,7 +56,7 @@ class TaskServiceTest {
     @DisplayName("[Service] Task 삽입")
     public void insert() {
         //given
-        TaskSaveRequestDto task = TaskSaveRequestDto.builder().title("new task").content("new task unit test").build();
+        TaskSaveRequestDto task = TaskSaveRequestDto.builder().title("new task").hashtag("#hello#bye").content("new task unit test").build();
         //given
         Member newMember = Member.builder()
                 .email("test@test.com")
@@ -98,7 +98,7 @@ class TaskServiceTest {
                 .build();
 
         memberRepository.save(newMember);
-        Task task = new Task(1L, newMember,"new Task", "Task Test");
+        Task task = new Task(1L, newMember, "test1","new Task", "Task Test");
 
         //when
         given(taskRepository.findById(task.getId())).willReturn(Optional.of(task));
@@ -122,7 +122,7 @@ class TaskServiceTest {
                 .build();
 
         memberRepository.save(newMember);
-        Task task = new Task(1L, newMember,"new Task", "Task Test");
+        Task task = new Task(1L, newMember, "test1","new Task", "Task Test");
         given(taskRepository.findById(task.getId())).willReturn(Optional.of(task));
         //when
         when(taskRepository.findById(task.getId())).thenReturn(Optional.of(task));
@@ -145,10 +145,10 @@ class TaskServiceTest {
                 .build();
 
         memberRepository.save(newMember);
-        Task task = new Task(1L, newMember,"new Task", "Task Test");
-        Task task2 = new Task(2L, newMember,"new Task", "Task Test");
+        Task task1 = new Task(1L, newMember, "test1","new Task1", "Task Test");
+        Task task2 = new Task(2L, newMember, "test1","new Task2", "Task Test");
         List<Task> taskList = new ArrayList<>();
-        taskList.add(task);
+        taskList.add(task1);
         taskList.add(task2);
         given(taskRepository.findAll()).willReturn(taskList);
         //when
@@ -173,7 +173,7 @@ class TaskServiceTest {
                 .build();
 
         memberRepository.save(newMember);
-        Task task = new Task(1L, newMember,"new Task", "Task Test");
+        Task task = new Task(1L, newMember, "test1","new Task1", "Task Test");
         TaskUpdateRequestDto taskUpdateRequestDto = new TaskUpdateRequestDto("update task", "update task test22");
         given(taskRepository.findById(1L)).willReturn(Optional.of(task));
 
