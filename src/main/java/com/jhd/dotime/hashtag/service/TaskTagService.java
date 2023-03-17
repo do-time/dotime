@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface TaskTagService {
 
-    Long createTaskTag(Long memberId, Long taskId);
+    Long createTaskTag(Long taskId, List<Long> hashtagIdLst);
 
     List<HashTag> getHashTagList(Long taskId);
 }

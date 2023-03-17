@@ -30,7 +30,7 @@ public class TaskController {
 
     private final TaskService taskService;
 
-    private final MemberService memberService;
+    private final TaskTagService taskTagService;
 
     private final HashTagService hashTagService;
 
@@ -108,8 +108,8 @@ public class TaskController {
     })
     @PostMapping("/members/{memberId}/task")
     public Long saveTask(@PathVariable Long memberId, @RequestBody TaskSaveRequestDto taskSaveRequestDto){
-        hashTagService.createHashtag(taskSaveRequestDto.getHashtag());
-        return taskService.insert(memberId, taskSaveRequestDto);
+        return taskTagService.createTaskTag(taskService.insert(memberId, taskSaveRequestDto), hashTagService.createHashtag(taskSaveRequestDto.getHashtag()));
+
     }
 
 

@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -42,10 +43,8 @@ public class HashTagServiceImpl implements HashTagService {
 
     @Override
     @Transactional
-    public void createHashtag(String hashtag) {
-//        Task task = taskRepository.findById(taskId).orElseThrow(() -> new TaskException(TaskErrorCode.TASK_NOT_FOUNT));
-//        TaskTag newTaskTag = TaskTag.builder().task(task).hashTag(hashTagRequestDto.toEntity()).build();
-//        taskTagRepository.save(newTaskTag);
+    public List<Long> createHashtag(String hashtag) {
+        List<Long> hashtagIdLst = new ArrayList<>();
         String pat = "#(\\S+)";
         Pattern pattern = Pattern.compile(pat);
         Matcher res = pattern.matcher(hashtag);
@@ -53,9 +52,15 @@ public class HashTagServiceImpl implements HashTagService {
         while(res.find()){
 //            System.out.println("res.group() = " + res.group(1));
             HashTag newTag = HashTag.builder().name(res.group(1)).build();
-            hashTagRepository.save(newTag);
+            HashTag hashTag = hashTagRepository.findByName(res.group(1));
+            if (hashTag == null){
+                hashTagRepository.save(newTag);
+                hashtagIdLst.add(newTag.getId());
+            }else
+                hashtagIdLst.add(hashTag.getId());
+
         }
 
-
+        return hashtagIdLst;
     }
 }

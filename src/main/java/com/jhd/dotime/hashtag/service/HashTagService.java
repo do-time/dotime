@@ -15,6 +15,6 @@ public interface HashTagService {
     List<HashTag> getHashTagList();
 //    Long createHashtag(Long taskId, HashTagRequestDto hashTagRequestDto);
 
-    void createHashtag(String hashtag);
+    List<Long> createHashtag(String hashtag);
 
 }
