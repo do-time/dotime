@@ -32,7 +32,6 @@ public class TaskSaveRequestDto {
                 .member(member)
                 .title(title)
                 .content(content)
-                .hashtag(hashtag)
                 .build();
     }
 
