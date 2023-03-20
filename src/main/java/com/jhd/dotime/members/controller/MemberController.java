@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin("*")
-@RequestMapping("/api/v1/member")
+@RequestMapping("/member")
 public class MemberController {
 
     private final MemberService memberService;
