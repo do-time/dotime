@@ -1,18 +1,17 @@
 package com.jhd.dotime.tasks.service;
 
-import com.jhd.dotime.common.error.ErrorCode;
 import com.jhd.dotime.common.exception.CustomException;
-import com.jhd.dotime.hashtag.repository.HashTagRepository;
-import com.jhd.dotime.hashtag.repository.TaskTagRepository;
+import com.jhd.dotime.members.common.error.MemberErrorCode;
 import com.jhd.dotime.members.repository.MemberRepository;
 import com.jhd.dotime.tasks.common.error.TaskErrorCode;
 import com.jhd.dotime.tasks.common.exception.TaskException;
-import com.jhd.dotime.tasks.dto.TaskSaveRequestDto;
-import com.jhd.dotime.tasks.dto.TaskUpdateRequestDto;
+import com.jhd.dotime.tasks.dto.TaskRequestDto;
 import com.jhd.dotime.tasks.dto.TaskResponseDto;
 import com.jhd.dotime.tasks.entity.Task;
+import com.jhd.dotime.tasks.mapper.TaskMapper;
 import com.jhd.dotime.tasks.repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
+import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,16 +26,14 @@ public class TaskServiceImpl implements TaskService{
 
     private final MemberRepository memberRepository;
 
+    private final TaskMapper taskMapper = Mappers.getMapper(TaskMapper.class);
+
 //    private final HashTagRepository hashTagRepository;
 
     @Override
     @Transactional
-    public Long insert(Long memberId, TaskSaveRequestDto taskSaveRequestDto) {
-        Task newTask = Task.builder()
-                .member(memberRepository.findById(memberId).get())
-                .title(taskSaveRequestDto.getTitle())
-                .content(taskSaveRequestDto.getContent())
-                .build();
+    public Long insert(Long memberId, TaskRequestDto taskRequestDto) {
+        Task newTask = taskMapper.toEntity(taskRequestDto, memberRepository.findById(memberId).orElseThrow(() -> new CustomException(MemberErrorCode.MEMBER_NOT_FOUND)));
 
         //* 같은 이름의 title이 task list에 존재하는지 확인 있다면 DUPLICATE_RESOURCE 처리 *//
         List<Task> taskLst = taskRepository.findTaskListByMemberId(memberId);
@@ -83,11 +80,11 @@ public class TaskServiceImpl implements TaskService{
 
     @Override
     @Transactional
-    public Long update(Long id, TaskUpdateRequestDto taskUpdateRequestDto) {
+    public Long update(Long id, TaskRequestDto taskRequestDto) {
         Task tasks = taskRepository.findById(id)
                 .orElseThrow(() -> new TaskException(TaskErrorCode.TASK_NOT_FOUNT));
 
-        tasks.update(taskUpdateRequestDto.getTitle(), taskUpdateRequestDto.getContent());
+        tasks.update(taskRequestDto.getTitle(), taskRequestDto.getContent());
         return id;
     }
 
