@@ -1,5 +1,10 @@
 # properties to yaml
 # https://mageddo.com/tools/yaml-converter
+server:
+  port: 8000
+  servlet:
+    context-path: /api/v1
+
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
