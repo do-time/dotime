@@ -2,12 +2,8 @@ package com.jhd.dotime.tasks.controller;
 
 import com.jhd.dotime.hashtag.service.HashTagService;
 import com.jhd.dotime.hashtag.service.TaskTagService;
-import com.jhd.dotime.members.entity.Member;
-import com.jhd.dotime.members.service.MemberService;
-import com.jhd.dotime.tasks.dto.TaskSaveRequestDto;
+import com.jhd.dotime.tasks.dto.TaskRequestDto;
 import com.jhd.dotime.tasks.dto.TaskResponseDto;
-import com.jhd.dotime.tasks.dto.TaskUpdateRequestDto;
-import com.jhd.dotime.tasks.entity.Task;
 import com.jhd.dotime.tasks.service.TaskService;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -16,8 +12,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -84,8 +78,8 @@ public class TaskController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @PatchMapping("members/{memberId}/task/{id}")
-    public Long updateTask(@PathVariable Long memberId, @PathVariable Long id, @RequestBody TaskUpdateRequestDto taskUpdateRequestDto){
-        return taskService.update(id, taskUpdateRequestDto);
+    public Long updateTask(@PathVariable Long memberId, @PathVariable Long id, @RequestBody TaskRequestDto taskRequestDto){
+        return taskService.update(id, taskRequestDto);
 
     }
 //    @ApiResponses({
@@ -107,8 +101,8 @@ public class TaskController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @PostMapping("/members/{memberId}/task")
-    public Long saveTask(@PathVariable Long memberId, @RequestBody TaskSaveRequestDto taskSaveRequestDto){
-        return taskTagService.createTaskTag(taskService.insert(memberId, taskSaveRequestDto), hashTagService.createHashtag(taskSaveRequestDto.getHashtag()));
+    public Long saveTask(@PathVariable Long memberId, @RequestBody TaskRequestDto taskRequestDto){
+        return taskTagService.createTaskTag(taskService.insert(memberId, taskRequestDto), hashTagService.createHashtag(taskRequestDto.getHashtag()));
 
     }
 
