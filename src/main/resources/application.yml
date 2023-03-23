@@ -1,7 +1,7 @@
 # properties to yaml
 # https://mageddo.com/tools/yaml-converter
 server:
-  port: 8000
+  port: 8080
   servlet:
     context-path: /api/v1
 
@@ -43,7 +43,7 @@ jwt:
   refresh:
     expiration: 90
     header: Authorization-refresh
-  access-token-validity-in-seconds: 600 # 10 min
+  access-token-validity-in-seconds: 6000 # 10 min
 
 #    oauth2:
 #      client:
