@@ -37,7 +37,7 @@ public class Member extends BaseTimeEntity {
 //    @JoinColumn(name = "member_id")
 //    private List<Task> task = new ArrayList<>();
 
-    @ManyToMany
+    @ManyToMany(cascade=CascadeType.ALL)
     @JoinTable( // JoinTable은 테이블과 테이블 사이에 별도의 조인 테이블을 만들어 양 테이블간의 연관관계를 설정 하는 방법
             name = "member_authority",
             joinColumns = {@JoinColumn(name = "member_id", referencedColumnName = "member_id")},
