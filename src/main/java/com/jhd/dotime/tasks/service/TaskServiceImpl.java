@@ -38,7 +38,8 @@ public class TaskServiceImpl implements TaskService{
         //* 같은 이름의 title이 task list에 존재하는지 확인 있다면 DUPLICATE_RESOURCE 처리 *//
         List<Task> taskLst = taskRepository.findTaskListByMemberId(memberId);
         for (Task task : taskLst) {
-            if(task.getTitle().equals(newTask.getTitle())) throw new TaskException(TaskErrorCode.DUPLICATE_TASK_RESOURCE);
+            if(task.getTitle().equals(newTask)) throw new CustomException(ErrorCode.DUPLICATE_RESOURCE);
+
         }
 
 
