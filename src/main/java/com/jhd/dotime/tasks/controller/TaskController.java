@@ -1,5 +1,7 @@
 package com.jhd.dotime.tasks.controller;
 
+import com.jhd.dotime.hashtag.service.HashTagService;
+import com.jhd.dotime.hashtag.service.TaskTagService;
 import com.jhd.dotime.members.entity.Member;
 import com.jhd.dotime.members.service.MemberService;
 import com.jhd.dotime.tasks.dto.TaskSaveRequestDto;
@@ -28,7 +30,9 @@ public class TaskController {
 
     private final TaskService taskService;
 
-    private final MemberService memberService;
+    private final TaskTagService taskTagService;
+
+    private final HashTagService hashTagService;
 
 
     @ApiResponses({
@@ -60,6 +64,17 @@ public class TaskController {
         return taskService.findTaskList();
     }
 
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND"),
+            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
+    })
+    @PostMapping("/members/{memberId}/task")
+    public Long saveTask(@PathVariable Long memberId, @RequestBody TaskSaveRequestDto taskSaveRequestDto){
+        return taskTagService.createTaskTag(taskService.insert(memberId, taskSaveRequestDto), hashTagService.createHashtag(taskSaveRequestDto.getHashtag()));
+
+    }
 
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK"),
@@ -95,17 +110,6 @@ public class TaskController {
 ////        return new ResponseEntity<>(taskService.update(id, taskUpdateRequestDto), HttpStatus.CREATED);
 //
 //    }
-
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "OK"),
-            @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
-            @ApiResponse(responseCode = "404", description = "NOT FOUND"),
-            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
-    })
-    @PostMapping("/members/{memberId}/task")
-    public Long saveTask(@PathVariable Long memberId, @RequestBody TaskSaveRequestDto taskSaveRequestDto){
-        return taskService.insert(memberId, taskSaveRequestDto);
-    }
 
 
     @ApiResponses({

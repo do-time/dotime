@@ -15,15 +15,17 @@ public class TaskSaveRequestDto {
     private String title;
     private String content;
 
+    private String hashtag;
 
 //    LocalDateTime createdDate;
 //
 //    LocalDateTime updatedDate;
 
     @Builder
-    public TaskSaveRequestDto(String title, String content){
+    public TaskSaveRequestDto(String title, String content, String hashtag){
         this.title = title;
         this.content = content;
+        this.hashtag = hashtag;
     }
     public Task toEntity(Member member){
         return Task.builder()

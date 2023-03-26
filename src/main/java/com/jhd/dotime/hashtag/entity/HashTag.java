@@ -12,7 +12,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity(name="hashtag")
 @Builder
-public class HashTag extends BaseTimeEntity {
+public class HashTag extends BaseTimeEntity { // 실제 HashTag를 저장하는 엔티티
 
     @Id
     @Column(name="hashtag_id")
@@ -22,7 +22,5 @@ public class HashTag extends BaseTimeEntity {
     @Column
     private String name;
 
-    @Column
-    private String descr;
 
 }
