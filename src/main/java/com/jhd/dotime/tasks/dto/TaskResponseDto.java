@@ -16,12 +16,15 @@ public class TaskResponseDto {
     private final LocalDateTime createdDate;
     private final LocalDateTime updatedDate;
 
+    private final String hashtag;
+
     public TaskResponseDto(Task entity){
         this.id = entity.getId();
         this.title = entity.getTitle();
         this.content = entity.getContent();
         this.createdDate = entity.getCreatedDate();
         this.updatedDate = entity.getUpdatedDate();
+        this.hashtag = entity.getHashtag();
 
     }
 }

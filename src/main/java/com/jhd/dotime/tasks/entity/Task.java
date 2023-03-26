@@ -26,13 +26,17 @@ public class Task extends BaseTimeEntity {
     @Column
     private String content;
 
+    @Column
+    private String hashtag;
+
 
 
     @Builder
-    public Task(Member member, String title, String content){
+    public Task(Member member, String title, String content, String hashtag){
         this.member = member;
         this.title = title;
         this.content = content;
+        this.hashtag = hashtag;
     }
 
 
