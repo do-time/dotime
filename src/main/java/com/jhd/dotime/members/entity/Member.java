@@ -2,6 +2,7 @@ package com.jhd.dotime.members.entity;
 
 import com.jhd.dotime.auth.entity.Authority;
 import com.jhd.dotime.common.entity.BaseTimeEntity;
+import io.jsonwebtoken.Claims;
 import lombok.*;
 
 import javax.persistence.*;
@@ -53,5 +54,9 @@ public class Member extends BaseTimeEntity {
         this.authorities = authorities;
         this.activated = activated;
 //        this.tokenWeight = 1L;
+    }
+
+    public Member(Claims claims){
+
     }
 }
