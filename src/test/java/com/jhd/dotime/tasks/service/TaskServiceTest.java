@@ -3,14 +3,11 @@ package com.jhd.dotime.tasks.service;
 
 import com.jhd.dotime.members.entity.Member;
 import com.jhd.dotime.members.repository.MemberRepository;
-import com.jhd.dotime.members.service.MemberServiceImpl;
 import com.jhd.dotime.tasks.dto.TaskResponseDto;
-import com.jhd.dotime.tasks.dto.TaskSaveRequestDto;
-import com.jhd.dotime.tasks.dto.TaskUpdateRequestDto;
+import com.jhd.dotime.tasks.dto.TaskRequestDto;
 import com.jhd.dotime.tasks.entity.Task;
 import com.jhd.dotime.tasks.repository.TaskRepository;
 import org.assertj.core.api.Assertions;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,11 +15,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import javax.transaction.Transactional;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -56,7 +50,7 @@ class TaskServiceTest {
     @DisplayName("[Service] Task 삽입")
     public void insert() {
         //given
-        TaskSaveRequestDto task = TaskSaveRequestDto.builder().title("new task").hashtag("#hello#bye").content("new task unit test").build();
+        TaskRequestDto task = TaskRequestDto.builder().title("new task").hashtag("#hello#bye").content("new task unit test").build();
         //given
         Member newMember = Member.builder()
                 .email("test@test.com")
@@ -174,16 +168,16 @@ class TaskServiceTest {
 
         memberRepository.save(newMember);
         Task task = new Task(1L, newMember, "test1","new Task1", "Task Test");
-        TaskUpdateRequestDto taskUpdateRequestDto = new TaskUpdateRequestDto("update task", "update task test22");
+        TaskRequestDto taskRequestDto = new TaskRequestDto("update task", "update task test22", "#testtag");
         given(taskRepository.findById(1L)).willReturn(Optional.of(task));
 
         //when
-        Long id = taskService.update(1L, taskUpdateRequestDto);
+        Long id = taskService.update(1L, taskRequestDto);
         System.out.println("task.getTitle() = " + task.getTitle());
 
         //then
         Assertions.assertThat(id).isEqualTo(task.getId());
-        Assertions.assertThat(taskUpdateRequestDto.getTitle()).isEqualTo(task.getTitle());
+        Assertions.assertThat(taskRequestDto.getTitle()).isEqualTo(task.getTitle());
 
     }
 

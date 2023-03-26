@@ -32,6 +32,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         this.jwtAccessDeniedHandler = jwtAccessDeniedHandler;
     }
 
+    private static final String[] SWAGGER_URL = {
+            /* swagger v2 */
+            "/v2/api-docs",
+            "/swagger-resources",
+            "/swagger-resources/**",
+            "/configuration/ui",
+            "/configuration/security",
+            "/swagger-ui.html",
+            "/webjars/**"
+    };
+
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
@@ -71,9 +82,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/api/signup").permitAll()
-                .antMatchers("/api/auth/**").permitAll()
-                .antMatchers("/swagger-ui.html").permitAll()
-//                .anyRequest().authenticated()
+                .antMatchers("/auth/**").permitAll()
+                .antMatchers(SWAGGER_URL).permitAll()
+                .anyRequest().authenticated()
 
                 .and()
                 .apply(new JwtSecurityConfig(tokenProvider)) // JwtSecurityConfig 적용

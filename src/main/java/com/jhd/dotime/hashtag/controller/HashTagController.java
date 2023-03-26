@@ -3,14 +3,11 @@ package com.jhd.dotime.hashtag.controller;
 
 import com.jhd.dotime.hashtag.dto.HashTagRequestDto;
 import com.jhd.dotime.hashtag.entity.HashTag;
-import com.jhd.dotime.hashtag.entity.TaskTag;
 import com.jhd.dotime.hashtag.service.HashTagService;
 import com.jhd.dotime.hashtag.service.TaskTagService;
-import com.jhd.dotime.tasks.dto.TaskSaveRequestDto;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

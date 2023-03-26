@@ -34,7 +34,7 @@ public class HashTagRepositoryTest {
     @DisplayName("tag 생성 테스트")
     public void tagCreate() {
         //given
-        HashTag newTag = HashTag.builder().id(1L).name("newTag").descr("this is new tag").build();
+        HashTag newTag = HashTag.builder().id(1L).name("newTag").build();
 
         //when
         hashTagRepository.save(newTag);
@@ -51,7 +51,7 @@ public class HashTagRepositoryTest {
     @DisplayName("tag 삭제 테스트")
     public void tagDelete(){
         //given
-        HashTag newTag = HashTag.builder().id(1L).name("newTag").descr("this is new tag").build();
+        HashTag newTag = HashTag.builder().id(1L).name("newTag").build();
 
         //when
         hashTagRepository.save(newTag);
