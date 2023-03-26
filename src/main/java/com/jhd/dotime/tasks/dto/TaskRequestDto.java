@@ -26,6 +26,7 @@ public class TaskRequestDto {
                 .member(member)
                 .title(title)
                 .content(content)
+                .hashtag(hashtag)
                 .build();
     }
 

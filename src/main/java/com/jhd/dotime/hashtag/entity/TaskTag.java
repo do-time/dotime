@@ -15,7 +15,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity(name="tasktag")
 @Builder
-public class TaskTag { // Task와 HashTag를 매핑하는 테이블
+public class TaskTag {
     @Id
     @Column(name="tasktag_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
