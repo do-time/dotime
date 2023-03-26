@@ -1,9 +1,13 @@
 package com.jhd.dotime.members.controller;
 
 
+import com.jhd.dotime.common.annotation.CurrentMember;
 import com.jhd.dotime.members.dto.MemberRequestDto;
 import com.jhd.dotime.members.dto.MemberResponseDto;
+import com.jhd.dotime.members.entity.Member;
 import com.jhd.dotime.members.service.MemberService;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,11 +17,17 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin("*")
-@RequestMapping("/api/v1/member")
+@RequestMapping("/member")
 public class MemberController {
 
     private final MemberService memberService;
 
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND"),
+            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
+    })
     @PostMapping()
     public ResponseEntity<Void> createMember(@RequestBody MemberRequestDto memberRequestDto) {
         memberService.createMember(memberRequestDto);
@@ -27,13 +37,25 @@ public class MemberController {
     /*
      * JWT 도입 이후 email 파라미터 삭제 예정
      */
-    @GetMapping("/{email}")
-    public ResponseEntity<MemberResponseDto> getMember(@PathVariable String email) {
-        return new ResponseEntity<>(memberService.getMember(email), HttpStatus.OK);
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND"),
+            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
+    })
+    @GetMapping()
+    public ResponseEntity<MemberResponseDto> getMember(@CurrentMember Member member) {
+        return new ResponseEntity<>(memberService.getMember(member.getEmail()), HttpStatus.OK);
     }
 
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND"),
+            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
+    })
     @PatchMapping()
-    public ResponseEntity<Void> updateMember(@RequestBody MemberRequestDto memberRequestDto){
+    public ResponseEntity<Void> updateMember(@RequestBody MemberRequestDto memberRequestDto, @CurrentMember Member member){
         memberService.updateMember(memberRequestDto);
 
         return new ResponseEntity<>(HttpStatus.OK);
@@ -42,9 +64,15 @@ public class MemberController {
     /*
      * JWT 도입 이후 id 파라미터 삭제 예정
      */
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteMember(@PathVariable Long id){
-        memberService.deleteMember(id);
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND"),
+            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
+    })
+    @DeleteMapping()
+    public ResponseEntity<Void> deleteMember(@CurrentMember Member member){
+        memberService.deleteMember(member.getId());
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

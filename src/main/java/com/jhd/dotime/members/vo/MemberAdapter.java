@@ -16,8 +16,8 @@ public class MemberAdapter extends User {
     private Member member;
 
     public MemberAdapter(Member member) {
-        super(member.getUsername(), member.getPassword(), authorities(member.getAuthorities()));
-
+        super(member.getEmail(), member.getPassword(), authorities(member.getAuthorities()));
+        this.member = member;
     }
     private static List<GrantedAuthority> authorities(Set<Authority> authorities) {
         return authorities.stream()

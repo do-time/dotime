@@ -1,6 +1,7 @@
 package com.jhd.dotime.common.security;
 
 
+import com.jhd.dotime.auth.service.UserDetailsServiceImpl;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -11,6 +12,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.security.Key;
 import java.util.Arrays;
@@ -23,7 +26,7 @@ import java.util.stream.Collectors;
  * 토큰을 생성하고 검증하며 토큰에서 정보를 꺼내 스프링 시큐리티 Authentication 객체 생성
  */
 public class TokenProvider {
-
+    private final UserDetailsService userDetailsService;
     protected final Logger logger = LoggerFactory.getLogger(TokenProvider.class);
 
     protected static final String AUTHORITIES_KEY = "auth";
@@ -34,9 +37,10 @@ public class TokenProvider {
     protected Key key;
 
 
-    public TokenProvider(String secret, long tokenValidityInSeconds) {
+    public TokenProvider(String secret, long tokenValidityInSeconds, UserDetailsService userDetailsService) {
         this.secret = secret;
         this.tokenValidityInMilliseconds = tokenValidityInSeconds * 1000;
+        this.userDetailsService = userDetailsService;
 
         //시크릿 값을 decode해서 키 변수에 할당
         byte[] keyBytes = Decoders.BASE64.decode(secret);
@@ -55,6 +59,7 @@ public class TokenProvider {
         return Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim(AUTHORITIES_KEY, authorities)
+                .claim("email", authentication.getName())
                 .signWith(key, SignatureAlgorithm.HS512)
                 .setExpiration(validity)
                 .compact();
@@ -77,7 +82,10 @@ public class TokenProvider {
         // 디비를 거치지 않고 토큰에서 값을 꺼내 바로 시큐리티 유저 객체를 만들어 Authentication을 만들어 반환하기에 유저네임, 권한 외 정보는 알 수 없다.
         User principal = new User(claims.getSubject(), "", authorities);
 
-        return new UsernamePasswordAuthenticationToken(principal, token, authorities);
+        //return new UsernamePasswordAuthenticationToken(principal, token, authorities);
+        UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getUsername());
+
+        return new UsernamePasswordAuthenticationToken(userDetails, token, userDetails.getAuthorities());
     }
 
     // 토큰 유효성 검사
