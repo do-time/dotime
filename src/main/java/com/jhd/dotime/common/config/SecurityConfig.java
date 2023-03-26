@@ -82,9 +82,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/api/signup").permitAll()
-                .antMatchers("/api/v1/auth/**").permitAll()
+                .antMatchers("/auth/**").permitAll()
                 .antMatchers(SWAGGER_URL).permitAll()
-                //.anyRequest().authenticated()
+                .anyRequest().authenticated()
 
                 .and()
                 .apply(new JwtSecurityConfig(tokenProvider)) // JwtSecurityConfig 적용

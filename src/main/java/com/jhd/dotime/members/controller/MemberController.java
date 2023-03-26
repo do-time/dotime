@@ -1,8 +1,10 @@
 package com.jhd.dotime.members.controller;
 
 
+import com.jhd.dotime.common.annotation.CurrentMember;
 import com.jhd.dotime.members.dto.MemberRequestDto;
 import com.jhd.dotime.members.dto.MemberResponseDto;
+import com.jhd.dotime.members.entity.Member;
 import com.jhd.dotime.members.service.MemberService;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -41,9 +43,9 @@ public class MemberController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND"),
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
-    @GetMapping("/{email}")
-    public ResponseEntity<MemberResponseDto> getMember(@PathVariable String email) {
-        return new ResponseEntity<>(memberService.getMember(email), HttpStatus.OK);
+    @GetMapping()
+    public ResponseEntity<MemberResponseDto> getMember(@CurrentMember Member member) {
+        return new ResponseEntity<>(memberService.getMember(member.getEmail()), HttpStatus.OK);
     }
 
     @ApiResponses({
@@ -53,7 +55,7 @@ public class MemberController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @PatchMapping()
-    public ResponseEntity<Void> updateMember(@RequestBody MemberRequestDto memberRequestDto){
+    public ResponseEntity<Void> updateMember(@RequestBody MemberRequestDto memberRequestDto, @CurrentMember Member member){
         memberService.updateMember(memberRequestDto);
 
         return new ResponseEntity<>(HttpStatus.OK);
@@ -68,9 +70,9 @@ public class MemberController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND"),
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteMember(@PathVariable Long id){
-        memberService.deleteMember(id);
+    @DeleteMapping()
+    public ResponseEntity<Void> deleteMember(@CurrentMember Member member){
+        memberService.deleteMember(member.getId());
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

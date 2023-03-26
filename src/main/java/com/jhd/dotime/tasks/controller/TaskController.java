@@ -1,7 +1,9 @@
 package com.jhd.dotime.tasks.controller;
 
+import com.jhd.dotime.common.annotation.CurrentMember;
 import com.jhd.dotime.hashtag.service.HashTagService;
 import com.jhd.dotime.hashtag.service.TaskTagService;
+import com.jhd.dotime.members.entity.Member;
 import com.jhd.dotime.tasks.dto.TaskRequestDto;
 import com.jhd.dotime.tasks.dto.TaskResponseDto;
 import com.jhd.dotime.tasks.service.TaskService;
@@ -77,8 +79,8 @@ public class TaskController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND"),
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
-    @PatchMapping("members/{memberId}/task/{id}")
-    public Long updateTask(@PathVariable Long memberId, @PathVariable Long id, @RequestBody TaskRequestDto taskRequestDto){
+    @PatchMapping("/task/{id}")
+    public Long updateTask(@PathVariable Long id, @RequestBody TaskRequestDto taskRequestDto, @CurrentMember Member member){
         return taskService.update(id, taskRequestDto);
 
     }
@@ -100,9 +102,9 @@ public class TaskController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND"),
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
-    @PostMapping("/members/{memberId}/task")
-    public Long saveTask(@PathVariable Long memberId, @RequestBody TaskRequestDto taskRequestDto){
-        return taskTagService.createTaskTag(taskService.insert(memberId, taskRequestDto), hashTagService.createHashtag(taskRequestDto.getHashtag()));
+    @PostMapping("/task")
+    public Long saveTask(@RequestBody TaskRequestDto taskRequestDto, @CurrentMember Member member){
+        return taskTagService.createTaskTag(taskService.insert(member.getId(), taskRequestDto), hashTagService.createHashtag(taskRequestDto.getHashtag()));
 
     }
 
@@ -114,9 +116,9 @@ public class TaskController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @ResponseBody
-    @GetMapping("/member/{memberId}/task")
-    public List<TaskResponseDto> getTaskList(@PathVariable Long memberId){
-        return taskService.getTaskListByMemberId(memberId);
+    @GetMapping("/task")
+    public List<TaskResponseDto> getTaskList(@CurrentMember Member member){
+        return taskService.getTaskListByMemberId(member.getId());
     }
 
 }
