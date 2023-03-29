@@ -116,7 +116,7 @@ public class TaskController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @ResponseBody
-    @GetMapping("/task")
+    @GetMapping("/taskList")
     public List<TaskResponseDto> getTaskList(@CurrentMember Member member){
         return taskService.getTaskListByMemberId(member.getId());
     }

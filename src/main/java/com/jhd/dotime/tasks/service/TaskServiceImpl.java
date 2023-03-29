@@ -1,5 +1,6 @@
 package com.jhd.dotime.tasks.service;
 
+import com.jhd.dotime.common.error.ErrorCode;
 import com.jhd.dotime.common.exception.CustomException;
 import com.jhd.dotime.members.common.error.MemberErrorCode;
 import com.jhd.dotime.members.repository.MemberRepository;
