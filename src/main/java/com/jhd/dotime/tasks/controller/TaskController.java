@@ -1,13 +1,11 @@
 package com.jhd.dotime.tasks.controller;
 
+import com.jhd.dotime.common.annotation.CurrentMember;
 import com.jhd.dotime.hashtag.service.HashTagService;
 import com.jhd.dotime.hashtag.service.TaskTagService;
 import com.jhd.dotime.members.entity.Member;
-import com.jhd.dotime.members.service.MemberService;
-import com.jhd.dotime.tasks.dto.TaskSaveRequestDto;
+import com.jhd.dotime.tasks.dto.TaskRequestDto;
 import com.jhd.dotime.tasks.dto.TaskResponseDto;
-import com.jhd.dotime.tasks.dto.TaskUpdateRequestDto;
-import com.jhd.dotime.tasks.entity.Task;
 import com.jhd.dotime.tasks.service.TaskService;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -16,8 +14,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -83,9 +79,9 @@ public class TaskController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND"),
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
-    @PatchMapping("members/{memberId}/task/{id}")
-    public Long updateTask(@PathVariable Long memberId, @PathVariable Long id, @RequestBody TaskUpdateRequestDto taskUpdateRequestDto){
-        return taskService.update(id, taskUpdateRequestDto);
+    @PatchMapping("/task/{id}")
+    public Long updateTask(@PathVariable Long id, @RequestBody TaskRequestDto taskRequestDto, @CurrentMember Member member){
+        return taskService.update(id, taskRequestDto);
 
     }
 //    @ApiResponses({
@@ -106,9 +102,9 @@ public class TaskController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND"),
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
-    @PostMapping("/members/{memberId}/task")
-    public Long saveTask(@PathVariable Long memberId, @RequestBody TaskSaveRequestDto taskSaveRequestDto){
-        return taskTagService.createTaskTag(taskService.insert(memberId, taskSaveRequestDto), hashTagService.createHashtag(taskSaveRequestDto.getHashtag()));
+    @PostMapping("/task")
+    public Long saveTask(@RequestBody TaskRequestDto taskRequestDto, @CurrentMember Member member){
+        return taskTagService.createTaskTag(taskService.insert(member.getId(), taskRequestDto), hashTagService.createHashtag(taskRequestDto.getHashtag()));
 
     }
 
@@ -120,9 +116,9 @@ public class TaskController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @ResponseBody
-    @GetMapping("/member/{memberId}/task")
-    public List<TaskResponseDto> getTaskList(@PathVariable Long memberId){
-        return taskService.getTaskListByMemberId(memberId);
+    @GetMapping("/task")
+    public List<TaskResponseDto> getTaskList(@CurrentMember Member member){
+        return taskService.getTaskListByMemberId(member.getId());
     }
 
 }
