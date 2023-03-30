@@ -9,23 +9,22 @@ import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 @Getter
-public class CustomException extends RuntimeException{
+public class CustomException extends RuntimeException {
 
 
     //    private final String message;
 //    private final HttpStatus status;
     private final BaseErrorCode errorCode;
 
-    public CustomException(BaseErrorCode errorCode, Throwable reason){
+    public CustomException(BaseErrorCode errorCode, Throwable reason) {
         super(errorCode.getMessage(), reason);
         this.errorCode = errorCode;
     }
 
-    public CustomException(BaseErrorCode errorCode){
+    public CustomException(BaseErrorCode errorCode) {
         super(errorCode.getMessage());
         this.errorCode = errorCode;
     }
-
 
 //    public CustomException(String message, HttpStatus status, Throwable reason) {
 //        super(message, reason);
@@ -38,4 +37,5 @@ public class CustomException extends RuntimeException{
 //        this.status = status;
 //        this.message = message;
 //    }
+
 }
