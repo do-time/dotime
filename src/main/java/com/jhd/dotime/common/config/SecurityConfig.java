@@ -82,6 +82,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/api/signup").permitAll()
+                .antMatchers("/", "/**").permitAll() // 전체 경로 허가
                 .antMatchers("/auth/**").permitAll()
                 .antMatchers(SWAGGER_URL).permitAll()
                 .anyRequest().authenticated()
