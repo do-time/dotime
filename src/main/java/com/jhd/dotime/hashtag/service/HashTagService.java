@@ -8,7 +8,7 @@ import java.util.List;
 public interface HashTagService {
 
     List<HashTag> getHashTagList();
-//    Long createHashtag(Long taskId, HashTagRequestDto hashTagRequestDto);
+//    Long createHashtag(Long taskId, HashTagDto.Request HashTagDto.Request);
 
     List<Long> createHashtag(String hashtag);
 
