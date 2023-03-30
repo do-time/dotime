@@ -15,7 +15,6 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/v1/members/{memberId}/tasks/{taskId}")
 public class HashTagController {
 
     private final HashTagService hashTagService;

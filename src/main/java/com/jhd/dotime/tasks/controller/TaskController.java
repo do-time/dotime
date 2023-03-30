@@ -21,7 +21,6 @@ import java.util.List;
 //@Tag(name = "tasks", description = "Task API")
 
 @RestController @RequiredArgsConstructor
-@RequestMapping("api/v1")
 public class TaskController {
 
     private final TaskService taskService;
