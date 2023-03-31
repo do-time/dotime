@@ -1,9 +1,14 @@
 package com.jhd.dotime.tasks.entity;
 
 import com.jhd.dotime.common.entity.BaseTimeEntity;
+import com.jhd.dotime.hashtag.entity.HashTag;
+import com.jhd.dotime.hashtag.entity.TaskTag;
 import com.jhd.dotime.members.entity.Member;
 import lombok.*;
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Getter
@@ -28,7 +33,8 @@ public class Task extends BaseTimeEntity {
 
     @Column
     private String hashtag;
-
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    List<TaskTag> taskTagList = new ArrayList<>();
 
 
     @Builder
@@ -39,7 +45,10 @@ public class Task extends BaseTimeEntity {
         this.hashtag = hashtag;
     }
 
-
+    public List<HashTag> getHashTag(){
+        return taskTagList.stream().map(TaskTag::getHashTag)
+                .collect(Collectors.toList());
+    }
 
     public void update(String title, String content){
         this.title = title;

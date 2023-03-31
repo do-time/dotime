@@ -1,7 +1,8 @@
 package com.jhd.dotime.tasks.service;
 
-import com.jhd.dotime.tasks.dto.TaskRequestDto;
-import com.jhd.dotime.tasks.dto.TaskResponseDto;
+import com.jhd.dotime.tasks.dto.TaskDto;
+
+
 import com.jhd.dotime.tasks.entity.Task;
 import org.springframework.stereotype.Service;
 
@@ -10,20 +11,20 @@ import java.util.List;
 @Service
 public interface TaskService {
 
-    Long insert(Long memberId, TaskRequestDto taskRequestDto);
+    Long insert(Long memberId, TaskDto.Request taskRequestDto);
 
-    TaskResponseDto findTask(Long id);
+    List<TaskDto.Response> findTask(Long id);
 
 
-    List<TaskResponseDto> findTaskList();
+    List<TaskDto.Response> findTaskList();
 
     Long delete(Long id);
 
     void save(Task task);
 
-    Long update(Long id, TaskRequestDto taskRequestDto);
+    Long update(Long id, TaskDto.Request taskRequestDto);
 
-    List<TaskResponseDto> getTaskListByMemberId(Long memberId);
+    List<TaskDto.Response> getTaskListByMemberId(Long memberId);
 
 
 }

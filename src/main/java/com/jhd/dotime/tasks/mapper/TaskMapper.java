@@ -1,7 +1,8 @@
 package com.jhd.dotime.tasks.mapper;
 
 import com.jhd.dotime.members.entity.Member;
-import com.jhd.dotime.tasks.dto.TaskRequestDto;
+import com.jhd.dotime.tasks.dto.TaskDto;
+
 import com.jhd.dotime.tasks.entity.Task;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
@@ -14,7 +15,7 @@ import org.mapstruct.ReportingPolicy;
 )
 public interface TaskMapper {
 
-    default Task toEntity(TaskRequestDto taskRequestDto, Member member){
+    default Task toEntity(TaskDto.Request taskRequestDto, Member member){
         return Task.builder()
                 .member(member)
                 .title(taskRequestDto.getTitle())

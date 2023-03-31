@@ -1,7 +1,8 @@
 package com.jhd.dotime.hashtag.controller;
 
 
-import com.jhd.dotime.hashtag.dto.HashTagRequestDto;
+import com.jhd.dotime.hashtag.dto.HashTagDto;
+import com.jhd.dotime.hashtag.dto.HashTagDto.Request;
 import com.jhd.dotime.hashtag.entity.HashTag;
 import com.jhd.dotime.hashtag.service.HashTagService;
 import com.jhd.dotime.hashtag.service.TaskTagService;
@@ -14,7 +15,6 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/v1/members/{memberId}/tasks/{taskId}")
 public class HashTagController {
 
     private final HashTagService hashTagService;
@@ -40,8 +40,8 @@ public class HashTagController {
     })
     @ResponseBody
     @PatchMapping("/hashtag")
-    public void createHashTag(@PathVariable Long taskId, @RequestBody HashTagRequestDto hashTagRequestDto){
-//        hashTagService.createHashtag(taskId, hashTagRequestDto);
+    public void createHashTag(@PathVariable Long taskId, @RequestBody HashTagDto.Request hashTagDtoRequest){
+//        hashTagService.createHashtag(taskId, hashTagDtoRequest);
     }
 
     @ApiResponses({

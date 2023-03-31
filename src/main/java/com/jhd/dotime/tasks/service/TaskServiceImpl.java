@@ -1,20 +1,27 @@
 package com.jhd.dotime.tasks.service;
 
+import com.jhd.dotime.common.error.ErrorCode;
 import com.jhd.dotime.common.exception.CustomException;
+import com.jhd.dotime.hashtag.entity.HashTag;
+import com.jhd.dotime.hashtag.entity.TaskTag;
+import com.jhd.dotime.hashtag.repository.HashTagRepository;
+import com.jhd.dotime.hashtag.repository.TaskTagRepository;
 import com.jhd.dotime.members.common.error.MemberErrorCode;
+import com.jhd.dotime.members.entity.Member;
 import com.jhd.dotime.members.repository.MemberRepository;
 import com.jhd.dotime.tasks.common.error.TaskErrorCode;
 import com.jhd.dotime.tasks.common.exception.TaskException;
-import com.jhd.dotime.tasks.dto.TaskRequestDto;
-import com.jhd.dotime.tasks.dto.TaskResponseDto;
+import com.jhd.dotime.tasks.dto.TaskDto;
+
 import com.jhd.dotime.tasks.entity.Task;
-import com.jhd.dotime.tasks.mapper.TaskMapper;
+//import com.jhd.dotime.tasks.mapper.TaskMapper;
 import com.jhd.dotime.tasks.repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
 import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,40 +33,59 @@ public class TaskServiceImpl implements TaskService{
 
     private final MemberRepository memberRepository;
 
-    private final TaskMapper taskMapper = Mappers.getMapper(TaskMapper.class);
+    private final TaskTagRepository taskTagRepository;
 
-//    private final HashTagRepository hashTagRepository;
+    private final HashTagRepository hashTagRepository;
+
+
+//    private final TaskMapper taskMapper = Mappers.getMapper(TaskMapper.class);
+
+
 
     @Override
     @Transactional
-    public Long insert(Long memberId, TaskRequestDto taskRequestDto) {
-        Task newTask = taskMapper.toEntity(taskRequestDto, memberRepository.findById(memberId).orElseThrow(() -> new CustomException(MemberErrorCode.MEMBER_NOT_FOUND)));
+    public Long insert(Long memberId, TaskDto.Request taskRequestDto) {
+//        Task newTask = taskMapper.toEntity(taskRequestDto, memberRepository.findById(memberId).orElseThrow(() -> new CustomException(MemberErrorCode.MEMBER_NOT_FOUND)));
+//        Task newTask = Task
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> new CustomException(MemberErrorCode.MEMBER_NOT_FOUND));
+//
+//        //* 같은 이름의 title이 task list에 존재하는지 확인 있다면 DUPLICATE_RESOURCE 처리 *//
+//        List<Task> taskLst = taskRepository.findTaskListByMemberId(memberId);
+//        for (Task task : taskLst) {
+//            if(task.getTitle().equals(newTask)) throw new CustomException(ErrorCode.DUPLICATE_RESOURCE);
+//
+//        }
 
-        //* 같은 이름의 title이 task list에 존재하는지 확인 있다면 DUPLICATE_RESOURCE 처리 *//
-        List<Task> taskLst = taskRepository.findTaskListByMemberId(memberId);
-        for (Task task : taskLst) {
-            if(task.getTitle().equals(newTask)) throw new CustomException(ErrorCode.DUPLICATE_RESOURCE);
-
-        }
-
-
-        return taskRepository.save(newTask).getId();
+        return taskRepository.save(Task.builder()
+                .member(member)
+                .content(taskRequestDto.getContent())
+                .title(taskRequestDto.getTitle())
+                .build()).getId();
     }
 
 
     @Override
     @Transactional(readOnly = true)
-    public TaskResponseDto findTask(Long id) {
+    public List<TaskDto.Response> findTask(Long id) {
         Task entity = taskRepository.findById(id)
                 .orElseThrow(() -> new TaskException(TaskErrorCode.TASK_NOT_FOUNT));
-        return new TaskResponseDto(entity);
+        List<TaskTag> taskTagList = taskTagRepository.findTaskTagByTaskId(id);
+        List<HashTag> hashTagList = new ArrayList<>();
+
+        for (TaskTag taskTag : taskTagList) {
+            hashTagList.add(taskTag.getHashTag());
+        }
+
+        return taskRepository.findById(id).stream()
+                .map(TaskDto.Response::of)
+                .collect(Collectors.toList());
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<TaskResponseDto> findTaskList() {
+    public List<TaskDto.Response> findTaskList() {
         return taskRepository.findAll().stream()
-                .map(TaskResponseDto::new)
+                .map(TaskDto.Response::of)
                 .collect(Collectors.toList());
     }
 
@@ -80,19 +106,20 @@ public class TaskServiceImpl implements TaskService{
 
     @Override
     @Transactional
-    public Long update(Long id, TaskRequestDto taskRequestDto) {
+    public Long update(Long id, TaskDto.Request taskRequestDto) {
         Task tasks = taskRepository.findById(id)
                 .orElseThrow(() -> new TaskException(TaskErrorCode.TASK_NOT_FOUNT));
 
         tasks.update(taskRequestDto.getTitle(), taskRequestDto.getContent());
+
         return id;
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<TaskResponseDto> getTaskListByMemberId(Long memberId){
+    public List<TaskDto.Response> getTaskListByMemberId(Long memberId){
         return taskRepository.findTaskListByMemberId(memberId).stream()
-                .map(TaskResponseDto::new)
+                .map(TaskDto.Response::of)
                 .collect(Collectors.toList());
     }
 
