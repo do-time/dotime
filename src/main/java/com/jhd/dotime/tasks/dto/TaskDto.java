@@ -47,6 +47,7 @@ public class TaskDto {
                     .content(task.getContent())
                     .createdDate(task.getCreatedDate())
                     .updatedDate(task.getUpdatedDate())
+//                    .hashtag(task.getHashTag().stream().map(HashTagDto.Response::of).collect(Collectors.toList()))
                     .hashtag(task.getHashTag().stream().map(HashTagDto.Response::of).collect(Collectors.toList()))
                     .build();
 

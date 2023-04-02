@@ -33,6 +33,8 @@ public class Task extends BaseTimeEntity {
 
     @Column
     private String hashtag;
+
+
     @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     List<TaskTag> taskTagList = new ArrayList<>();
 
