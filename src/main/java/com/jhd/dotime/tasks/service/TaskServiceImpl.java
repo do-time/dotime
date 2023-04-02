@@ -7,6 +7,7 @@ import com.jhd.dotime.hashtag.entity.TaskTag;
 import com.jhd.dotime.hashtag.repository.HashTagRepository;
 import com.jhd.dotime.hashtag.repository.TaskTagRepository;
 import com.jhd.dotime.members.common.error.MemberErrorCode;
+import com.jhd.dotime.members.common.exception.NotFoundException;
 import com.jhd.dotime.members.entity.Member;
 import com.jhd.dotime.members.repository.MemberRepository;
 import com.jhd.dotime.tasks.common.error.TaskErrorCode;
@@ -23,6 +24,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 
@@ -106,11 +109,27 @@ public class TaskServiceImpl implements TaskService{
 
     @Override
     @Transactional
-    public Long update(Long id, TaskDto.Request taskRequestDto) {
+    public Long update(Long id, TaskDto.Request taskRequestDto, List<Long> hashtagIdList) {
         Task tasks = taskRepository.findById(id)
                 .orElseThrow(() -> new TaskException(TaskErrorCode.TASK_NOT_FOUNT));
 
-        tasks.update(taskRequestDto.getTitle(), taskRequestDto.getContent());
+
+        List<TaskTag> taskTagList = taskTagRepository.findTaskTagByTaskId(id);
+        List<TaskTag> taskTags = new ArrayList<>();
+
+        // 있으면 하고 없으면 삭제 안함
+        for (TaskTag taskTag : taskTagList) {
+            taskTagRepository.delete(taskTag);
+        }
+
+        // 업데이트 시에도 이미 tasktag list에 해당 해시태그 존재하면 add 일어나면 안됨
+        for (Long hashtagId : hashtagIdList) {
+            HashTag hashTag = hashTagRepository.findById(hashtagId).orElseThrow(() -> new NotFoundException("해시태그가 존재하지 않습니다."));
+            taskTags.add(TaskTag.builder().task(tasks).hashTag(hashTag).build());
+
+        }
+
+        tasks.update(taskRequestDto.getTitle(), taskRequestDto.getContent(), taskTags);
 
         return id;
     }
