@@ -52,9 +52,10 @@ public class Task extends BaseTimeEntity {
                 .collect(Collectors.toList());
     }
 
-    public void update(String title, String content){
+    public void update(String title, String content, List<TaskTag> taskTagList){
         this.title = title;
         this.content = content;
+        this.taskTagList = taskTagList;
     }
 
 
