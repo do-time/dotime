@@ -1,19 +1,20 @@
 package com.jhd.dotime.members.service;
 
 import com.jhd.dotime.auth.dto.LoginResponseDto;
-import com.jhd.dotime.members.dto.MemberRequestDto;
-import com.jhd.dotime.members.dto.MemberResponseDto;
+import com.jhd.dotime.members.dto.MemberDto;
+import com.jhd.dotime.members.dto.MemberDto.Request;
+import com.jhd.dotime.members.dto.MemberDto.Response;
 import com.jhd.dotime.members.entity.Member;
 
 public interface MemberService {
-    void createMember(MemberRequestDto memberRequestDto);
+    void createMember(MemberDto.Request memberDtoRequest);
 
 
-    MemberResponseDto getMember(String email);
+    MemberDto.Response getMember(String email);
 
-    void updateMember(MemberRequestDto memberRequestDto);
+    void updateMember(MemberDto.Request memberDtoRequest);
 
-    void updatePassword(MemberRequestDto memberRequestDto);
+    void updatePassword(MemberDto.Request memberDtoRequest);
 
     void deleteMember(Long id);
 

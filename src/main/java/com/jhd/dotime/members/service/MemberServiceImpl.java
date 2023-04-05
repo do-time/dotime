@@ -2,8 +2,9 @@ package com.jhd.dotime.members.service;
 
 import com.jhd.dotime.common.exception.CustomException;
 import com.jhd.dotime.members.common.error.MemberErrorCode;
-import com.jhd.dotime.members.dto.MemberRequestDto;
-import com.jhd.dotime.members.dto.MemberResponseDto;
+import com.jhd.dotime.members.dto.MemberDto;
+import com.jhd.dotime.members.dto.MemberDto.Request;
+import com.jhd.dotime.members.dto.MemberDto.Response;
 import com.jhd.dotime.members.entity.Member;
 import com.jhd.dotime.members.mapper.MemberMapper;
 import com.jhd.dotime.members.repository.MemberRepository;
@@ -27,19 +28,19 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional
-    public void createMember(MemberRequestDto memberRequestDto) {
-        duplicateCheckEmail(memberRequestDto.getEmail());
+    public void createMember(MemberDto.Request memberDtoRequest) {
+        duplicateCheckEmail(memberDtoRequest.getEmail());
 
-        Member member = memberMapper.toEntity(memberRequestDto);
+        Member member = memberMapper.toEntity(memberDtoRequest);
 
         memberRepository.save(member);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public MemberResponseDto getMember(String email) {
+    public MemberDto.Response getMember(String email) {
         return memberRepository.findByEmail(email)
-                .map(MemberResponseDto::new)
+                .map(MemberDto.Response::new)
                 .orElseThrow(() -> new CustomException(MemberErrorCode.MEMBER_NOT_FOUND));
     }
 
@@ -51,10 +52,10 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional
-    public void updateMember(MemberRequestDto memberRequestDto) {
-        Member member = getMember(memberRequestDto.getId());
+    public void updateMember(MemberDto.Request memberDtoRequest) {
+        Member member = getMember(memberDtoRequest.getId());
 
-        member.updateInfo(memberRequestDto.getUsername());
+        member.updateInfo(memberDtoRequest.getUsername());
     }
 
     /*
@@ -62,10 +63,10 @@ public class MemberServiceImpl implements MemberService {
      */
     @Override
     @Transactional
-    public void updatePassword(MemberRequestDto memberRequestDto) {
-        getMember(memberRequestDto.getPassword());
+    public void updatePassword(MemberDto.Request memberDtoRequest) {
+        getMember(memberDtoRequest.getPassword());
 
-        memberRepository.save(Member.builder().password(memberRequestDto.getPassword()).build());
+        memberRepository.save(Member.builder().password(memberDtoRequest.getPassword()).build());
     }
 
     /*
