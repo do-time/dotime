@@ -1,8 +1,9 @@
 package com.jhd.dotime.members.mapper;
 
 import com.jhd.dotime.auth.entity.Authority;
-import com.jhd.dotime.members.dto.MemberRequestDto;
-import com.jhd.dotime.members.dto.MemberResponseDto;
+import com.jhd.dotime.members.dto.MemberDto;
+import com.jhd.dotime.members.dto.MemberDto.Request;
+import com.jhd.dotime.members.dto.MemberDto.Response;
 import com.jhd.dotime.members.entity.Member;
 import org.mapstruct.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -24,10 +25,10 @@ public interface MemberMapper {
             qualifiedByName = "encryptPassword"
     )
     @Mapping(target = "authorities", expression = "java(mapAuthority())")
-    Member toEntity(MemberRequestDto memberRequestDto);
+    Member toEntity(MemberDto.Request memberDtoRequest);
 
     @Mapping(target = "taskList", ignore = true)
-    MemberResponseDto toResponseDto(Member member);
+    MemberDto.Response toResponseDto(Member member);
 
     @Named("encryptPassword")
     default String encryptPassword(String password){

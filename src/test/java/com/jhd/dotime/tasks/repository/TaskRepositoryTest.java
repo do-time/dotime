@@ -10,6 +10,8 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -35,7 +37,7 @@ class TaskRepositoryTest {
     @DisplayName("[Repository] task 조회")
     public void getTask() {
         //given
-        Task task = Task.builder().title("new task").content("nono").hashtag("#hello#bye").build();
+        Task task = Task.builder().title("new task").content("nono").build();
 
         //when
         taskRepository.save(task);
@@ -59,7 +61,7 @@ class TaskRepositoryTest {
 
         memberRepository.save(newMember);
         Long memberId = memberRepository.findByEmail(newMember.getEmail()).get().getId();
-        Task task1 = new Task(1L, newMember,  "new task", "test1", "testtest");
+        Task task1 = new Task(1L, newMember,  "new task", "test1", new ArrayList<>());
 
         taskRepository.save(task1);
 //        taskRepository.save(task2);
@@ -91,7 +93,7 @@ class TaskRepositoryTest {
 
         //when
         memberRepository.save(newMember);
-        Task newTask = new Task(1L, newMember,  "new task", "test1", "testtest");
+        Task newTask = new Task(1L, newMember,  "new task", "test1", new ArrayList<>());
         taskRepository.save(newTask);
         List<Task> taskList = taskRepository.findTaskListByMemberId(newMember.getId());
 //        newMember.setTask(taskList);
@@ -114,7 +116,7 @@ class TaskRepositoryTest {
 
         //when
         memberRepository.save(newMember);
-        Task newTask = new Task(1L, newMember,  "new task", "test1", "testtest");
+        Task newTask = new Task(1L, newMember,  "new task", "test1", new ArrayList<>());
         taskRepository.save(newTask);
         List<Task> taskList = taskRepository.findAll();
         for (Task task : taskList) {

@@ -2,8 +2,9 @@ package com.jhd.dotime.members.controller;
 
 
 import com.jhd.dotime.common.annotation.CurrentMember;
-import com.jhd.dotime.members.dto.MemberRequestDto;
-import com.jhd.dotime.members.dto.MemberResponseDto;
+import com.jhd.dotime.members.dto.MemberDto;
+import com.jhd.dotime.members.dto.MemberDto.Request;
+import com.jhd.dotime.members.dto.MemberDto.Response;
 import com.jhd.dotime.members.entity.Member;
 import com.jhd.dotime.members.service.MemberService;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -29,8 +30,8 @@ public class MemberController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @PostMapping()
-    public ResponseEntity<Void> createMember(@RequestBody MemberRequestDto memberRequestDto) {
-        memberService.createMember(memberRequestDto);
+    public ResponseEntity<Void> createMember(@RequestBody MemberDto.Request memberDtoRequest) {
+        memberService.createMember(memberDtoRequest);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
@@ -44,7 +45,7 @@ public class MemberController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @GetMapping()
-    public ResponseEntity<MemberResponseDto> getMember(@CurrentMember Member member) {
+    public ResponseEntity<MemberDto.Response> getMember(@CurrentMember Member member) {
         return new ResponseEntity<>(memberService.getMember(member.getEmail()), HttpStatus.OK);
     }
 
@@ -55,8 +56,8 @@ public class MemberController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @PatchMapping()
-    public ResponseEntity<Void> updateMember(@RequestBody MemberRequestDto memberRequestDto, @CurrentMember Member member){
-        memberService.updateMember(memberRequestDto);
+    public ResponseEntity<Void> updateMember(@RequestBody MemberDto.Request memberDtoRequest, @CurrentMember Member member){
+        memberService.updateMember(memberDtoRequest);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
