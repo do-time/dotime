@@ -6,6 +6,7 @@ import io.jsonwebtoken.Claims;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
 
 @Data
@@ -58,5 +59,23 @@ public class Member extends BaseTimeEntity {
 
     public Member(Claims claims){
 
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if(this == o)
+            return true;
+        if(!(o instanceof Member))
+            return false;
+
+        Member member = (Member)o;
+
+        return member.id == this.id &&
+                member.email.equals(this.email);
+    }
+
+    @Override
+    public int hashCode(){
+        return Objects.hash(id, email);
     }
 }

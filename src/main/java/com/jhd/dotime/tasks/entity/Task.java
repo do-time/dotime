@@ -31,18 +31,17 @@ public class Task extends BaseTimeEntity {
     @Column
     private String content;
 
-    @Column
-    private String hashtag;
+
+
     @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     List<TaskTag> taskTagList = new ArrayList<>();
 
 
     @Builder
-    public Task(Member member, String title, String content, String hashtag){
+    public Task(Member member, String title, String content){
         this.member = member;
         this.title = title;
         this.content = content;
-        this.hashtag = hashtag;
     }
 
     public List<HashTag> getHashTag(){
@@ -50,9 +49,10 @@ public class Task extends BaseTimeEntity {
                 .collect(Collectors.toList());
     }
 
-    public void update(String title, String content){
+    public void update(String title, String content, List<TaskTag> taskTagList){
         this.title = title;
         this.content = content;
+        this.taskTagList = taskTagList;
     }
 
 

@@ -81,7 +81,7 @@ public class TaskController {
     })
     @PatchMapping("/task/{id}")
     public Long updateTask(@PathVariable Long id, @RequestBody TaskDto.Request taskRequestDto, @CurrentMember Member member){
-        return taskService.update(id, taskRequestDto);
+        return taskService.update(id, taskRequestDto, hashTagService.createHashtag(taskRequestDto.getHashtag()));
 
     }
 //    @ApiResponses({

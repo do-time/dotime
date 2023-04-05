@@ -22,7 +22,7 @@ public interface TaskService {
 
     void save(Task task);
 
-    Long update(Long id, TaskDto.Request taskRequestDto);
+    Long update(Long id, TaskDto.Request taskRequestDto, List<Long> hashtagIdList);
 
     List<TaskDto.Response> getTaskListByMemberId(Long memberId);
 
