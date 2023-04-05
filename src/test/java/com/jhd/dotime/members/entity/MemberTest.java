@@ -2,7 +2,7 @@ package com.jhd.dotime.members.entity;
 
 import com.jhd.dotime.common.exception.CustomException;
 import com.jhd.dotime.members.common.error.MemberErrorCode;
-import com.jhd.dotime.members.dto.MemberRequestDto;
+import com.jhd.dotime.members.dto.MemberDto.Request;
 import com.jhd.dotime.members.mapper.MemberMapper;
 import com.jhd.dotime.members.repository.MemberRepository;
 import com.jhd.dotime.members.service.MemberService;

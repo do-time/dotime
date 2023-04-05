@@ -1,7 +1,8 @@
 package com.jhd.dotime.members.service;
 
 import com.jhd.dotime.members.common.exception.NotFoundException;
-import com.jhd.dotime.members.dto.MemberRequestDto;
+import com.jhd.dotime.members.dto.MemberDto;
+import com.jhd.dotime.members.dto.MemberDto.Request;
 import com.jhd.dotime.members.entity.Member;
 import com.jhd.dotime.members.repository.MemberRepository;
 import com.jhd.dotime.tasks.repository.TaskRepository;
@@ -48,7 +49,7 @@ class MemberServiceTest {
     public void createMember() {
         //given
         LocalDateTime now = LocalDateTime.now();
-        MemberRequestDto newMember = new MemberRequestDto("test@test.com", "testMan", "1234", "");
+        MemberDto.Request newMember = new MemberDto.Request("test@test.com", "testMan", "1234", "");
         Member member = Member.builder()
                 .email("11111@test.com")
                 .password("1234")

@@ -1,6 +1,6 @@
 //package com.jhd.dotime.tasks.mapper;
 //
-//import com.jhd.dotime.members.dto.MemberRequestDto;
+//import com.jhd.dotime.members.dto.MemberDto.Request;
 //import com.jhd.dotime.members.entity.Member;
 //import com.jhd.dotime.members.mapper.MemberMapper;
 //
@@ -17,13 +17,13 @@
 //    @Test
 //    public void toEntityTest(){
 //        //given
-//        MemberRequestDto memberRequestDto = MemberRequestDto.builder()
+//        MemberDto.Request MemberDto.Request = MemberDto.Request.builder()
 //                .email("Taskmapper@email.com")
 //                .password("1234")
 //                .username("mapperTest")
 //                .build();
 //
-//        Member member = memberMapper.toEntity(memberRequestDto);
+//        Member member = memberMapper.toEntity(MemberDto.Request);
 //
 //        TaskRequestDto taskRequestDto = new TaskRequestDto("new task", "new task content", "testTag");
 //        //when
