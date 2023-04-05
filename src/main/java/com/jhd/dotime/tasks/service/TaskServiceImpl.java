@@ -113,20 +113,26 @@ public class TaskServiceImpl implements TaskService{
         Task tasks = taskRepository.findById(id)
                 .orElseThrow(() -> new TaskException(TaskErrorCode.TASK_NOT_FOUNT));
 
-
         List<TaskTag> taskTagList = taskTagRepository.findTaskTagByTaskId(id);
         List<TaskTag> taskTags = new ArrayList<>();
 
-        // 있으면 하고 없으면 삭제 안함
+
+        // 있으면 하고 없으면 삭제 안함, taskTagList - 기존 taskTagList
         for (TaskTag taskTag : taskTagList) {
+            if(!hashtagIdList.contains(taskTag.getHashTag().getId()))
+                continue;
+
             taskTagRepository.delete(taskTag);
         }
+
+        List<Long> newHasktagIdList = taskTagRepository.findTaskTagByTaskId(id).stream().map(TaskTag::getHashTag).map(HashTag::getId).collect(Collectors.toList());
 
         // 업데이트 시에도 이미 tasktag list에 해당 해시태그 존재하면 add 일어나면 안됨
         for (Long hashtagId : hashtagIdList) {
             HashTag hashTag = hashTagRepository.findById(hashtagId).orElseThrow(() -> new NotFoundException("해시태그가 존재하지 않습니다."));
+            if(newHasktagIdList.contains(hashtagId))
+                continue;
             taskTags.add(TaskTag.builder().task(tasks).hashTag(hashTag).build());
-
         }
 
         tasks.update(taskRequestDto.getTitle(), taskRequestDto.getContent(), taskTags);

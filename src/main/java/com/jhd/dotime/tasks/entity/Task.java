@@ -31,8 +31,6 @@ public class Task extends BaseTimeEntity {
     @Column
     private String content;
 
-    @Column
-    private String hashtag;
 
 
     @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -40,11 +38,10 @@ public class Task extends BaseTimeEntity {
 
 
     @Builder
-    public Task(Member member, String title, String content, String hashtag){
+    public Task(Member member, String title, String content){
         this.member = member;
         this.title = title;
         this.content = content;
-        this.hashtag = hashtag;
     }
 
     public List<HashTag> getHashTag(){
