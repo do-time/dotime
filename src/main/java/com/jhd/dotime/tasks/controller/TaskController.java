@@ -5,8 +5,6 @@ import com.jhd.dotime.hashtag.service.HashTagService;
 import com.jhd.dotime.hashtag.service.TaskTagService;
 import com.jhd.dotime.members.entity.Member;
 import com.jhd.dotime.tasks.dto.TaskDto;
-
-
 import com.jhd.dotime.tasks.service.TaskService;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -80,6 +78,7 @@ public class TaskController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @PatchMapping("/task/{id}")
+
     public Long updateTask(@PathVariable Long id, @RequestBody TaskDto.Request taskRequestDto, @CurrentMember Member member){
         return taskService.update(id, taskRequestDto, hashTagService.createHashtag(taskRequestDto.getHashtag()));
 
