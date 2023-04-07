@@ -5,8 +5,6 @@ import com.jhd.dotime.hashtag.service.HashTagService;
 import com.jhd.dotime.hashtag.service.TaskTagService;
 import com.jhd.dotime.members.entity.Member;
 import com.jhd.dotime.tasks.dto.TaskDto;
-
-
 import com.jhd.dotime.tasks.service.TaskService;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -84,6 +82,7 @@ public class TaskController {
     @PatchMapping("/task/{id}")
     public ResponseEntity<Long> updateTask(@PathVariable Long id, @RequestBody TaskDto.Request taskRequestDto, @CurrentMember Member member){
         return new ResponseEntity<>(taskService.update(id, taskRequestDto, hashTagService.createHashtag(taskRequestDto.getHashtag())), HttpStatus.OK);
+
 
     }
 
