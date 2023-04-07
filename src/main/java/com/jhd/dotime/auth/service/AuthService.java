@@ -2,11 +2,7 @@ package com.jhd.dotime.auth.service;
 
 
 import com.jhd.dotime.auth.dto.LoginDto;
-import com.jhd.dotime.auth.dto.LoginRequestDto;
-import com.jhd.dotime.auth.dto.LoginResponseDto;
-import com.jhd.dotime.auth.repository.AuthorityRepository;
 import com.jhd.dotime.common.security.TokenProvider;
-import com.jhd.dotime.members.repository.MemberRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -19,8 +15,6 @@ import org.springframework.stereotype.Service;
 public class AuthService {
     private final TokenProvider tokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
-
-    private final MemberRepository memberRepository;
 
 
     public LoginDto.Response authenticate(LoginDto.Request loginRequestDto){
