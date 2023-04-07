@@ -15,6 +15,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -42,8 +44,8 @@ public class TaskController {
             @Parameter(name="task id")
     })
     @GetMapping("/task/{id}")
-    public List<TaskDto.Response> getTask(@PathVariable Long id){
-        return taskService.findTask(id);
+    public ResponseEntity<List<TaskDto.Response>> getTask(@PathVariable Long id){
+        return new ResponseEntity<>(taskService.findTask(id), HttpStatus.OK);
     }
 
 
@@ -56,8 +58,8 @@ public class TaskController {
     })
     @ResponseBody
     @GetMapping("/task")
-    public List<TaskDto.Response> getTask(){
-        return taskService.findTaskList();
+    public ResponseEntity<List<TaskDto.Response>> getTask(){
+        return new ResponseEntity<>(taskService.findTaskList(), HttpStatus.OK);
     }
 
 
@@ -68,8 +70,8 @@ public class TaskController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @DeleteMapping("/task/{id}")
-    public Long deleteTask(@PathVariable Long id){
-        return taskService.delete(id);
+    public ResponseEntity<Long> deleteTask(@PathVariable Long id){
+        return new ResponseEntity<>(taskService.delete(id), HttpStatus.NO_CONTENT);
 
     }
 
@@ -80,21 +82,11 @@ public class TaskController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @PatchMapping("/task/{id}")
-    public Long updateTask(@PathVariable Long id, @RequestBody TaskDto.Request taskRequestDto, @CurrentMember Member member){
-        return taskService.update(id, taskRequestDto, hashTagService.createHashtag(taskRequestDto.getHashtag()));
+    public ResponseEntity<Long> updateTask(@PathVariable Long id, @RequestBody TaskDto.Request taskRequestDto, @CurrentMember Member member){
+        return new ResponseEntity<>(taskService.update(id, taskRequestDto, hashTagService.createHashtag(taskRequestDto.getHashtag())), HttpStatus.OK);
 
     }
-//    @ApiResponses({
-//            @ApiResponse(responseCode = "200", description = "OK"),
-//            @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
-//            @ApiResponse(responseCode = "404", description = "NOT FOUND"),
-//            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
-//    })
-//    @PatchMapping("members/{memberId}/task/{id}")
-//    public ResponseEntity<Long> updateTask(@PathVariable Long memberId, @PathVariable Long id, @RequestBody TaskUpdateRequestDto taskUpdateRequestDto){
-////        return new ResponseEntity<>(taskService.update(id, taskUpdateRequestDto), HttpStatus.CREATED);
-//
-//    }
+
 
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK"),
@@ -103,8 +95,8 @@ public class TaskController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @PostMapping("/task")
-    public Long saveTask(@RequestBody TaskDto.Request taskRequestDto, @CurrentMember Member member){
-        return taskTagService.createTaskTag(taskService.insert(member.getId(), taskRequestDto), hashTagService.createHashtag(taskRequestDto.getHashtag()));
+    public ResponseEntity<Long> saveTask(@RequestBody TaskDto.Request taskRequestDto, @CurrentMember Member member){
+        return new ResponseEntity<>(taskTagService.createTaskTag(taskService.insert(member.getId(), taskRequestDto), hashTagService.createHashtag(taskRequestDto.getHashtag())), HttpStatus.CREATED);
 
     }
 
@@ -117,8 +109,8 @@ public class TaskController {
     })
     @ResponseBody
     @GetMapping("/taskList")
-    public List<TaskDto.Response> getTaskList(@CurrentMember Member member){
-        return taskService.getTaskListByMemberId(member.getId());
+    public ResponseEntity<List<TaskDto.Response>> getTaskList(@CurrentMember Member member){
+        return new ResponseEntity<>(taskService.getTaskListByMemberId(member.getId()), HttpStatus.OK);
     }
 
 }
