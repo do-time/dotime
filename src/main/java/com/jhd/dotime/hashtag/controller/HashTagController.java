@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
+/**
+ * Test 용 Controller
+ */
 @RestController
 @RequiredArgsConstructor
 public class HashTagController {
@@ -32,17 +36,6 @@ public class HashTagController {
         return hashTagService.getHashTagList();
     }
 
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "OK"),
-            @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
-            @ApiResponse(responseCode = "404", description = "NOT FOUND"),
-            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
-    })
-    @ResponseBody
-    @PatchMapping("/hashtag")
-    public void createHashTag(@PathVariable Long taskId, @RequestBody HashTagDto.Request hashTagDtoRequest){
-//        hashTagService.createHashtag(taskId, hashTagDtoRequest);
-    }
 
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK"),
