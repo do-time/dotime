@@ -4,6 +4,7 @@ package com.jhd.dotime.tasks.repository;
 import com.jhd.dotime.members.entity.Member;
 import com.jhd.dotime.members.repository.MemberRepository;
 import com.jhd.dotime.tasks.entity.Task;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.assertj.core.api.Assertions;
@@ -15,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-//@DataJpaTest
 //@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ActiveProfiles("test") // application-test
 @SpringBootTest
@@ -27,24 +27,30 @@ class TaskRepositoryTest {
     @Autowired
     private TaskRepository taskRepository;
 
-//    @BeforeEach
-//    public void cleanup(){
-//        memberRepository.deleteAllInBatch();
-//        taskRepository.deleteAllInBatch();
-//    }
 
     @Test
     @DisplayName("[Repository] task 조회")
     public void getTask() {
         //given
-        Task task = Task.builder().title("new task").content("nono").build();
+        Member newMember = Member.builder()
+                .email("test@test.com")
+                .password("1234")
+                .username("testMan")
+                .profileImage("")
+                .build();
+
+        Task newTask = Task.builder()
+                .member(newMember)
+                .title("test1")
+                .content("test11")
+                .build();
 
         //when
-        taskRepository.save(task);
+        taskRepository.save(newTask);
         List<Task> lst = taskRepository.findAll();
 
         //then
-        Assertions.assertThat(taskRepository.findById(lst.get(lst.size() - 1).getId()).get().getTitle()).isEqualTo(task.getTitle());
+        Assertions.assertThat(taskRepository.findById(lst.get(lst.size() - 1).getId()).get().getTitle()).isEqualTo(newTask.getTitle());
 
     }
 
@@ -61,12 +67,13 @@ class TaskRepositoryTest {
 
         memberRepository.save(newMember);
         Long memberId = memberRepository.findByEmail(newMember.getEmail()).get().getId();
-        Task task1 = new Task(1L, newMember,  "new task", "test1", new ArrayList<>());
+        Task task1 = Task.builder()
+                .member(newMember)
+                .title("test1")
+                .content("test11")
+                .build();
 
         taskRepository.save(task1);
-//        taskRepository.save(task2);
-//        taskRepository.save(task3);
-
 
         //when
         List<Task> findTask = taskRepository.findTaskListByMemberId(memberId);
@@ -93,7 +100,11 @@ class TaskRepositoryTest {
 
         //when
         memberRepository.save(newMember);
-        Task newTask = new Task(1L, newMember,  "new task", "test1", new ArrayList<>());
+        Task newTask = Task.builder()
+                .member(newMember)
+                .title("test1")
+                .content("test11")
+                .build();
         taskRepository.save(newTask);
         List<Task> taskList = taskRepository.findTaskListByMemberId(newMember.getId());
 //        newMember.setTask(taskList);
@@ -116,7 +127,11 @@ class TaskRepositoryTest {
 
         //when
         memberRepository.save(newMember);
-        Task newTask = new Task(1L, newMember,  "new task", "test1", new ArrayList<>());
+        Task newTask = Task.builder()
+                .member(newMember)
+                .title("test1")
+                .content("test11")
+                .build();
         taskRepository.save(newTask);
         List<Task> taskList = taskRepository.findAll();
         for (Task task : taskList) {
