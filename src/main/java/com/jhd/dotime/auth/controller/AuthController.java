@@ -1,6 +1,7 @@
 package com.jhd.dotime.auth.controller;
 
 
+import com.jhd.dotime.auth.dto.LoginDto;
 import com.jhd.dotime.auth.dto.LoginRequestDto;
 import com.jhd.dotime.auth.dto.LoginResponseDto;
 import com.jhd.dotime.auth.service.AuthService;
@@ -25,8 +26,8 @@ public class AuthController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponseDto> authorize(@RequestBody LoginRequestDto loginRequestDto){
-        LoginResponseDto token = authService.authenticate(loginRequestDto);
+    public ResponseEntity<LoginDto.Response> authorize(@RequestBody LoginDto.Request loginRequestDto){
+        LoginDto.Response token = authService.authenticate(loginRequestDto);
 
         // response header 에도 넣고 응답 객체에도 넣는다.
         HttpHeaders httpHeaders = new HttpHeaders();
