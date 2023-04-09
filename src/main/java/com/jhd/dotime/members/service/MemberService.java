@@ -1,9 +1,6 @@
 package com.jhd.dotime.members.service;
 
-import com.jhd.dotime.auth.dto.LoginResponseDto;
 import com.jhd.dotime.members.dto.MemberDto;
-import com.jhd.dotime.members.dto.MemberDto.Request;
-import com.jhd.dotime.members.dto.MemberDto.Response;
 import com.jhd.dotime.members.entity.Member;
 
 public interface MemberService {

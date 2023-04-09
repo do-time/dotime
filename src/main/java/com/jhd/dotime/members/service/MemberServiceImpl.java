@@ -7,6 +7,7 @@ import com.jhd.dotime.members.dto.MemberDto.Request;
 import com.jhd.dotime.members.dto.MemberDto.Response;
 import com.jhd.dotime.members.entity.Member;
 import com.jhd.dotime.members.mapper.MemberMapper;
+import com.jhd.dotime.members.mapper.MemberMapperImpl;
 import com.jhd.dotime.members.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.mapstruct.factory.Mappers;
