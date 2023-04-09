@@ -2,8 +2,6 @@ package com.jhd.dotime.auth.controller;
 
 
 import com.jhd.dotime.auth.dto.LoginDto;
-import com.jhd.dotime.auth.dto.LoginRequestDto;
-import com.jhd.dotime.auth.dto.LoginResponseDto;
 import com.jhd.dotime.auth.service.AuthService;
 import com.jhd.dotime.common.security.JwtFilter;
 import org.springframework.http.HttpHeaders;
