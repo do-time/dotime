@@ -38,7 +38,7 @@ public class TaskDto {
         private String title;
         private String content;
 
-        @Builder.Default
+//        @Builder.Default
         private List<HashTagDto.Response> hashtag;
         private LocalDateTime createdDate;
         private LocalDateTime updatedDate;

@@ -129,10 +129,9 @@ public class TaskServiceImpl implements TaskService{
 
         // 있으면 하고 없으면 삭제 안함, taskTagList - 기존 taskTagList
         for (TaskTag taskTag : taskTagList) {
-            if(!hashtagIdList.contains(taskTag.getHashTag().getId()))
-                continue;
-
-            taskTagRepository.delete(taskTag);
+            if(!hashtagIdList.contains(taskTag.getHashTag().getId())) {
+                taskTagRepository.delete(taskTag);
+            }
         }
 
         List<Long> newHasktagIdList = taskTagRepository.findTaskTagByTaskId(id).stream().map(TaskTag::getHashTag).map(HashTag::getId).collect(Collectors.toList());

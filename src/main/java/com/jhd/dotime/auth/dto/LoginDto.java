@@ -12,7 +12,7 @@ public class LoginDto {
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
-    public class Request {
+    public static class Request {
         @NotNull
         private String email;
 
@@ -25,7 +25,7 @@ public class LoginDto {
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
-    public class Response {
+    public static class Response {
 
         private String accessToken;
 
