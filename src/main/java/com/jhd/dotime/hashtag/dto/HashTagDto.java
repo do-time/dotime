@@ -16,12 +16,13 @@ public class HashTagDto {
     @Builder
     public static class Request{
         private String name;
-        @Builder.Default
+        @Builder.Default // default를 사용하지 않으면 arrayList로 초기화되지 않을수도 있다.
         private List<Long> hashTagId = new ArrayList<>();
     }
 
     @Getter
-    @NoArgsConstructor@AllArgsConstructor
+    @NoArgsConstructor
+    @AllArgsConstructor
     @Builder
     public static class Response{
         @NonNull
