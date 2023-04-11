@@ -6,9 +6,9 @@ import lombok.*;
 
 import javax.persistence.*;
 
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
 @Entity(name = "chat")
 public class Chat extends BaseTimeEntity {
     @Id
