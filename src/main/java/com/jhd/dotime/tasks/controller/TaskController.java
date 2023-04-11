@@ -43,7 +43,7 @@ public class TaskController {
     })
     @GetMapping("/task/{id}")
     public ResponseEntity<List<TaskDto.Response>> getTask(@PathVariable Long id){
-        return new ResponseEntity<>(taskService.findTask(id), HttpStatus.OK);
+        return ResponseEntity.ok(taskService.findTask(id));
     }
 
 
@@ -57,7 +57,7 @@ public class TaskController {
     @ResponseBody
     @GetMapping("/task")
     public ResponseEntity<List<TaskDto.Response>> getTask(){
-        return new ResponseEntity<>(taskService.findTaskList(), HttpStatus.OK);
+        return ResponseEntity.ok(taskService.findTaskList());
     }
 
 
@@ -81,7 +81,8 @@ public class TaskController {
     })
     @PatchMapping("/task/{id}")
     public ResponseEntity<Long> updateTask(@PathVariable Long id, @RequestBody TaskDto.Request taskRequestDto, @CurrentMember Member member){
-        return new ResponseEntity<>(taskService.update(id, taskRequestDto, hashTagService.createHashtag(taskRequestDto.getHashtag())), HttpStatus.OK);
+//        return new ResponseEntity<>(taskService.update(id, taskRequestDto, hashTagService.createHashtag(taskRequestDto.getHashtag())), HttpStatus.OK);
+        return ResponseEntity.ok(taskService.update(id, taskRequestDto, hashTagService.createHashtag(taskRequestDto.getHashtag())));
 
 
     }
