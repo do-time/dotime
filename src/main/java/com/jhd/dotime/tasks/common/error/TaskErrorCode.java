@@ -19,12 +19,6 @@ public enum TaskErrorCode {
     INPUT_VALUE_ERROR(BAD_REQUEST, "잘못된 입력 값 입니다."),
 
 
-
-    /**
-     * 401 - UNAUTHORIZED
-     */
-
-
     /**
      * 404 - NOTFOUND
      */

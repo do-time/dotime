@@ -37,6 +37,8 @@ public class TaskDto {
         private Long id;
         private String title;
         private String content;
+
+//        @Builder.Default
         private List<HashTagDto.Response> hashtag;
         private LocalDateTime createdDate;
         private LocalDateTime updatedDate;
@@ -48,8 +50,7 @@ public class TaskDto {
                     .content(task.getContent())
                     .createdDate(task.getCreatedDate())
                     .updatedDate(task.getUpdatedDate())
-//                    .hashtag(task.getHashTag().stream().map(HashTagDto.Response::of).collect(Collectors.toList()))
-                    .hashtag(task.getHashTag().stream().map(HashTagDto.Response::of).collect(Collectors.toList()))
+                    .hashtag(task.getHashTag().stream().map(HashTagDto.Response::of).collect(Collectors.toList())) // tasktag List를 받아 해시태그 Response로 매핑
                     .build();
 
         }
