@@ -5,6 +5,7 @@ server:
   servlet:
     context-path: /api/v1
 
+
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -36,8 +37,25 @@ spring:
         enabled: false
 
 springdoc:
+  components:
+    request:
+      members:
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/members/dto/MemberDto'
+                - $ref: '#/task/dto/TaskDto'
+
   api-docs:
     path: /api-docs
+  swagger-ui:
+    path: /swagger-ui
+    display-request-duration: true
+    groups-order: DESC
+    operationsSorter: method
+    disable-swagger-default-url: true
+
 
 jwt:
   header: Authorization

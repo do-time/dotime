@@ -7,6 +7,7 @@ import com.jhd.dotime.members.dto.MemberDto.Request;
 import com.jhd.dotime.members.dto.MemberDto.Response;
 import com.jhd.dotime.members.entity.Member;
 import com.jhd.dotime.members.service.MemberService;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
@@ -69,7 +70,7 @@ public class MemberController {
             @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
             @ApiResponse(responseCode = "404", description = "NOT FOUND"),
-            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
+            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR"),
     })
     @DeleteMapping()
     public ResponseEntity<Void> deleteMember(@CurrentMember Member member){

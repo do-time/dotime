@@ -3,6 +3,7 @@ package com.jhd.dotime.tasks.dto;
 
 import com.jhd.dotime.hashtag.dto.HashTagDto;
 import com.jhd.dotime.tasks.entity.Task;
+import io.swagger.annotations.ApiModel;
 import lombok.*;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -15,7 +16,7 @@ public class TaskDto {
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
-    @Builder
+    @Builder @ApiModel(value = "to-do 요청")
     public static class Request {
 
         @NonNull
@@ -30,7 +31,7 @@ public class TaskDto {
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
-    @Builder
+    @Builder @ApiModel(value = "to-do 응답")
     public static class Response {
 
         @NonNull

@@ -21,14 +21,14 @@ public class Chat extends BaseTimeEntity {
 
 
     @JoinColumn(name = "member_id",insertable = false, updatable=false)
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     private Member sender;
 
     /**
      * receiver를 MANYTOONE으로 할지 아니면 socket 자체에서 해결을 해주는지 알아봐야함.
      */
     @JoinColumn(name = "member_id",insertable = false, updatable=false)
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     private Member receiver;
 
     @Builder
