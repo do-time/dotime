@@ -3,6 +3,7 @@ package com.jhd.dotime.members.entity;
 import com.jhd.dotime.auth.entity.Authority;
 import com.jhd.dotime.common.entity.BaseTimeEntity;
 import io.jsonwebtoken.Claims;
+import io.swagger.annotations.ApiModel;
 import lombok.*;
 
 import javax.persistence.*;
@@ -13,6 +14,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "member")
+@ApiModel(value = "member")
 public class Member extends BaseTimeEntity {
     @Id
     @Column(name="member_id")

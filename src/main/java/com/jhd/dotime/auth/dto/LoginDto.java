@@ -4,14 +4,16 @@ package com.jhd.dotime.auth.dto;
 
 import com.jhd.dotime.members.entity.Member;
 import com.sun.istack.NotNull;
+import io.swagger.annotations.ApiModel;
 import lombok.*;
 
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+//@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class LoginDto {
     @Builder
     @Data
     @NoArgsConstructor
-    @AllArgsConstructor
+    @AllArgsConstructor @ApiModel(value = "login 요청")
     public static class Request {
         @NotNull
         private String email;
@@ -24,7 +26,7 @@ public class LoginDto {
     @Data
     @Getter
     @NoArgsConstructor
-    @AllArgsConstructor
+    @AllArgsConstructor @ApiModel(value = "login 응답")
     public static class Response {
 
         private String accessToken;

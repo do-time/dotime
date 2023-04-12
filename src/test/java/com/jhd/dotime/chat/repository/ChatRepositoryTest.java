@@ -48,25 +48,27 @@ class ChatRepositoryTest {
                 .build();
     }
 
-    @AfterEach
-    void tearDown() {
-//        chatRepository.deleteAll();
-//        memberRepository.deleteAll();
-    }
+//    @AfterEach
+//    void tearDown() {
+////        chatRepository.deleteAll();
+////        memberRepository.deleteAll();
+//    }
 
     @Test
     @DisplayName("메시지 생성")
     void createMessage(){
         //given
+        Member se = memberRepository.save(sender);
+        Member rev = memberRepository.save(receiver);
+
         Chat newChat = Chat.builder()
                 .content("hello world")
-                .receiver(receiver)
-                .sender(sender)
+                .receiver(se)
+                .sender(rev)
                 .build();
 
         //when
-        memberRepository.save(sender);
-        memberRepository.save(receiver);
+
         chatRepository.save(newChat);
 
         //then
