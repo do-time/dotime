@@ -3,17 +3,22 @@ package com.jhd.dotime.members.dto;
 
 import com.jhd.dotime.members.entity.Member;
 import com.jhd.dotime.tasks.dto.TaskDto;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 import java.util.List;
 
+
 @NoArgsConstructor
 public class MemberDto {
+
     @Getter
     @Setter
     @AllArgsConstructor
     @NoArgsConstructor
-    @Builder
+    @Builder @ApiModel(value = "멤버 요청")
     public static class Request {
         private Long id;
 
@@ -37,7 +42,7 @@ public class MemberDto {
     @Setter
     @AllArgsConstructor
     @NoArgsConstructor
-    @Builder
+    @Builder @ApiModel(value = "멤버 응답")
     public static class Response {
         private Long id;
 

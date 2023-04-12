@@ -3,6 +3,7 @@ package com.jhd.dotime.hashtag.entity;
 
 import com.jhd.dotime.common.entity.BaseTimeEntity;
 import com.jhd.dotime.members.entity.Member;
+import io.swagger.annotations.ApiModel;
 import lombok.*;
 
 import javax.persistence.*;
@@ -14,6 +15,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @Entity(name="hashtag")
 @Builder
+@ApiModel(value = "hashtag")
 public class HashTag extends BaseTimeEntity {
 
     @Id

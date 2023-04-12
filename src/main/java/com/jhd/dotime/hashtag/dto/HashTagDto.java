@@ -1,6 +1,7 @@
 package com.jhd.dotime.hashtag.dto;
 
 import com.jhd.dotime.hashtag.entity.HashTag;
+import io.swagger.annotations.ApiModel;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ public class HashTagDto {
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
-    @Builder
+    @Builder @ApiModel(value = "hashtag 요청")
     public static class Request{
         private String name;
         @Builder.Default // default를 사용하지 않으면 arrayList로 초기화되지 않을수도 있다.
@@ -23,7 +24,7 @@ public class HashTagDto {
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
-    @Builder
+    @Builder @ApiModel(value = "hashtag 응답")
     public static class Response{
         @NonNull
         private Long id;

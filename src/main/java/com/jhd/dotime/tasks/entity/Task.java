@@ -4,6 +4,7 @@ import com.jhd.dotime.common.entity.BaseTimeEntity;
 import com.jhd.dotime.hashtag.entity.HashTag;
 import com.jhd.dotime.hashtag.entity.TaskTag;
 import com.jhd.dotime.members.entity.Member;
+import io.swagger.annotations.ApiModel;
 import lombok.*;
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name="task")
+@ApiModel(value = "task")
 public class Task extends BaseTimeEntity {
     @Id
     @Column(name="task_id")
