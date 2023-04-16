@@ -1,11 +1,8 @@
-package com.jhd.dotime.tasktimelog.entity;
+package com.jhd.dotime.tasktime.entity;
 
-import com.jhd.dotime.members.entity.Member;
 import com.jhd.dotime.tasks.entity.Task;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.jhd.dotime.tasktime.dto.TaskTimeLogDto;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -15,8 +12,8 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@EntityListeners(AuditingEntityListener.class)
 @Entity(name="taskTimeLog")
+@ToString
 public class TaskTimeLog {
     @Id
     @Column
@@ -27,15 +24,21 @@ public class TaskTimeLog {
     @JoinColumn(name = "task_id")
     private Task task;
 
-    @CreatedDate
+    @Column
     private LocalDateTime startTime;
 
     @Column
     private LocalDateTime endTime;
 
     @Builder
-    public TaskTimeLog(Long id, Task task) {
-        this.id = id;
+    public TaskTimeLog(Task task, LocalDateTime startTime, LocalDateTime endTime) {
         this.task = task;
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
+
+    public void update(LocalDateTime startTime, LocalDateTime endTime){
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 }
