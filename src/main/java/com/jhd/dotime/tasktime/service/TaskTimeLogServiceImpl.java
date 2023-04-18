@@ -1,5 +1,6 @@
 package com.jhd.dotime.tasktime.service;
 
+import com.jhd.dotime.members.repository.MemberRepository;
 import com.jhd.dotime.tasks.common.error.TaskErrorCode;
 import com.jhd.dotime.tasks.common.exception.TaskException;
 import com.jhd.dotime.tasks.entity.Task;
@@ -15,6 +16,7 @@ import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -67,18 +69,30 @@ public class TaskTimeLogServiceImpl implements TaskTimeLogService {
 
     @Override
     @Transactional(readOnly = true)
-    public TaskTimeLogDto.Response getTimeLog(TaskTimeLogDto.Request requestDto) {
-        return null;
+    public List<TaskTimeLogDto.Response> getTimeLog(Long taskId) {
+        taskRepository.findById(taskId)
+                .orElseThrow(() -> new TaskException(TaskErrorCode.TASK_NOT_FOUNT));
+
+        return taskTimeLogRepository.findByTaskId(taskId).stream()
+                .map(taskTimeLogMapper::toResponseDto)
+                .collect(Collectors.toList());
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<TaskTimeLogDto.Response> getTimeLogList(TaskTimeLogDto.Request requestDto) {
-        taskRepository.findById(requestDto.getTaskId())
-                .orElseThrow(() -> new TaskException(TaskErrorCode.TASK_NOT_FOUNT));
+    public List<TaskTimeLogDto.Response> getTimeLogByMember(Long memberId) {
+        List<Task> taskIdList = taskRepository.findTaskListByMemberId(memberId);
+        List<TaskTimeLogDto.Response> responseList = new ArrayList<>();
 
-        return taskTimeLogRepository.findByTaskId(requestDto.getTaskId()).stream()
-                .map(taskTimeLogMapper::toResponseDto)
-                .collect(Collectors.toList());
+        for(Task task : taskIdList){
+            responseList.addAll(
+                    taskTimeLogRepository.findByTaskId(task.getId())
+                            .stream()
+                            .map(taskTimeLogMapper::toResponseDto)
+                            .collect(Collectors.toList())
+            );
+        }
+
+        return responseList;
     }
 }

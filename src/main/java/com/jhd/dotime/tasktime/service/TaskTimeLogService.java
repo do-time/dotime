@@ -11,7 +11,7 @@ public interface TaskTimeLogService {
 
     TaskTimeLogDto.Response endTimeLog(TaskTimeLogDto.Request requestDto);
 
-    TaskTimeLogDto.Response getTimeLog(TaskTimeLogDto.Request requestDto);
+    List<TaskTimeLogDto.Response> getTimeLog(Long taskId);
 
-    List<TaskTimeLogDto.Response> getTimeLogList(TaskTimeLogDto.Request requestDto);
+    List<TaskTimeLogDto.Response> getTimeLogByMember(Long memberId);
 }
