@@ -5,8 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.socket.WebSocketSession;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @NoArgsConstructor
@@ -25,6 +28,10 @@ public class ChatRoom extends BaseTimeEntity {
 
     @Column(name="people_count")
     private Long people_count;
+
+//    @Column(name = "sessions")
+//    @Builder.Default
+//    private Set<WebSocketSession> sessions = new HashSet<>();
 
     @Builder
     public ChatRoom(String title, Long people_count){

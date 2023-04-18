@@ -10,7 +10,11 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "chat")
-public class Chat extends BaseTimeEntity {
+public class ChatMessage extends BaseTimeEntity {
+    public enum MessageType{
+        ENTER, TALK
+    }
+
     @Id
     @Column(name="chat_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,6 +22,8 @@ public class Chat extends BaseTimeEntity {
 
     @Column(name = "content")
     private String content;
+
+    private MessageType type;
 
 
     @JoinColumn(name = "member_id",insertable = false, updatable=false)
@@ -32,7 +38,7 @@ public class Chat extends BaseTimeEntity {
     private Member receiver;
 
     @Builder
-    public Chat(String content, Member sender, Member receiver){
+    public ChatMessage(String content, Member sender, Member receiver){
         this.content = content;
         this.sender = sender;
         this.receiver = receiver;
