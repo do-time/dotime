@@ -1,10 +1,9 @@
 package com.jhd.dotime.chat.repository;
 
-import com.jhd.dotime.chat.entity.Chat;
+import com.jhd.dotime.chat.entity.ChatMessage;
 import com.jhd.dotime.members.entity.Member;
 import com.jhd.dotime.members.repository.MemberRepository;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,25 +13,33 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 
 @SpringBootTest
 @ActiveProfiles("test")
-class ChatRepositoryTest {
-
-
+class ChatMessageRepositoryTest {
 
     @Autowired
-    private static ChatRepository chatRepository;
+    private ChatRepository chatRepository;
 
     @Autowired
-    private static MemberRepository memberRepository;
+    private MemberRepository memberRepository;
 
 
 //    @BeforeEach
 //    void setUp() {
+//        sender = Member.builder()
+//                .username("member1")
+//                .email("test1@email.com")
+//                .password("1234")
+//                .profileImage("")
+//                .build();
 //
+//        receiver = Member.builder()
+//                .username("member2")
+//                .email("test2@email.com")
+//                .password("1234")
+//                .profileImage("")
+//                .build();
 //    }
 
 //    @AfterEach
@@ -58,22 +65,24 @@ class ChatRepositoryTest {
                 .profileImage("")
                 .build();
 
+        //given
         memberRepository.save(sender);
         memberRepository.save(receiver);
 
-        Chat newChat = Chat.builder()
+        ChatMessage newChat = ChatMessage.builder()
                 .content("hello world")
-//                .receiver(receiver)
-                .sender(sender)
+                .receiver(sender)
+                .sender(receiver)
                 .build();
 
         //when
-
         chatRepository.save(newChat);
 
         //then
-        List<Chat> messageList = chatRepository.findAll();
+        List<ChatMessage> messageList = chatRepository.findAll();
         Assertions.assertThat(newChat.getId()).isEqualTo(messageList.get(0).getId());
 
     }
+
+
 }
