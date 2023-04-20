@@ -3,8 +3,11 @@ package com.jhd.dotime.chat.entity;
 import com.jhd.dotime.common.entity.BaseTimeEntity;
 import com.jhd.dotime.members.entity.Member;
 import lombok.*;
+import org.springframework.web.socket.WebSocketSession;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @NoArgsConstructor
@@ -20,6 +23,11 @@ public class Chat extends BaseTimeEntity {
     private String content;
 
 
+    @JoinColumn(name = "room_id",insertable = false, updatable=false)
+    private String roomId;
+
+
+
     @JoinColumn(name = "member_id",insertable = false, updatable=false)
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     private Member sender;
@@ -27,17 +35,15 @@ public class Chat extends BaseTimeEntity {
     /**
      * receiver를 MANYTOONE으로 할지 아니면 socket 자체에서 해결을 해주는지 알아봐야함.
      */
-    @JoinColumn(name = "member_id",insertable = false, updatable=false)
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-    private Member receiver;
+//    @JoinColumn(name = "member_id",insertable = false, updatable=false)
+//    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+//    private Member receiver;
+
 
     @Builder
-    public Chat(String content, Member sender, Member receiver){
+    public Chat(String content, Member sender){
         this.content = content;
         this.sender = sender;
-        this.receiver = receiver;
-
-
 
 
     }
