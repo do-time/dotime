@@ -1,4 +1,8 @@
 package com.jhd.dotime.chat.repository;
 
-public interface ChatRoomRepository {
+import com.jhd.dotime.chat.entity.ChatRoom;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ChatRoomRepository extends JpaRepository<ChatRoom, String> {
+
 }

@@ -21,8 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ActiveProfiles("test")
 class ChatRepositoryTest {
 
-    Member sender;
-    Member receiver;
+
 
     @Autowired
     private static ChatRepository chatRepository;
@@ -31,22 +30,10 @@ class ChatRepositoryTest {
     private static MemberRepository memberRepository;
 
 
-    @BeforeEach
-    void setUp() {
-        sender = Member.builder()
-                .username("member1")
-                .email("test1@email.com")
-                .password("1234")
-                .profileImage("")
-                .build();
-
-        receiver = Member.builder()
-                .username("member2")
-                .email("test2@email.com")
-                .password("1234")
-                .profileImage("")
-                .build();
-    }
+//    @BeforeEach
+//    void setUp() {
+//
+//    }
 
 //    @AfterEach
 //    void tearDown() {
@@ -57,14 +44,27 @@ class ChatRepositoryTest {
     @Test
     @DisplayName("메시지 생성")
     void createMessage(){
-        //given
-        Member se = memberRepository.save(sender);
-        Member rev = memberRepository.save(receiver);
+        Member sender = Member.builder()
+                .username("member1")
+                .email("test1@email.com")
+                .password("1234")
+                .profileImage("")
+                .build();
+
+        Member receiver = Member.builder()
+                .username("member2")
+                .email("test2@email.com")
+                .password("1234")
+                .profileImage("")
+                .build();
+
+        memberRepository.save(sender);
+        memberRepository.save(receiver);
 
         Chat newChat = Chat.builder()
                 .content("hello world")
-                .receiver(se)
-                .sender(rev)
+//                .receiver(receiver)
+                .sender(sender)
                 .build();
 
         //when
