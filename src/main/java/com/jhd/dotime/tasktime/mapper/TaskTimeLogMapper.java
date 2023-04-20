@@ -5,7 +5,6 @@ import com.jhd.dotime.tasktime.dto.TaskTimeLogDto;
 import com.jhd.dotime.tasktime.entity.TaskTimeLog;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
 @Mapper(
@@ -21,9 +20,6 @@ public interface TaskTimeLogMapper {
                 .endTime(requestDto.getEndTime())
                 .build();
     }
-
-//    @Mapping(target = )
-//    TaskTimeLogDto.Response toResponseDto(TaskTimeLog taskTimelog);
 
     default TaskTimeLogDto.Response toResponseDto(TaskTimeLog taskTimelog){
         return TaskTimeLogDto.Response.builder()

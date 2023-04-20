@@ -19,8 +19,6 @@ public class AllocationTimeDto {
     @ToString
     @ApiModel(value = "Allocation Time 요청 DTO")
     public static class Request{
-        Long id;
-
         @NonNull
         Long taskId;
 
@@ -36,8 +34,6 @@ public class AllocationTimeDto {
     @ToString
     @ApiModel(value = "Allocation Time 반환 DTO")
     public static class Response{
-        Long id;
-
         Long taskId;
 
         LocalDateTime startTime;
