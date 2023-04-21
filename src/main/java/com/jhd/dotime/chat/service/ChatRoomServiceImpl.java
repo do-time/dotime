@@ -21,11 +21,13 @@ public class ChatRoomServiceImpl implements ChatRoomService {
     private final ChatRoomRepository chatRoomRepository;
 
     @Override
-    public void createChatroom(ChatRoomDto.Request chatroomRequestDto) {
-        chatRoomRepository.save(ChatRoom
+    public List<ChatRoomDto.Response> createChatroom(ChatRoomDto.Request chatroomRequestDto) {
+        ChatRoom chatRoom = chatRoomRepository.save(ChatRoom
                 .builder()
                 .name(chatroomRequestDto.getName())
                 .build());
+        return null;
+
     }
 
     @Override

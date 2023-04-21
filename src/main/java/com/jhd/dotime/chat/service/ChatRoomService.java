@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface ChatRoomService {
 
-    void createChatroom(ChatRoomDto.Request chatroomRequestDto);
+    List<ChatRoomDto.Response> createChatroom(ChatRoomDto.Request chatroomRequestDto);
     List<ChatRoomDto.Response> findAllRoom();
 }
