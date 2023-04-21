@@ -27,11 +27,9 @@ public class ChatController {
     }
 
 
-
     @GetMapping
     public List<ChatRoomDto.Response> findAllRoom() {
         return chatService.findAllRoom();
-
     }
 
 }
