@@ -3,11 +3,8 @@ package com.jhd.dotime.chat.entity;
 import com.jhd.dotime.common.entity.BaseTimeEntity;
 import com.jhd.dotime.members.entity.Member;
 import lombok.*;
-import org.springframework.web.socket.WebSocketSession;
-
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+
 
 @Getter
 @NoArgsConstructor
