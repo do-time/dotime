@@ -1,8 +1,6 @@
 package com.jhd.dotime.chat.common.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jhd.dotime.chat.entity.Chat;
-import com.jhd.dotime.chat.entity.ChatRoom;
 import com.jhd.dotime.chat.service.ChatService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,9 +34,9 @@ public class WebSocketChatHandler extends TextWebSocketHandler {
         String payload = message.getPayload();
         log.info("payload {}", payload);
 
-        Chat chatMessage = objectMapper.readValue(payload, Chat.class);
-        ChatRoom room = chatService.findRoom(chatMessage.getRoomId());
-        room.handle(session, chatMessage, chatService);
+//        Chat chatMessage = objectMapper.readValue(payload, Chat.class);
+//        ChatRoom room = chatService.findRoom(chatMessage.getRoomId());
+//        room.handle(session, chatMessage, chatService);
     }
 
     @Override

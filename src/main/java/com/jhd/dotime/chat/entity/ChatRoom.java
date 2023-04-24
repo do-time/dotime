@@ -6,6 +6,7 @@ import lombok.*;
 import org.springframework.web.socket.WebSocketSession;
 
 import javax.persistence.*;
+import java.io.IOException;
 import java.util.*;
 
 
@@ -22,7 +23,6 @@ public class ChatRoom extends BaseTimeEntity {
     @Column(name="name")
     private String name;
 
-
     @Builder
     public ChatRoom(String name) {
         this.roomId = UUID.randomUUID().toString();
@@ -30,7 +30,7 @@ public class ChatRoom extends BaseTimeEntity {
 
     }
 
-    public void handle(WebSocketSession session, Chat chatMessage, ChatService chatService) {
+    public void handle(@NonNull WebSocketSession session, ChatMessage chatMessage, ChatService chatService) throws IOException {
 
     }
 
