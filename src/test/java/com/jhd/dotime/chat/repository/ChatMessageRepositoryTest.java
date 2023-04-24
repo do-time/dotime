@@ -1,9 +1,10 @@
 package com.jhd.dotime.chat.repository;
 
-import com.jhd.dotime.chat.entity.Chat;
+import com.jhd.dotime.chat.entity.ChatMessage;
 import com.jhd.dotime.members.entity.Member;
 import com.jhd.dotime.members.repository.MemberRepository;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +16,7 @@ import java.util.List;
 
 @SpringBootTest
 @ActiveProfiles("test")
-
-class ChatRepositoryTest {
+class ChatMessageRepositoryTest {
 
 
     @Autowired
@@ -24,6 +24,7 @@ class ChatRepositoryTest {
 
     @Autowired
     private MemberRepository memberRepository;
+
 
     @Test
     @DisplayName("메시지 생성")
@@ -47,7 +48,7 @@ class ChatRepositoryTest {
         memberRepository.save(sender);
 //        memberRepository.save(receiver);
 
-        Chat newChat = Chat.builder()
+        ChatMessage newChat = ChatMessage.builder()
                 .content("hello world")
 //                .receiver(receiver)
                 .sender(sender)
@@ -57,10 +58,8 @@ class ChatRepositoryTest {
         chatRepository.save(newChat);
 
         //then
-        List<Chat> messageList = chatRepository.findAll();
+        List<ChatMessage> messageList = chatRepository.findAll();
         Assertions.assertThat(newChat.getId()).isEqualTo(messageList.get(0).getId());
 
     }
-
-
 }

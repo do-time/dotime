@@ -10,7 +10,6 @@ public class ChatDto {
 
     @Getter
     @NoArgsConstructor
-    @AllArgsConstructor
     @Builder @ApiModel(value = "chat message 요청")
     public static class Request{
 

@@ -9,8 +9,8 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "chat")
-public class Chat extends BaseTimeEntity {
+@Entity(name = "chatmessage")
+public class ChatMessage extends BaseTimeEntity {
     @Id
     @Column(name="chat_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,9 +20,9 @@ public class Chat extends BaseTimeEntity {
     private String content;
 
 
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id",insertable = false, updatable=false)
-    private String roomId;
-
+    private ChatRoom chatRoom;
 
 
     @JoinColumn(name = "member_id",insertable = false, updatable=false)
@@ -38,10 +38,9 @@ public class Chat extends BaseTimeEntity {
 
 
     @Builder
-    public Chat(String content, Member sender){
+    public ChatMessage(String content, Member sender){
         this.content = content;
         this.sender = sender;
-
 
     }
 }

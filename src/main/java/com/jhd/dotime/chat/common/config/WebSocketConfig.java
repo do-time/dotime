@@ -17,7 +17,9 @@ public class WebSocketConfig implements WebSocketConfigurer {
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(chatHandler, "/ws/chat").withSockJS().setClientLibraryUrl("https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.2/sockjs.js");
+        registry.addHandler(chatHandler, "/ws/chat")
+                .withSockJS()
+                .setClientLibraryUrl("https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.2/sockjs.js");
         //.setClientLibarayUrl은 그냥 sockjs CDN 주소를 입력해도 무관하다.
         //https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.2/sockjs.js
                 /*
