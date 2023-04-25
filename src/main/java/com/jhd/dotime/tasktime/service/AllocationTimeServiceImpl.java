@@ -25,23 +25,25 @@ public class AllocationTimeServiceImpl implements AllocationTimeService{
 
     @Override
     public void createAllocationTime(AllocationTimeDto.Request requestDto) {
-        Task task = taskRepository.findById(requestDto.getTaskId())
-                .orElseThrow(() -> new TaskException(TaskErrorCode.TASK_NOT_FOUNT));
-
-        if(allocationTimeRepository.existsByTaskAndType(task,requestDto.getType())){
-            throw new AllocationException(AllocationTimeErrorCode.ALLOCATION_TIME_DUPLICATE);
-        }
-
-        allocationTimeRepository.save(
-            allocationTimeMapper.toEntity(requestDto, task)
-        );
+//        Task task = taskRepository.findById(requestDto.getTaskId())
+//                .orElseThrow(() -> new TaskException(TaskErrorCode.TASK_NOT_FOUNT));
+//
+//        if(allocationTimeRepository.existsByTaskAndType(task,requestDto.getType())){
+//            throw new AllocationException(AllocationTimeErrorCode.ALLOCATION_TIME_DUPLICATE);
+//        }
+//
+//        allocationTimeRepository.save(
+//            allocationTimeMapper.toEntity(requestDto, task)
+//        );
     }
+
 
     @Override
     public void updateAllocationTime(AllocationTimeDto.Request requestDto) {
 
     }
 
+    
     @Override
     public void getAllocationTime(Long taskId) {
 
