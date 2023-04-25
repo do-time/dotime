@@ -5,12 +5,9 @@ import io.swagger.annotations.ApiModel;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-/*
- * 수정예정
- * type Enum으로 변경
- * day, week, month, year type 한 번에 요청이 들어올 수 있게 DTO 변경
- */
+
 public class AllocationTimeDto {
     @Getter
     @NoArgsConstructor
@@ -22,9 +19,7 @@ public class AllocationTimeDto {
         @NonNull
         Long taskId;
 
-        String type;
-
-        Long time;
+        List<Allocation> allocationList;
     }
 
     @Getter
@@ -42,5 +37,18 @@ public class AllocationTimeDto {
 
         public Response(TaskTimeLog taskTimeLog) {
         }
+    }
+
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    @ToString
+    @ApiModel(value = "Allocation 입력/수정에 사용되는 Type 구분자")
+    public static class Allocation{
+        @NonNull
+        AllocationType type;
+
+        Long time;
     }
 }
