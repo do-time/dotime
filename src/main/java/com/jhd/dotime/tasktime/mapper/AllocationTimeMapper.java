@@ -15,13 +15,13 @@ import org.mapstruct.ReportingPolicy;
         unmappedTargetPolicy = ReportingPolicy.IGNORE
 )
 public interface AllocationTimeMapper {
-    default AllocationTime toEntity(AllocationTimeDto.Request requestDto, Task task){
-        return AllocationTime.builder()
-                .type(requestDto.getType())
-                .time(requestDto.getTime())
-                .task(task)
-                .build();
-    }
+//    default AllocationTime toEntity(AllocationTimeDto.Request requestDto, Task task){
+//        return AllocationTime.builder()
+//                .type(requestDto.getType())
+//                .time(requestDto.getTime())
+//                .task(task)
+//                .build();
+//    }
 
     default TaskTimeLogDto.Response toResponseDto(TaskTimeLog taskTimelog){
         return TaskTimeLogDto.Response.builder()
