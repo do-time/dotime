@@ -6,18 +6,18 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum AllocationType {
+public enum AllocationCategory {
     DAY("day"),
     WEEK("week"),
     MONTH("month"),
     YEAR("year")
     ;
-    private String type;
+    private String value;
 
     @JsonCreator
-    public static AllocationType from(String sub){
-        for (AllocationType type : AllocationType.values()){
-            if(type.getType().equals(sub)){
+    public static AllocationCategory from(String sub){
+        for (AllocationCategory type : AllocationCategory.values()){
+            if(type.getValue().equals(sub)){
                 return type;
             }
         }

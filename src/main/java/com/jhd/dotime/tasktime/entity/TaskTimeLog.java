@@ -12,8 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name="taskTimeLog")
-@ToString
+@Entity(name="task_time_log")
 public class TaskTimeLog {
     @Id
     @Column

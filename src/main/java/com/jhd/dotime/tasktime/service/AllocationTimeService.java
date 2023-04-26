@@ -4,7 +4,7 @@ import com.jhd.dotime.tasktime.dto.AllocationTimeDto;
 
 public interface AllocationTimeService {
 
-    void createAllocationTime(AllocationTimeDto.Request requestDto);
+    void insertAllocationTime(AllocationTimeDto.Request requestDto);
 
     void updateAllocationTime(AllocationTimeDto.Request requestDto);
 
