@@ -1,13 +1,16 @@
 package com.jhd.dotime.chat.service;
 
+import com.jhd.dotime.chat.dto.ChatRoomDto;
 import com.jhd.dotime.chat.entity.ChatRoom;
 import org.springframework.web.socket.WebSocketSession;
 
 public interface ChatService {
     ChatRoom findRoom(String roomId);
 
-    ChatRoom createRoom(String name);
+    ChatRoom createRoom(ChatRoomDto.Request request);
 
-    <T> void sendMessage(WebSocketSession session, T message);
+    ChatRoomDto.Response enterChatRoom(ChatRoomDto.Request chatRoomRequest);
+
+    void leaveChatRoom(String roomId);
 
 }
