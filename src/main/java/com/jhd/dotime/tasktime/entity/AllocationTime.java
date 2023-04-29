@@ -31,6 +31,9 @@ public class AllocationTime extends BaseTimeEntity {
         this.category = category;
         this.hour = hour;
         this.task = task;
+    }
 
+    public void updateTime(Long hour){
+        this.hour = hour;
     }
 }

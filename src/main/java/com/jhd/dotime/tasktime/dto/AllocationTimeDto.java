@@ -32,7 +32,7 @@ public class AllocationTimeDto {
 
         Long taskId;
 
-        String catagory;
+        String category;
 
         Long hour;
 
@@ -40,7 +40,7 @@ public class AllocationTimeDto {
             return Response.builder()
                     .id(allocationTime.getId())
                     .taskId(allocationTime.getId())
-                    .catagory(allocationTime.getCategory())
+                    .category(allocationTime.getCategory())
                     .hour(allocationTime.getHour())
                     .build();
         }

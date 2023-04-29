@@ -1,18 +1,39 @@
 package com.jhd.dotime.tasktime.controller;
 
+import com.jhd.dotime.common.annotation.CurrentMember;
+import com.jhd.dotime.members.entity.Member;
 import com.jhd.dotime.tasktime.dto.AllocationTimeDto;
 import com.jhd.dotime.tasktime.service.AllocationTimeService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("allocation-time")
 @RequiredArgsConstructor
 public class AllocationTimeController {
+
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND"),
+            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
+    })
+    @ApiOperation(
+            value = "Allocation Time 입력",
+            notes = "TaskId의 할당 시간을 구분 별로 입력 받아 저장한다"
+    )
+    @PostMapping
+    public ResponseEntity<?> insertAllocationTime(@CurrentMember Member member, @RequestBody AllocationTimeDto.Request requestDto){
+        allocationTimeService.insertAllocationTime(requestDto);
+        return null;
+    }
 
     private final AllocationTimeService allocationTimeService;
 
@@ -23,12 +44,27 @@ public class AllocationTimeController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @ApiOperation(
-            value = "Task 별 TimeLog 조회",
-            notes = "TaskId에 해당하는 TimeLog 들을 조회한다."
+            value = "Allocation Time 수정",
+            notes = "TaskId의 할당 시간을 구분 별로 수정한다."
     )
-    @PostMapping
-    public ResponseEntity<?> insertAllocationTime(@RequestBody AllocationTimeDto.Request requestDto){
-        allocationTimeService.insertAllocationTime(requestDto);
+    @PatchMapping
+    public ResponseEntity<?> updateAllocationTime(@CurrentMember Member member, @RequestBody AllocationTimeDto.Request requestDto){
+        allocationTimeService.updateAllocationTime(requestDto);
         return null;
+    }
+
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND"),
+            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
+    })
+    @ApiOperation(
+            value = "Allocation Time 조회",
+            notes = "TaskId의 할당 시간 리스트를 조회한다."
+    )
+    @GetMapping("/{taskId}")
+    public ResponseEntity<List<AllocationTimeDto.Response>> getAllocationTime(@CurrentMember Member member, @PathVariable Long taskId){
+        return new ResponseEntity<>(allocationTimeService.getAllocationTime(taskId), HttpStatus.OK);
     }
 }
