@@ -1,8 +1,7 @@
 package com.jhd.dotime.tasktime.controller;
 
-import com.jhd.dotime.common.annotation.CurrentMember;
-import com.jhd.dotime.members.entity.Member;
 import com.jhd.dotime.tasktime.dto.AllocationTimeDto;
+import com.jhd.dotime.tasktime.service.AllocationTimeService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -14,6 +13,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("allocation-time")
 @RequiredArgsConstructor
 public class AllocationTimeController {
+
+    private final AllocationTimeService allocationTimeService;
+
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
@@ -26,7 +28,7 @@ public class AllocationTimeController {
     )
     @PostMapping
     public ResponseEntity<?> insertAllocationTime(@RequestBody AllocationTimeDto.Request requestDto){
-        System.out.println(requestDto.toString());
+        allocationTimeService.insertAllocationTime(requestDto);
         return null;
     }
 }

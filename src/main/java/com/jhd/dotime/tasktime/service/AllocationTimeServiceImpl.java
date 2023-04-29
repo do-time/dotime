@@ -24,17 +24,19 @@ public class AllocationTimeServiceImpl implements AllocationTimeService{
     private final AllocationTimeMapper allocationTimeMapper = Mappers.getMapper(AllocationTimeMapper.class);
 
     @Override
-    public void createAllocationTime(AllocationTimeDto.Request requestDto) {
-//        Task task = taskRepository.findById(requestDto.getTaskId())
-//                .orElseThrow(() -> new TaskException(TaskErrorCode.TASK_NOT_FOUNT));
-//
-//        if(allocationTimeRepository.existsByTaskAndType(task,requestDto.getType())){
-//            throw new AllocationException(AllocationTimeErrorCode.ALLOCATION_TIME_DUPLICATE);
-//        }
-//
-//        allocationTimeRepository.save(
-//            allocationTimeMapper.toEntity(requestDto, task)
-//        );
+    public void insertAllocationTime(AllocationTimeDto.Request requestDto) {
+        Task task = taskRepository.findById(requestDto.getTaskId())
+                .orElseThrow(() -> new TaskException(TaskErrorCode.TASK_NOT_FOUNT));
+
+        for(AllocationTimeDto.Allocation allocation : requestDto.getAllocationList()){
+            if(allocationTimeRepository.existsByTaskAndType(task,allocation.getCategory().getValue())){
+                throw new AllocationException(AllocationTimeErrorCode.ALLOCATION_TIME_DUPLICATE);
+            }
+
+            allocationTimeRepository.save(
+                    allocationTimeMapper.toEntity(allocation.getCategory().getValue(), allocation.getTime(), task)
+            );
+        }
     }
 
 

@@ -1,10 +1,9 @@
 package com.jhd.dotime.tasktime.dto;
 
-import com.jhd.dotime.tasktime.entity.TaskTimeLog;
+import com.jhd.dotime.tasktime.entity.AllocationTime;
 import io.swagger.annotations.ApiModel;
 import lombok.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -29,13 +28,21 @@ public class AllocationTimeDto {
     @ToString
     @ApiModel(value = "Allocation Time 반환 DTO")
     public static class Response{
+        Long id;
+
         Long taskId;
 
-        LocalDateTime startTime;
+        String catagory;
 
-        LocalDateTime endTime;
+        Long hour;
 
-        public Response(TaskTimeLog taskTimeLog) {
+        public static AllocationTimeDto.Response of(AllocationTime allocationTime){
+            return Response.builder()
+                    .id(allocationTime.getId())
+                    .taskId(allocationTime.getId())
+                    .catagory(allocationTime.getCategory())
+                    .hour(allocationTime.getHour())
+                    .build();
         }
     }
 
@@ -47,7 +54,7 @@ public class AllocationTimeDto {
     @ApiModel(value = "Allocation 입력/수정에 사용되는 Type 구분자")
     public static class Allocation{
         @NonNull
-        AllocationType type;
+        AllocationCategory category;
 
         Long time;
     }
