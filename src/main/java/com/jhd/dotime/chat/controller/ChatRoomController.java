@@ -14,21 +14,25 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/chat")
-public class ChatController {
+public class ChatRoomController {
 
     private final ChatRoomService chatService;
 
 
     @PostMapping
-    public List<ChatRoomDto.Response> createRoom(@RequestParam String name, ChatRoomDto.Request chatRoomRequestDto) {
-        chatService.createChatroom(chatRoomRequestDto);
-        return null;
+    public List<ChatRoomDto.Response> createRoom(ChatRoomDto.Request chatRoomRequestDto) {
+        return chatService.createChatroom(chatRoomRequestDto);
     }
 
 
     @GetMapping
     public List<ChatRoomDto.Response> findAllRoom() {
         return chatService.findAllRoom();
+    }
+
+    @GetMapping("/{roomId}")
+    public ChatRoomDto.Response findRoom(@PathVariable String roomId){
+        return null;
     }
 
 }

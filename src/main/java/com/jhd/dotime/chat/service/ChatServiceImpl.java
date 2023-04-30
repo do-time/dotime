@@ -50,5 +50,10 @@ public class ChatServiceImpl implements ChatService{
         return null;
     }
 
+    @Override
+    public void leaveChatRoom(String roomId) {
+
+    }
+
 
 }

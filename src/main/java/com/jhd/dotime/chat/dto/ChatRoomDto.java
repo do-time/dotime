@@ -14,7 +14,6 @@ public class ChatRoomDto {
     public static class Request{
         @NonNull
         private String name;
-
     }
 
     @Getter
@@ -30,7 +29,7 @@ public class ChatRoomDto {
 
         public static Response of(ChatRoom chatRoom) {
             return Response.builder()
-                    .roomId(chatRoom.getRoomId())
+                    .roomId(chatRoom.getId())
                     .name(chatRoom.getName())
                     .build();
         }
