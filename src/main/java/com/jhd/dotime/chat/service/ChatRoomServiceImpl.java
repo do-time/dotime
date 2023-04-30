@@ -17,17 +17,14 @@ import static java.util.Collections.reverse;
 @Service
 @RequiredArgsConstructor
 public class ChatRoomServiceImpl implements ChatRoomService {
-    @Autowired
     private final ChatRoomRepository chatRoomRepository;
 
     @Override
     public List<ChatRoomDto.Response> createChatroom(ChatRoomDto.Request chatroomRequestDto) {
-        ChatRoom chatRoom = chatRoomRepository.save(ChatRoom
-                .builder()
+        ChatRoom chatRoom = chatRoomRepository.save(ChatRoom.builder()
                 .name(chatroomRequestDto.getName())
                 .build());
-        return null;
-
+        return chatRoomRepository.findChatRoomById(chatRoom.getId()).stream().map(ChatRoomDto.Response::of).collect(Collectors.toList());
     }
 
     @Override
@@ -39,4 +36,19 @@ public class ChatRoomServiceImpl implements ChatRoomService {
                     return lst;
                 }));
     }
+
+    /**
+     * chat room 반환 by Room Id
+     * @param roomId
+     * @return
+     */
+    @Override
+    public ChatRoomDto.Response findChatRoomById(String roomId) {
+        return chatRoomRepository.findChatRoomById(roomId)
+                .stream()
+                .map(ChatRoomDto.Response::of)
+                .collect(Collectors.toList()).get(0);
+    }
+
+
 }

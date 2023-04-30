@@ -18,14 +18,14 @@ public class ChatRoom extends BaseTimeEntity {
 
     @Id
     @Column(name="room_id")
-    private String roomId;
+    private String id;
 
     @Column(name="name")
     private String name;
 
     @Builder
     public ChatRoom(String name) {
-        this.roomId = UUID.randomUUID().toString();
+        this.id = UUID.randomUUID().toString();
         this.name = name;
 
     }
