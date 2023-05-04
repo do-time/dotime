@@ -27,6 +27,8 @@ public class TaskDto {
 
         private String hashtag;
 
+        private List<AllocationTimeDto.Allocation> allocationList;
+
     }
 
     @Getter

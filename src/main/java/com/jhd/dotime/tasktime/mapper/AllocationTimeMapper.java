@@ -1,6 +1,7 @@
 package com.jhd.dotime.tasktime.mapper;
 
 import com.jhd.dotime.tasks.entity.Task;
+import com.jhd.dotime.tasktime.dto.AllocationCategory;
 import com.jhd.dotime.tasktime.dto.AllocationTimeDto;
 import com.jhd.dotime.tasktime.dto.TaskTimeLogDto;
 import com.jhd.dotime.tasktime.entity.AllocationTime;
@@ -15,9 +16,9 @@ import org.mapstruct.ReportingPolicy;
         unmappedTargetPolicy = ReportingPolicy.IGNORE
 )
 public interface AllocationTimeMapper {
-    default AllocationTime toEntity(String type, Long hour , Task task){
+    default AllocationTime toEntity(AllocationCategory category, Long hour , Task task){
         return AllocationTime.builder()
-                .category(type)
+                .category(category)
                 .hour(hour)
                 .task(task)
                 .build();

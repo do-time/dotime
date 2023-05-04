@@ -2,6 +2,7 @@ package com.jhd.dotime.tasktime.entity;
 
 import com.jhd.dotime.common.entity.BaseTimeEntity;
 import com.jhd.dotime.tasks.entity.Task;
+import com.jhd.dotime.tasktime.dto.AllocationCategory;
 import lombok.*;
 
 import javax.persistence.*;
@@ -18,7 +19,8 @@ public class AllocationTime extends BaseTimeEntity {
     private Long id;
 
     @Column
-    private String category;
+    @Enumerated(EnumType.STRING)
+    private AllocationCategory category;
 
     @Column Long hour;
 
@@ -27,7 +29,7 @@ public class AllocationTime extends BaseTimeEntity {
     private Task task;
 
     @Builder
-    public AllocationTime(String category, Long hour, Task task){
+    public AllocationTime(AllocationCategory category, Long hour, Task task){
         this.category = category;
         this.hour = hour;
         this.task = task;

@@ -18,7 +18,7 @@ import java.util.List;
 @RequestMapping("allocation-time")
 @RequiredArgsConstructor
 public class AllocationTimeController {
-
+    private final AllocationTimeService allocationTimeService;
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
@@ -30,12 +30,10 @@ public class AllocationTimeController {
             notes = "TaskId의 할당 시간을 구분 별로 입력 받아 저장한다"
     )
     @PostMapping
-    public ResponseEntity<?> insertAllocationTime(@CurrentMember Member member, @RequestBody AllocationTimeDto.Request requestDto){
+    public ResponseEntity<Void> insertAllocationTime(@CurrentMember Member member, @RequestBody AllocationTimeDto.Request requestDto) {
         allocationTimeService.insertAllocationTime(requestDto);
-        return null;
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
-
-    private final AllocationTimeService allocationTimeService;
 
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK"),
@@ -48,9 +46,9 @@ public class AllocationTimeController {
             notes = "TaskId의 할당 시간을 구분 별로 수정한다."
     )
     @PatchMapping
-    public ResponseEntity<?> updateAllocationTime(@CurrentMember Member member, @RequestBody AllocationTimeDto.Request requestDto){
+    public ResponseEntity<Void> updateAllocationTime(@CurrentMember Member member, @RequestBody AllocationTimeDto.Request requestDto){
         allocationTimeService.updateAllocationTime(requestDto);
-        return null;
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @ApiResponses({

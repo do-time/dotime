@@ -30,8 +30,6 @@ public class AllocationTimeDto {
     public static class Response{
         Long id;
 
-        Long taskId;
-
         String category;
 
         Long hour;
@@ -39,8 +37,7 @@ public class AllocationTimeDto {
         public static AllocationTimeDto.Response of(AllocationTime allocationTime){
             return Response.builder()
                     .id(allocationTime.getId())
-                    .taskId(allocationTime.getId())
-                    .category(allocationTime.getCategory())
+                    .category(allocationTime.getCategory().getValue())
                     .hour(allocationTime.getHour())
                     .build();
         }
@@ -51,7 +48,6 @@ public class AllocationTimeDto {
     @AllArgsConstructor
     @Builder
     @ToString
-    @ApiModel(value = "Allocation 입력/수정에 사용되는 Type 구분자")
     public static class Allocation{
         @NonNull
         AllocationCategory category;
