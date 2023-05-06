@@ -10,16 +10,17 @@ public class ChatRoomDto {
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
-    @Builder @ApiModel(value = "chat room 요청")
+    @Builder
+    @ApiModel(value = "chat room 요청")
     public static class Request{
-        @NonNull
         private String name;
     }
 
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
-    @Builder @ApiModel(value = "chat room 응답")
+    @Builder
+    @ApiModel(value = "chat room 응답")
     public static class Response {
         @NonNull
         private String name;
