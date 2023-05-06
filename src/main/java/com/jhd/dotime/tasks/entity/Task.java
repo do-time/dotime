@@ -4,6 +4,7 @@ import com.jhd.dotime.common.entity.BaseTimeEntity;
 import com.jhd.dotime.hashtag.entity.HashTag;
 import com.jhd.dotime.hashtag.entity.TaskTag;
 import com.jhd.dotime.members.entity.Member;
+import com.jhd.dotime.tasktime.entity.AllocationTime;
 import io.swagger.annotations.ApiModel;
 import lombok.*;
 import javax.persistence.*;
@@ -35,10 +36,11 @@ public class Task extends BaseTimeEntity {
     private String content;
 
 
-
     @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     List<TaskTag> taskTagList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    List<AllocationTime> allocationTimeList = new ArrayList<>();
 
     @Builder
     public Task(Member member, String title, String content){

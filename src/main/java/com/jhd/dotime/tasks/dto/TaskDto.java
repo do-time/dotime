@@ -3,6 +3,7 @@ package com.jhd.dotime.tasks.dto;
 
 import com.jhd.dotime.hashtag.dto.HashTagDto;
 import com.jhd.dotime.tasks.entity.Task;
+import com.jhd.dotime.tasktime.dto.AllocationTimeDto;
 import io.swagger.annotations.ApiModel;
 import lombok.*;
 import java.time.LocalDateTime;
@@ -26,6 +27,8 @@ public class TaskDto {
 
         private String hashtag;
 
+        private List<AllocationTimeDto.Allocation> allocationList;
+
     }
 
     @Getter
@@ -41,6 +44,7 @@ public class TaskDto {
 
 //        @Builder.Default
         private List<HashTagDto.Response> hashtag;
+        private List<AllocationTimeDto.Response>  allocationTime;
         private LocalDateTime createdDate;
         private LocalDateTime updatedDate;
 
@@ -52,10 +56,9 @@ public class TaskDto {
                     .createdDate(task.getCreatedDate())
                     .updatedDate(task.getUpdatedDate())
                     .hashtag(task.getHashTag().stream().map(HashTagDto.Response::of).collect(Collectors.toList())) // tasktag List를 받아 해시태그 Response로 매핑
+                    .allocationTime(task.getAllocationTimeList().stream().map(AllocationTimeDto.Response::of).collect(Collectors.toList()))
                     .build();
-
         }
-
     }
 
 

@@ -17,6 +17,12 @@ import com.jhd.dotime.tasks.dto.TaskDto;
 import com.jhd.dotime.tasks.entity.Task;
 //import com.jhd.dotime.tasks.mapper.TaskMapper;
 import com.jhd.dotime.tasks.repository.TaskRepository;
+import com.jhd.dotime.tasktime.common.error.AllocationTimeErrorCode;
+import com.jhd.dotime.tasktime.common.exception.AllocationException;
+import com.jhd.dotime.tasktime.dto.AllocationTimeDto;
+import com.jhd.dotime.tasktime.entity.AllocationTime;
+import com.jhd.dotime.tasktime.mapper.AllocationTimeMapper;
+import com.jhd.dotime.tasktime.repository.AllocationTimeRepository;
 import lombok.RequiredArgsConstructor;
 import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
@@ -40,8 +46,9 @@ public class TaskServiceImpl implements TaskService{
 
     private final HashTagRepository hashTagRepository;
 
-//    private final TaskMapper taskMapper = Mappers.getMapper(TaskMapper.class);
+    private final AllocationTimeRepository allocationTimeRepository;
 
+    private final AllocationTimeMapper allocationTimeMapper = Mappers.getMapper(AllocationTimeMapper.class);
 
     @Override
     @Transactional
@@ -55,11 +62,23 @@ public class TaskServiceImpl implements TaskService{
 //
 //        }
 
-        return taskRepository.save(Task.builder()
-                .member(member)
-                .content(taskRequestDto.getContent())
-                .title(taskRequestDto.getTitle())
-                .build()).getId();
+        Task newTask = taskRepository.save(Task.builder()
+                                    .member(member)
+                                    .content(taskRequestDto.getContent())
+                                    .title(taskRequestDto.getTitle())
+                                    .build());
+
+        for(AllocationTimeDto.Allocation allocation : taskRequestDto.getAllocationList()){
+            if(allocationTimeRepository.existsByTaskIdAndCategory(newTask.getId(),allocation.getCategory())){
+                throw new AllocationException(AllocationTimeErrorCode.ALLOCATION_TIME_DUPLICATE);
+            }
+
+            allocationTimeRepository.save(
+                    allocationTimeMapper.toEntity(allocation.getCategory(), allocation.getTime(), newTask)
+            );
+        }
+
+        return newTask.getId();
     }
 
     /**
@@ -145,6 +164,17 @@ public class TaskServiceImpl implements TaskService{
         }
 
         tasks.update(taskRequestDto.getTitle(), taskRequestDto.getContent(), taskTags);
+
+        List<AllocationTime> allocationTimeList = allocationTimeRepository.findAllByTaskId(id);
+
+        // 이중 반복문 vs DB connection 여러번 발생하는 것 뭐가 더 좋은지 아직 모르겠음
+        for(AllocationTime allocationTime : allocationTimeList){
+            for(AllocationTimeDto.Allocation newAllocation : taskRequestDto.getAllocationList()){
+                if(allocationTime.getCategory().equals(newAllocation.getCategory())) {
+                    allocationTime.updateTime(newAllocation.getTime());
+                }
+            }
+        }
 
         return id;
     }

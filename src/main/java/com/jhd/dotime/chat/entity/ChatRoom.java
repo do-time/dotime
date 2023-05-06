@@ -1,36 +1,31 @@
 package com.jhd.dotime.chat.entity;
 
+import com.jhd.dotime.chat.service.ChatService;
 import com.jhd.dotime.common.entity.BaseTimeEntity;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.web.socket.WebSocketSession;
 
 import javax.persistence.*;
+import java.io.IOException;
+import java.util.*;
 
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
 @Entity(name="chatroom")
+@Getter
 public class ChatRoom extends BaseTimeEntity {
 
     @Id
-    @Column(name="chatroom_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "room_id")
+    private String id;
 
-    @Column(name = "title")
-    private String title;
-
-    @Column(name="people_count")
-    private Long people_count;
+    @Column(name = "name")
+    private String name;
 
     @Builder
-    public ChatRoom(String title, Long people_count){
-        this.title = title;
-        this.people_count = people_count;
+    public ChatRoom(String name) {
+        this.id = UUID.randomUUID().toString();
+        this.name = name;
     }
-
-
 }
