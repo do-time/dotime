@@ -1,5 +1,7 @@
 package com.jhd.dotime.chat.service;
 
+import com.jhd.dotime.chat.common.error.ChatRoomErrorCode;
+import com.jhd.dotime.chat.common.exception.ChatException;
 import com.jhd.dotime.chat.dto.ChatRoomDto;
 import com.jhd.dotime.chat.entity.ChatRoom;
 import com.jhd.dotime.chat.repository.ChatRoomRepository;
@@ -24,6 +26,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
         ChatRoom chatRoom = chatRoomRepository.save(ChatRoom.builder()
                 .name(chatroomRequestDto.getName())
                 .build());
+        System.out.println("chatRoom.getName() = " + chatRoom.getName());
         return chatRoomRepository.findChatRoomById(chatRoom.getId()).stream().map(ChatRoomDto.Response::of).collect(Collectors.toList());
     }
 
@@ -48,6 +51,13 @@ public class ChatRoomServiceImpl implements ChatRoomService {
                 .stream()
                 .map(ChatRoomDto.Response::of)
                 .collect(Collectors.toList()).get(0);
+    }
+
+    @Override
+    public void deleteChatRoom(String roomId) {
+        ChatRoom chatRoom = chatRoomRepository.findChatRoomById(roomId).orElseThrow(() -> new ChatException(ChatRoomErrorCode.CHATROOM_NOT_FOUND));
+        chatRoomRepository.delete(chatRoom);
+
     }
 
 

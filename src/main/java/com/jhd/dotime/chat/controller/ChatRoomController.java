@@ -20,7 +20,7 @@ public class ChatRoomController {
 
 
     @PostMapping
-    public List<ChatRoomDto.Response> createRoom(ChatRoomDto.Request chatRoomRequestDto) {
+    public List<ChatRoomDto.Response> createRoom(@RequestBody ChatRoomDto.Request chatRoomRequestDto) {
         return chatService.createChatroom(chatRoomRequestDto);
     }
 
@@ -32,7 +32,7 @@ public class ChatRoomController {
 
     @GetMapping("/{roomId}")
     public ChatRoomDto.Response findRoom(@PathVariable String roomId){
-        return null;
+        return chatService.findChatRoomById(roomId);
     }
 
 }

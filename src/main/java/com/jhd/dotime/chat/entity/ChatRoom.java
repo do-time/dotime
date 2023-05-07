@@ -17,24 +17,15 @@ import java.util.*;
 public class ChatRoom extends BaseTimeEntity {
 
     @Id
-    @Column(name="room_id")
+    @Column(name = "room_id")
     private String id;
 
-    @Column(name="name")
+    @Column(name = "name")
     private String name;
 
     @Builder
     public ChatRoom(String name) {
         this.id = UUID.randomUUID().toString();
         this.name = name;
-
-    }
-
-    public void handle(@NonNull WebSocketSession session, ChatMessage chatMessage, ChatService chatService) throws IOException {
-
-    }
-
-    public <T> void sendMessage(WebSocketSession session, T message){
-
     }
 }

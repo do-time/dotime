@@ -10,4 +10,5 @@ public interface ChatRoomService {
     List<ChatRoomDto.Response> createChatroom(ChatRoomDto.Request chatroomRequestDto);
     List<ChatRoomDto.Response> findAllRoom();
     ChatRoomDto.Response findChatRoomById(String roomId);
+    void deleteChatRoom(String roomId);
 }
