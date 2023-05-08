@@ -13,6 +13,7 @@ import com.jhd.dotime.tasktime.repository.AllocationTimeRepository;
 import lombok.RequiredArgsConstructor;
 import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -45,6 +46,7 @@ public class AllocationTimeServiceImpl implements AllocationTimeService{
 
 
     @Override
+    @Transactional
     public void updateAllocationTime(AllocationTimeDto.Request requestDto) {
         Task task = taskRepository.findById(requestDto.getTaskId())
                 .orElseThrow(() -> new TaskException(TaskErrorCode.TASK_NOT_FOUNT));

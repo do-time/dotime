@@ -167,13 +167,11 @@ public class TaskServiceImpl implements TaskService{
 
         List<AllocationTime> allocationTimeList = allocationTimeRepository.findAllByTaskId(id);
 
-        // 이중 반복문 vs DB connection 여러번 발생하는 것 뭐가 더 좋은지 아직 모르겠음
-        for(AllocationTime allocationTime : allocationTimeList){
-            for(AllocationTimeDto.Allocation newAllocation : taskRequestDto.getAllocationList()){
-                if(allocationTime.getCategory().equals(newAllocation.getCategory())) {
-                    allocationTime.updateTime(newAllocation.getTime());
-                }
-            }
+        // Allocation Time update
+        // 현재 버전은 초기 입력시 모든 enum 타입이 모두 들어오고, 수정시에는 해당 allocation time 조회해 수정
+        for(AllocationTimeDto.Allocation allocation : taskRequestDto.getAllocationList()){
+            AllocationTime allocationTime = allocationTimeRepository.findByTaskIdAndCategory(tasks.getId(), allocation.getCategory()).orElseThrow(() -> new AllocationException(AllocationTimeErrorCode.ALLOCATION_TIME_NOT_FOUNT));
+            allocationTime.updateTime(allocation.getTime());
         }
 
         return id;
