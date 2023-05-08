@@ -13,6 +13,7 @@ public class ChatRoomDto {
     @Builder
     @ApiModel(value = "chat room 요청")
     public static class Request{
+        @NonNull
         private String name;
     }
 
@@ -30,8 +31,8 @@ public class ChatRoomDto {
 
         public static Response of(ChatRoom chatRoom) {
             return Response.builder()
-                    .roomId(chatRoom.getId())
-                    .name(chatRoom.getName())
+                    .roomId(chatRoom.getId().toString())
+                    .name(chatRoom.getRoomname())
                     .build();
         }
     }

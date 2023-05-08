@@ -4,7 +4,6 @@ import com.jhd.dotime.chat.entity.ChatMessage;
 import com.jhd.dotime.members.entity.Member;
 import com.jhd.dotime.members.repository.MemberRepository;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,7 @@ class ChatMessageRepositoryTest {
 
 
     @Autowired
-    private ChatRepository chatRepository;
+    private ChatMessageRepository chatMessageRepository;
 
     @Autowired
     private MemberRepository memberRepository;
@@ -55,10 +54,10 @@ class ChatMessageRepositoryTest {
                 .build();
 
         //when
-        chatRepository.save(newChat);
+        chatMessageRepository.save(newChat);
 
         //then
-        List<ChatMessage> messageList = chatRepository.findAll();
+        List<ChatMessage> messageList = chatMessageRepository.findAll();
         Assertions.assertThat(newChat.getId()).isEqualTo(messageList.get(0).getId());
 
     }

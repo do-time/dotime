@@ -2,6 +2,7 @@ package com.jhd.dotime.chat.entity;
 
 import com.jhd.dotime.chat.service.ChatService;
 import com.jhd.dotime.common.entity.BaseTimeEntity;
+import com.jhd.dotime.members.entity.Member;
 import lombok.*;
 import org.springframework.web.socket.WebSocketSession;
 
@@ -17,15 +18,23 @@ import java.util.*;
 public class ChatRoom extends BaseTimeEntity {
 
     @Id
-    @Column(name = "room_id")
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "chatroom_id")
+    private Long id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "roomname")
+    private String roomname;
+
+    @Column
+    private String lastMessage;
 
     @Builder
-    public ChatRoom(String name) {
-        this.id = UUID.randomUUID().toString();
-        this.name = name;
+    public ChatRoom(String roomname) {
+        this.roomname = roomname;
     }
+
+    public void updateLastMessage(String lastMessage) {
+        this.lastMessage = Objects.requireNonNull(lastMessage);
+    }
+
 }
