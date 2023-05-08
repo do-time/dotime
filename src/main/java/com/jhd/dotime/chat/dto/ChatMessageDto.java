@@ -7,7 +7,6 @@ import lombok.*;
 @RequiredArgsConstructor
 public class ChatMessageDto {
 
-
     @Getter
     @RequiredArgsConstructor
     @NoArgsConstructor
@@ -18,5 +17,20 @@ public class ChatMessageDto {
 
         @NonNull
         private String roomId;
+    }
+
+
+    @Getter
+    @NoArgsConstructor
+    @RequiredArgsConstructor
+    @Builder
+    @ApiModel(value = "chat message 응답")
+    public static class Response{
+//        private String memberId;
+        @NonNull
+        private String roomId;
+
+        @NonNull
+        private String content;
     }
 }

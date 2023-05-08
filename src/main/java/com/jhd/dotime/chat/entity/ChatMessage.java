@@ -14,7 +14,7 @@ import javax.persistence.*;
 public class ChatMessage extends BaseTimeEntity {
     @Id
     @Column(name="message_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "content")
@@ -44,4 +44,6 @@ public class ChatMessage extends BaseTimeEntity {
         this.sender = sender;
 
     }
+
+
 }

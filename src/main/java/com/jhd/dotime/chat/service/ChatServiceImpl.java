@@ -4,19 +4,18 @@ import com.jhd.dotime.chat.common.error.ChatRoomErrorCode;
 import com.jhd.dotime.chat.common.exception.ChatException;
 import com.jhd.dotime.chat.dto.ChatRoomDto;
 import com.jhd.dotime.chat.entity.ChatRoom;
-import com.jhd.dotime.chat.repository.ChatRepository;
+import com.jhd.dotime.chat.repository.ChatMessageRepository;
 import com.jhd.dotime.chat.repository.ChatRoomRepository;
 import com.jhd.dotime.members.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.socket.WebSocketSession;
 
 @Service
 @RequiredArgsConstructor
 public class ChatServiceImpl implements ChatService{
 
     private final ChatRoomRepository chatRoomRepository;
-    private final ChatRepository chatRepository;
+    private final ChatMessageRepository chatMessageRepository;
     private final MemberRepository memberRepository;
 
     /**

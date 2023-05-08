@@ -24,9 +24,9 @@ public class ChatRoomServiceImpl implements ChatRoomService {
     @Override
     public List<ChatRoomDto.Response> createChatroom(ChatRoomDto.Request chatroomRequestDto) {
         ChatRoom chatRoom = chatRoomRepository.save(ChatRoom.builder()
-                .name(chatroomRequestDto.getName())
+                .roomname(chatroomRequestDto.getName())
                 .build());
-        System.out.println("chatRoom.getName() = " + chatRoom.getName());
+        System.out.println("chatRoom.getName() = " + chatRoom.getRoomname());
         return chatRoomRepository.findChatRoomById(chatRoom.getId()).stream().map(ChatRoomDto.Response::of).collect(Collectors.toList());
     }
 
@@ -47,7 +47,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
      */
     @Override
     public ChatRoomDto.Response findChatRoomById(String roomId) {
-        return chatRoomRepository.findChatRoomById(roomId)
+        return chatRoomRepository.findChatRoomById(Long.parseLong(roomId))
                 .stream()
                 .map(ChatRoomDto.Response::of)
                 .collect(Collectors.toList()).get(0);
@@ -55,7 +55,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 
     @Override
     public void deleteChatRoom(String roomId) {
-        ChatRoom chatRoom = chatRoomRepository.findChatRoomById(roomId).orElseThrow(() -> new ChatException(ChatRoomErrorCode.CHATROOM_NOT_FOUND));
+        ChatRoom chatRoom = chatRoomRepository.findChatRoomById(Long.parseLong(roomId)).orElseThrow(() -> new ChatException(ChatRoomErrorCode.CHATROOM_NOT_FOUND));
         chatRoomRepository.delete(chatRoom);
 
     }
