@@ -3,6 +3,7 @@ package com.jhd.dotime.chat.entity;
 
 import com.jhd.dotime.common.entity.BaseTimeEntity;
 import com.jhd.dotime.members.entity.Member;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -15,12 +16,10 @@ import java.util.List;
 public class MemberChatRoom extends BaseTimeEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "member_chatroom_id")
     private Long id;
 
-    @Column
-    private String name;
 
     @ManyToOne
     @JoinColumn(name = "member_id")
@@ -29,5 +28,12 @@ public class MemberChatRoom extends BaseTimeEntity {
     @ManyToOne
     @JoinColumn(name = "chatroom_id")
     private ChatRoom chatRoom;
+
+    @Builder
+    public MemberChatRoom(Member member, ChatRoom chatRoom){
+        this.member = member;
+        this.chatRoom = chatRoom;
+
+    }
 
 }
