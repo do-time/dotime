@@ -37,7 +37,7 @@ public interface MemberMapper {
 
     default Set<Authority> mapAuthority(){
         Authority authority = Authority.builder()
-                .authorityName("USER_ROLE")
+                .authorityName("ROLE_USER")
                 .build();
         return Collections.singleton(authority);
     }
