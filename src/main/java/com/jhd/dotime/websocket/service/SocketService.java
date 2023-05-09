@@ -39,12 +39,15 @@ public class SocketService {
 
     @Transactional(isolation = Isolation.SERIALIZABLE)
     public void userEnter(ChatRoomSocketDto dto){
+        log.info("User {} entered {} room", dto.getChatMemberId(), dto.getChatRoomId());
         String roomId = dto.getChatRoomId();
         String userId = dto.getChatMemberId();
-        List<Member> users = memberChatRoomRepository.findMembersByChatRoomId(Long.parseLong(roomId));
+        Member member = memberRepository.findById(Long.parseLong(userId)).orElseThrow(() -> new CustomException(MemberErrorCode.MEMBER_NOT_FOUND));
+        ChatRoom chatRoom = chatRoomRepository.findChatRoomById(Long.parseLong(roomId)).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 채팅방입니다."));
+        memberChatRoomRepository.save(MemberChatRoom.builder().member(member).chatRoom(chatRoom).build());
+        List<Member> users = memberChatRoomRepository.findMembersByChatRoomId(Long.parseLong(roomId)).stream().map(MemberChatRoom::getMember).collect(Collectors.toList());
 
         messageSender.convertAndSend("/sub/chat/room/" + dto.getChatRoomId(), users);
-
     }
 
     @Transactional
@@ -57,8 +60,9 @@ public class SocketService {
         Member sender = memberRepository.findById(Long.parseLong(userId)).orElseThrow(() -> new CustomException(MemberErrorCode.MEMBER_NOT_FOUND));
 
         // 보낼 채팅방 찾기
-        MemberChatRoom memberChatRoom = memberChatRoomRepository.findById(Long.parseLong(chatRoomId)).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 채팅방입니다."));
-        ChatRoom chatRoom = memberChatRoom.getChatRoom();
+//        MemberChatRoom memberChatRoom = memberChatRoomRepository.findById(Long.parseLong(chatRoomId)).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 채팅방입니다."));
+//        ChatRoom chatRoom = memberChatRoom.getChatRoom();
+        ChatRoom chatRoom = chatRoomRepository.findChatRoomById(Long.parseLong(chatRoomId)).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 채팅방입니다."));
         chatRoom.updateLastMessage(msg);
 
         //메시지 저장
