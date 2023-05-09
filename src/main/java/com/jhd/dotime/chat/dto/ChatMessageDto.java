@@ -17,6 +17,9 @@ public class ChatMessageDto {
 
         @NonNull
         private String roomId;
+
+        @NonNull
+        private Long SenderId;
     }
 
 
@@ -32,5 +35,8 @@ public class ChatMessageDto {
 
         @NonNull
         private String content;
+
+        @NonNull
+        private Long SenderId;
     }
 }
