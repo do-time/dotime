@@ -70,7 +70,7 @@ public class SocketService {
         chatMessageRepository.save(chatMsg);
 
         //메시지 보내기
-        messageSender.convertAndSend("/sub/chat/room/" + dto.getChatRoomId(), ChatMessageDto.Response.builder().roomId(dto.getChatRoomId()).content(msg).SenderId(sender.getId()).build());
+        messageSender.convertAndSend("/sub/chat/room/" + dto.getChatRoomId(), ChatMessageDto.Response.builder().roomId(dto.getChatRoomId()).content(msg).build());
 
 
 
