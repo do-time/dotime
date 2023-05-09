@@ -36,6 +36,14 @@ spring:
       restart:
         enabled: false
 
+  #Thymeleaf config
+  thymeleaf:
+    prefix: classpath:templates/thymeleaf/
+    check-template: true
+    suffix: .html
+    mode: HTML
+    cache: false # default false, 개발 시에는 false로 두어 정적 파일처럼 사용
+
 springdoc:
   components:
     request:

@@ -42,6 +42,9 @@ public class SocketService {
         log.info("User {} entered {} room", dto.getChatMemberId(), dto.getChatRoomId());
         String roomId = dto.getChatRoomId();
         String userId = dto.getChatMemberId();
+
+        System.out.println(roomId + " " + userId);
+
         Member member = memberRepository.findById(Long.parseLong(userId)).orElseThrow(() -> new CustomException(MemberErrorCode.MEMBER_NOT_FOUND));
         ChatRoom chatRoom = chatRoomRepository.findChatRoomById(Long.parseLong(roomId)).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 채팅방입니다."));
         memberChatRoomRepository.save(MemberChatRoom.builder().member(member).chatRoom(chatRoom).build());
@@ -70,7 +73,7 @@ public class SocketService {
         chatMessageRepository.save(chatMsg);
 
         //메시지 보내기
-        messageSender.convertAndSend("/sub/chat/msg/" + dto.getChatRoomId(), ChatMessageDto.Response.builder().roomId(dto.getChatRoomId()).content(msg).build());
+        messageSender.convertAndSend("/sub/chat/room/" + dto.getChatRoomId(), ChatMessageDto.Response.builder().roomId(dto.getChatRoomId()).content(msg).senderId(sender.getId()).build());
 
 
 
