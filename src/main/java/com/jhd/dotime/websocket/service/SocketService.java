@@ -39,7 +39,7 @@ public class SocketService {
 
     @Transactional(isolation = Isolation.SERIALIZABLE)
     public void userEnter(ChatRoomSocketDto dto){
-        log.info("User {} entered {} room", dto.getChatMemberId(), dto.getChatRoomId());
+        log.info("[Socket Service]userId={} entered Room Id={}", dto.getChatMemberId(), dto.getChatRoomId());
         String roomId = dto.getChatRoomId();
         String userId = dto.getChatMemberId();
         Member member = memberRepository.findById(Long.parseLong(userId)).orElseThrow(() -> new CustomException(MemberErrorCode.MEMBER_NOT_FOUND));
@@ -52,6 +52,7 @@ public class SocketService {
 
     @Transactional
     public void sendMessage(ChatMessageSocketDto dto) {
+        log.info("[Socket Service]Chat Message Dto={}", dto.toString());
         String userId = dto.getChatUserId();
         String chatRoomId = dto.getChatRoomId();
         String msg = dto.getContent();
@@ -78,5 +79,12 @@ public class SocketService {
 
     @Transactional
     public void userQuit(ChatRoomSocketDto dto) {
+
+        /**
+         * 나가려는 유저 정보 수집
+         * member chatroom 테이블에서 해당 유저 삭제
+         * 자동으로 pub에서는 제거를 해주는지 알아봐야함.
+         */
+        log.info("[Socket Service]Chat Room Dto={}", dto.toString());
     }
 }
