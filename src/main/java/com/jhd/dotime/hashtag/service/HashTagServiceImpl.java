@@ -6,6 +6,7 @@ import com.jhd.dotime.hashtag.repository.HashTagRepository;
 import com.jhd.dotime.hashtag.repository.TaskTagRepository;
 import com.jhd.dotime.tasks.repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class HashTagServiceImpl implements HashTagService {
@@ -33,6 +35,7 @@ public class HashTagServiceImpl implements HashTagService {
     @Override
     @Transactional
     public List<Long> createHashtag(String hashtag) {
+        log.info("[Hashtag Service]Hashtag before conversion ={}", hashtag);
         List<Long> hashtagIdLst = new ArrayList<>();
         String pat = "#(\\S+)";
         Pattern pattern = Pattern.compile(pat);

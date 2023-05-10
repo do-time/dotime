@@ -10,12 +10,13 @@ import com.jhd.dotime.tasks.common.exception.TaskException;
 import com.jhd.dotime.tasks.entity.Task;
 import com.jhd.dotime.tasks.repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class TaskTagServiceImpl implements TaskTagService{
@@ -27,6 +28,7 @@ public class TaskTagServiceImpl implements TaskTagService{
 
     @Override
     public Long createTaskTag(Long taskId, List<Long> hashtagIdLst) {
+        log.info("[Tasktag Service]Hashtag List={}", hashtagIdLst.toString());
 
         Task task = taskRepository.findById(taskId).orElseThrow(() -> new TaskException(TaskErrorCode.TASK_NOT_FOUNT));;
         for (Long hashtagId : hashtagIdLst) {
@@ -42,6 +44,7 @@ public class TaskTagServiceImpl implements TaskTagService{
     public List<HashTag> getHashTagList(Long taskId) {
         List<HashTag> hashTagList = new ArrayList<>();
         List<TaskTag> taskTagList = taskTagRepository.findTaskTagByTaskId(taskId);
+        log.info("[Tasktag Service]Tasktag List={}", taskTagList.toString());
         for (TaskTag taskTag : taskTagList) {
             hashTagList.add(taskTag.getHashTag());
         }
