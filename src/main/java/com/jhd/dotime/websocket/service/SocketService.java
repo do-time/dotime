@@ -9,7 +9,6 @@ import com.jhd.dotime.chat.repository.ChatRoomRepository;
 import com.jhd.dotime.chat.repository.MemberChatRoomRepository;
 import com.jhd.dotime.common.exception.CustomException;
 import com.jhd.dotime.members.common.error.MemberErrorCode;
-import com.jhd.dotime.members.common.exception.MemberExceptionHandler;
 import com.jhd.dotime.members.entity.Member;
 import com.jhd.dotime.members.repository.MemberRepository;
 import com.jhd.dotime.websocket.dto.ChatMessageSocketDto;
