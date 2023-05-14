@@ -4,6 +4,7 @@ import com.jhd.dotime.common.annotation.CurrentMember;
 import com.jhd.dotime.hashtag.service.HashTagService;
 import com.jhd.dotime.hashtag.service.TaskTagService;
 import com.jhd.dotime.members.entity.Member;
+import com.jhd.dotime.tasks.aspect.TaskCheck;
 import com.jhd.dotime.tasks.dto.TaskDto;
 import com.jhd.dotime.tasks.service.TaskService;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -18,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 //@Tag(name = "tasks", description = "Task API")
 
@@ -42,7 +44,8 @@ public class TaskController {
             @Parameter(name="task id")
     })
     @GetMapping("/task/{id}")
-    public ResponseEntity<List<TaskDto.Response>> getTask(@PathVariable Long id){
+    @TaskCheck
+    public ResponseEntity<List<TaskDto.Response>> getTask(@CurrentMember Member member, @PathVariable Long id){
         return ResponseEntity.ok(taskService.findTask(id));
     }
 
@@ -68,9 +71,9 @@ public class TaskController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @DeleteMapping("/task/{id}")
-    public ResponseEntity<Long> deleteTask(@PathVariable Long id){
+    @TaskCheck
+    public ResponseEntity<Long> deleteTask(@CurrentMember Member member, @PathVariable Long id){
         return new ResponseEntity<>(taskService.delete(id), HttpStatus.NO_CONTENT);
-
     }
 
     @ApiResponses({
@@ -79,12 +82,11 @@ public class TaskController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND"),
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
-    @PatchMapping("/task/{id}")
-    public ResponseEntity<Long> updateTask(@PathVariable Long id, @RequestBody TaskDto.Request taskRequestDto, @CurrentMember Member member){
+    @PatchMapping("/task/{taskId}")
+    @TaskCheck
+    public ResponseEntity<Long> updateTask(@CurrentMember Member member, @PathVariable Long taskId, @RequestBody TaskDto.Request taskRequestDto){
 //        return new ResponseEntity<>(taskService.update(id, taskRequestDto, hashTagService.createHashtag(taskRequestDto.getHashtag())), HttpStatus.OK);
-        return ResponseEntity.ok(taskService.update(id, taskRequestDto, hashTagService.createHashtag(taskRequestDto.getHashtag())));
-
-
+        return ResponseEntity.ok(taskService.update(taskId, taskRequestDto, hashTagService.createHashtag(taskRequestDto.getHashtag())));
     }
 
 
@@ -97,7 +99,6 @@ public class TaskController {
     @PostMapping("/task")
     public ResponseEntity<Long> saveTask(@RequestBody TaskDto.Request taskRequestDto, @CurrentMember Member member){
         return new ResponseEntity<>(taskTagService.createTaskTag(taskService.insert(member.getId(), taskRequestDto), hashTagService.createHashtag(taskRequestDto.getHashtag())), HttpStatus.CREATED);
-
     }
 
 
@@ -112,5 +113,4 @@ public class TaskController {
     public ResponseEntity<List<TaskDto.Response>> getTaskList(@CurrentMember Member member){
         return new ResponseEntity<>(taskService.getTaskListByMemberId(member.getId()), HttpStatus.OK);
     }
-
 }
