@@ -2,6 +2,7 @@ package com.jhd.dotime.tasktime.controller;
 
 import com.jhd.dotime.common.annotation.CurrentMember;
 import com.jhd.dotime.members.entity.Member;
+import com.jhd.dotime.tasks.aspect.TaskCheck;
 import com.jhd.dotime.tasktime.dto.AllocationTimeDto;
 import com.jhd.dotime.tasktime.service.AllocationTimeService;
 import io.swagger.annotations.ApiOperation;
@@ -62,6 +63,7 @@ public class AllocationTimeController {
             notes = "TaskId의 할당 시간 리스트를 조회한다."
     )
     @GetMapping("/{taskId}")
+    @TaskCheck
     public ResponseEntity<List<AllocationTimeDto.Response>> getAllocationTime(@CurrentMember Member member, @PathVariable Long taskId){
         return new ResponseEntity<>(allocationTimeService.getAllocationTime(taskId), HttpStatus.OK);
     }

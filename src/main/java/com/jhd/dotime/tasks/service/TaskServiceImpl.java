@@ -193,6 +193,12 @@ public class TaskServiceImpl implements TaskService{
                 .collect(Collectors.toList());
     }
 
+    public boolean existTask(Long taskId) {
+        return taskRepository.existsById(taskId);
+    }
 
-
+    @Override
+    public boolean existTask(Long memberId, Long taskId) {
+        return taskRepository.existsByIdAndMemberId(memberId, taskId);
+    }
 }
