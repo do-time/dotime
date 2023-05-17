@@ -19,7 +19,7 @@ import java.util.List;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class TaskTagServiceImpl implements TaskTagService{
+public class TaskTagServiceImpl implements TaskTagService {
     private final TaskTagRepository taskTagRepository;
 
     private final TaskRepository taskRepository;
@@ -30,7 +30,8 @@ public class TaskTagServiceImpl implements TaskTagService{
     public Long createTaskTag(Long taskId, List<Long> hashtagIdLst) {
         log.info("[Tasktag Service]Hashtag List={}", hashtagIdLst.toString());
 
-        Task task = taskRepository.findById(taskId).orElseThrow(() -> new TaskException(TaskErrorCode.TASK_NOT_FOUNT));;
+        Task task = taskRepository.findById(taskId).orElseThrow(() -> new TaskException(TaskErrorCode.TASK_NOT_FOUNT));
+
         for (Long hashtagId : hashtagIdLst) {
             HashTag hashTag = hashTagRepository.findById(hashtagId).orElseThrow(() -> new NotFoundException("해시태그가 존재하지 않습니다."));
 
@@ -44,12 +45,12 @@ public class TaskTagServiceImpl implements TaskTagService{
     public List<HashTag> getHashTagList(Long taskId) {
         List<HashTag> hashTagList = new ArrayList<>();
         List<TaskTag> taskTagList = taskTagRepository.findTaskTagByTaskId(taskId);
+
         log.info("[Tasktag Service]Tasktag List={}", taskTagList.toString());
+
         for (TaskTag taskTag : taskTagList) {
             hashTagList.add(taskTag.getHashTag());
         }
-
-
 
         return hashTagList;
     }

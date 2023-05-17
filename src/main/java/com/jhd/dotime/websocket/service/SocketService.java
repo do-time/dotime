@@ -29,6 +29,9 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class SocketService {
 
+    public static List<String> onlineUserList = Collections.synchronizedList(new ArrayList<>());
+    public static Map<String, ArrayList<String>> userInChatRoomMap = Collections.synchronizedMap(new HashMap<>());
+
     private final SimpMessageSendingOperations messageSender;
     private final MemberRepository memberRepository;
     private final ChatRoomRepository chatRoomRepository;
@@ -86,5 +89,7 @@ public class SocketService {
          * 자동으로 pub에서는 제거를 해주는지 알아봐야함.
          */
         log.info("[Socket Service]Chat Room Dto={}", dto.toString());
+//        ArrayList<String> users =
+//        messageSender.convertAndSend("/sub/chat/room/" + dto.getChatRoomId(), users);
     }
 }
