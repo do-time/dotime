@@ -21,19 +21,6 @@ public class SocketController {
     private final SocketService socketService;
     private final SimpMessagingTemplate messagingTemplate;
 
-//    @MessageMapping(value="/chat/enter")
-//    public void enterChatRoom(ChatMessageDto.Request chatRequest){
-//        System.out.println("연결성공");
-//        ChatMessage chatMessage = ChatMessage.builder().content("지훈스" + "님이 채팅방에 참여하셨습니다.").sender(null).build();
-//        messagingTemplate.convertAndSend("/sub/chat/room/" + chatRequest.getRoomId(), chatMessage);
-//    }
-//
-//
-//    @MessageMapping(value = "/chat/message")
-//    public void sendMessage(ChatMessage chatMessage) {
-//        messagingTemplate.convertAndSend("/sub/chat/room/"+chatMessage.getChatRoom().getId(),chatMessage);
-//    }
-
     @MessageMapping("/chat/enter")
     public void enterUsers(ChatRoomSocketDto dto) {
         socketService.userEnter(dto);
