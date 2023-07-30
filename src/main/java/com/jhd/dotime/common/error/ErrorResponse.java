@@ -5,6 +5,10 @@ import lombok.Getter;
 import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDateTime;
+import java.util.AbstractMap;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Getter
 @Builder
@@ -28,5 +32,14 @@ public class ErrorResponse {
                                 .build()
 
                 );
+    }
+
+    public static Map<String, Object> toBody(BaseErrorCode errorCode, List<String> messages){
+        return Map.ofEntries(
+                new AbstractMap.SimpleEntry<>("status", errorCode.getStatus().value()),
+                new AbstractMap.SimpleEntry<>("error", errorCode.getStatus().name()),
+                new AbstractMap.SimpleEntry<>("code", errorCode.name()),
+                new AbstractMap.SimpleEntry<>("message", messages)
+        );
     }
 }
