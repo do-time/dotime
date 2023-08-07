@@ -26,15 +26,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
-    private final JwtExceptionHandlerFilter jwtExceptionHandlerFilter;
-
-
-    public SecurityConfig(TokenProvider tokenProvider, CorsFilter corsFilter, JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint, JwtAccessDeniedHandler jwtAccessDeniedHandler, JwtExceptionHandlerFilter jwtExceptionHandlerFilter){
+    public SecurityConfig(TokenProvider tokenProvider, CorsFilter corsFilter, JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint, JwtAccessDeniedHandler jwtAccessDeniedHandler){
         this.tokenProvider = tokenProvider;
         this.corsFilter = corsFilter;
         this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
         this.jwtAccessDeniedHandler = jwtAccessDeniedHandler;
-        this.jwtExceptionHandlerFilter = jwtExceptionHandlerFilter;
     }
 
     private static final String[] SWAGGER_URL = {
