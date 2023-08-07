@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -31,7 +32,7 @@ public class MemberController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @PostMapping()
-    public ResponseEntity<Void> createMember(@RequestBody MemberDto.Request memberDtoRequest) {
+    public ResponseEntity<Void> createMember(@Validated @RequestBody MemberDto.Request memberDtoRequest) {
         memberService.createMember(memberDtoRequest);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
