@@ -24,6 +24,9 @@ public enum ErrorCode implements BaseErrorCode {
      * 인증되지 않은 사용자
      */
     INVALID_AUTH_TOKEN(UNAUTHORIZED, "권한 정보가 없는 토큰입니다."),
+    EXPIRED_AUTH_TOKEN(UNAUTHORIZED, "만료된 JWT 토큰입니다."),
+    UNSUPPORTED_AUTH_TOKEN(UNAUTHORIZED, "지원되지 않는 JWT 토큰입니다."),
+    ILLEGAL_AUTH_TOKEN(UNAUTHORIZED, "JWT 토큰이 잘못되었습니다."),
 
     /**
      * 404 NOT_FOUND
