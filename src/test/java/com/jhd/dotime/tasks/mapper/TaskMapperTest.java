@@ -10,6 +10,8 @@ import com.jhd.dotime.tasks.entity.Task;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class TaskMapperTest {
@@ -27,7 +29,7 @@ class TaskMapperTest {
 
         Member member = memberMapper.toEntity(memberDtoRequest);
 
-        TaskDto.Request taskRequestDto = new TaskDto.Request("new task", "new task content", "testTag");
+        TaskDto.Request taskRequestDto = new TaskDto.Request("new task", "new task content", "testTag", new ArrayList<>());
         //when
 
         Task task = taskMapper.toEntity(taskRequestDto, member);

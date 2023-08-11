@@ -105,7 +105,7 @@ class TaskServiceTest {
                 .build();
 
         memberRepository.save(newMember);
-        Task task = new Task(1L, newMember, "test1","new Task", new ArrayList<>());
+        Task task = new Task(1L, newMember, "test1","new Task", new ArrayList<>(), new ArrayList<>()) ;
 
         //when
         given(taskRepository.findById(task.getId())).willReturn(Optional.of(task));
@@ -129,7 +129,7 @@ class TaskServiceTest {
                 .build();
 
         memberRepository.save(newMember);
-        Task task = new Task(1L, newMember, "test1","new Task", new ArrayList<>());
+        Task task = new Task(1L, newMember, "test1","new Task", new ArrayList<>(), new ArrayList<>());
         given(taskRepository.findById(task.getId())).willReturn(Optional.of(task));
 
         //when
@@ -154,8 +154,8 @@ class TaskServiceTest {
                 .build();
 
         memberRepository.save(newMember);
-        Task task1 = new Task(1L, newMember, "test1","new Task", new ArrayList<>());
-        Task task2 = new Task(2L, newMember, "test1","new Task", new ArrayList<>());
+        Task task1 = new Task(1L, newMember, "test1","new Task", new ArrayList<>(), new ArrayList<>());
+        Task task2 = new Task(2L, newMember, "test1","new Task", new ArrayList<>(), new ArrayList<>());
         List<Task> taskList = new ArrayList<>();
         taskList.add(task1);
         taskList.add(task2);
@@ -181,9 +181,9 @@ class TaskServiceTest {
                 .profileImage("")
                 .build();
 
-        Task task = new Task(1L, newMember, "test1","new Task", new ArrayList<>());
+        Task task = new Task(1L, newMember, "test1","new Task", new ArrayList<>(), new ArrayList<>());
 
-        TaskDto.Request taskDtoRequest = new TaskDto.Request("update task", "update task test22", "");
+        TaskDto.Request taskDtoRequest = new TaskDto.Request("update task", "update task test22", "", new ArrayList<>());
 
         memberRepository.save(newMember);
         taskRepository.save(task);
