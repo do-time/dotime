@@ -9,7 +9,6 @@ import com.jhd.dotime.chat.repository.ChatRoomRepository;
 import com.jhd.dotime.chat.repository.MemberChatRoomRepository;
 import com.jhd.dotime.common.exception.CustomException;
 import com.jhd.dotime.members.common.error.MemberErrorCode;
-import com.jhd.dotime.members.common.exception.MemberExceptionHandler;
 import com.jhd.dotime.members.entity.Member;
 import com.jhd.dotime.members.repository.MemberRepository;
 import com.jhd.dotime.websocket.dto.ChatMessageSocketDto;
@@ -29,6 +28,9 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class SocketService {
 
+    public static List<String> onlineUserList = Collections.synchronizedList(new ArrayList<>());
+    public static Map<String, ArrayList<String>> userInChatRoomMap = Collections.synchronizedMap(new HashMap<>());
+
     private final SimpMessageSendingOperations messageSender;
     private final MemberRepository memberRepository;
     private final ChatRoomRepository chatRoomRepository;
@@ -39,7 +41,7 @@ public class SocketService {
 
     @Transactional(isolation = Isolation.SERIALIZABLE)
     public void userEnter(ChatRoomSocketDto dto){
-        log.info("User {} entered {} room", dto.getChatMemberId(), dto.getChatRoomId());
+        log.info("[Socket Service]userId={} entered Room Id={}", dto.getChatMemberId(), dto.getChatRoomId());
         String roomId = dto.getChatRoomId();
         String userId = dto.getChatMemberId();
         Member member = memberRepository.findById(Long.parseLong(userId)).orElseThrow(() -> new CustomException(MemberErrorCode.MEMBER_NOT_FOUND));
@@ -52,6 +54,7 @@ public class SocketService {
 
     @Transactional
     public void sendMessage(ChatMessageSocketDto dto) {
+        log.info("[Socket Service]Chat Message Dto={}", dto.toString());
         String userId = dto.getChatUserId();
         String chatRoomId = dto.getChatRoomId();
         String msg = dto.getContent();
@@ -78,5 +81,14 @@ public class SocketService {
 
     @Transactional
     public void userQuit(ChatRoomSocketDto dto) {
+
+        /**
+         * 나가려는 유저 정보 수집
+         * member chatroom 테이블에서 해당 유저 삭제
+         * 자동으로 pub에서는 제거를 해주는지 알아봐야함.
+         */
+        log.info("[Socket Service]Chat Room Dto={}", dto.toString());
+//        ArrayList<String> users =
+//        messageSender.convertAndSend("/sub/chat/room/" + dto.getChatRoomId(), users);
     }
 }

@@ -15,7 +15,6 @@ public interface TaskService {
 
     List<TaskDto.Response> findTask(Long id);
 
-
     List<TaskDto.Response> findTaskList();
 
     Long delete(Long id);
@@ -26,5 +25,6 @@ public interface TaskService {
 
     List<TaskDto.Response> getTaskListByMemberId(Long memberId);
 
-
+    boolean existTask(Long taskId);
+    boolean existTask(Long memberId, Long taskId);
 }

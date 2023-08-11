@@ -16,6 +16,7 @@ public enum MemberErrorCode implements BaseErrorCode {
      * 잘못된 요청
      */
     INVALID_EMAIL(BAD_REQUEST, "잘못된 형식의 이메일입니다."),
+    MEMBER_BAD_REQUEST(BAD_REQUEST,"잘못된 형식의 멤버 양식입니다."),
 
     /**
      * 401 UNAUTHORIZED

@@ -24,6 +24,7 @@ import com.jhd.dotime.tasktime.entity.AllocationTime;
 import com.jhd.dotime.tasktime.mapper.AllocationTimeMapper;
 import com.jhd.dotime.tasktime.repository.AllocationTimeRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,6 +37,7 @@ import java.util.stream.Collectors;
 
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class TaskServiceImpl implements TaskService{
     private final TaskRepository taskRepository;
@@ -61,7 +63,7 @@ public class TaskServiceImpl implements TaskService{
 //            if(task.getTitle().equals(newTask)) throw new CustomException(ErrorCode.DUPLICATE_RESOURCE);
 //
 //        }
-
+        log.info("[Task Service]Task Request={}", taskRequestDto.toString());
         Task newTask = taskRepository.save(Task.builder()
                                     .member(member)
                                     .content(taskRequestDto.getContent())
@@ -139,6 +141,7 @@ public class TaskServiceImpl implements TaskService{
     @Override
     @Transactional
     public Long update(Long id, TaskDto.Request taskRequestDto, List<Long> hashtagIdList) {
+        log.info("[Task Service]Task Request={}", taskRequestDto.toString());
         Task tasks = taskRepository.findById(id)
                 .orElseThrow(() -> new TaskException(TaskErrorCode.TASK_NOT_FOUNT));
 
@@ -190,6 +193,12 @@ public class TaskServiceImpl implements TaskService{
                 .collect(Collectors.toList());
     }
 
+    public boolean existTask(Long taskId) {
+        return taskRepository.existsById(taskId);
+    }
 
-
+    @Override
+    public boolean existTask(Long memberId, Long taskId) {
+        return taskRepository.existsByIdAndMemberId(memberId, taskId);
+    }
 }

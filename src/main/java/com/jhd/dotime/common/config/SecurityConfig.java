@@ -1,7 +1,9 @@
 package com.jhd.dotime.common.config;
 
 import com.jhd.dotime.auth.JwtAccessDeniedHandler;
+import com.jhd.dotime.common.exception.JwtExceptionHandlerFilter;
 import com.jhd.dotime.common.security.JwtAuthenticationEntryPoint;
+import com.jhd.dotime.common.security.JwtFilter;
 import com.jhd.dotime.common.security.TokenProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -13,7 +15,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.web.filter.CorsFilter;
 
 @EnableWebSecurity
@@ -82,7 +83,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/api/signup").permitAll()
-                .antMatchers("/", "/**").permitAll() // 전체 경로 허가
+                //.antMatchers("/", "/**").permitAll() // 전체 경로 허가
                 .antMatchers("/auth/**").permitAll()
                 .antMatchers(SWAGGER_URL).permitAll()
                 .anyRequest().authenticated()

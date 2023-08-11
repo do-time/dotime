@@ -68,7 +68,7 @@ jwt:
   refresh:
     expiration: 90
     header: Authorization-refresh
-  access-token-validity-in-seconds: 6000 # 10 min
+  access-token-validity-in-seconds: 1 # 10 min
 
 #    oauth2:
 #      client:

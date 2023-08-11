@@ -20,6 +20,12 @@ public enum TaskErrorCode {
 
 
     /**
+     * 401 - BAD_REQUEST
+     * 1. task 입력값 오류
+     */
+    UNAUTHORIZED_TASK(UNAUTHORIZED, "Task에 접근할 권한이 없습니다."),
+
+    /**
      * 404 - NOTFOUND
      */
     TASK_NOT_FOUNT(NOT_FOUND, "Task가 존재하지 않습니다."),
