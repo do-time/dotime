@@ -8,6 +8,9 @@ import com.jhd.dotime.members.repository.MemberRepository;
 import com.jhd.dotime.tasks.repository.TaskRepository;
 import com.jhd.dotime.tasks.service.TaskServiceImpl;
 import org.assertj.core.api.Assertions;
+import org.junit.After;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,6 +22,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
@@ -39,22 +43,32 @@ class MemberServiceTest {
     @Mock
     private TaskRepository taskRepository;
 
-    @Test
-    @DisplayName("Member 회원 가입 성공 테스트")
-    public void createMember() {
-        //given
-        MemberDto.Request newMember = new MemberDto.Request("test@test.com", "testMan", "1234", "");
+    // 리팩토링 beforeEach를 활용하여 중복코드 제거
+    private Member member;
 
-        Member member = Member.builder()
+    private MemberDto.Request newMember;
+
+    private static final Long fakeMemberId = 1l;
+
+    @BeforeEach
+    void setup() {
+        newMember = new MemberDto.Request("test@test.com", "testMan", "1234", "");
+
+        member = Member.builder()
                 .email("test@test.com")
                 .password("1234")
                 .username("testMan")
                 .profileImage("")
                 .build();
 
-        Long fakeMemberId = 1l;
         ReflectionTestUtils.setField(member, "id", fakeMemberId);
+    }
 
+
+    @Test
+    @DisplayName("Member 회원 가입 성공 테스트")
+    public void createMember() {
+        //given
         given(memberRepository.save(any(Member.class))).willReturn(member);
         given(memberRepository.findByEmail(member.getEmail())).willReturn(Optional.of(member));
 
@@ -63,7 +77,7 @@ class MemberServiceTest {
         Member findMember = memberRepository.findByEmail(member.getEmail()).orElseThrow(() -> new NotFoundException("Member does not exist"));
 
         //then
-        Assertions.assertThat(findMember.getEmail()).isEqualTo(newMember.getEmail());
+        assertThat(findMember.getEmail()).isEqualTo(newMember.getEmail());
         assertAll(
                 () -> findMember.getEmail().equals(newMember.getEmail()),
                 () -> findMember.getEmail().equals(newMember.getEmail())
@@ -73,8 +87,14 @@ class MemberServiceTest {
     @Test
     void getMember() {
         //given
+        given(memberRepository.save(any(Member.class))).willReturn(member);
+        given(memberRepository.findById(member.getId())).willReturn(Optional.of(member));
+
         //when
+        memberService.createMember(newMember);
+
         //then
+        assertThat(memberService.getMember(fakeMemberId)).isEqualTo(member);
     }
 
     @Test
